@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Edit Profile | *name here*</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="top-bar">
+    <div class="site-width top-bar-inner">
+
+      <span>
+        *NAME HERE*
+      </span>
+
+      <span class="online-status">
+        <span class="online-dot"></span>
+        ONLINE
+      </span>
+
+    </div>
+  </div>
+
+
+  <header class="site-header">
+    <div class="site-width header-inner">
+
+      <a class="site-logo" href="index.html">
+
+        <span class="logo-circle">
+          X
+        </span>
+
+        <span class="logo-name">
+          <strong>*NAME</strong>
+          <span>HERE*</span>
+        </span>
+
+      </a>
+
+
+      <div class="header-text">
+
+        <p>
+          Xbox 360 games, posts and recommendations
+        </p>
+
+        <span>
+          unofficial fan community
+        </span>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <nav class="main-nav">
+    <div class="site-width nav-inner">
+
+      <a href="index.html">
+        HOME
+      </a>
+
+      <a href="#">
+        DISCOVER
+      </a>
+
+      <a href="#">
+        GAMES
+      </a>
+
+      <a href="#">
+        COMMUNITIES
+      </a>
+
+      <a href="#">
+        MEMBERS
+      </a>
+
+      <a class="active" href="profile.html">
+        PROFILE
+      </a>
+
+    </div>
+  </nav>
+
+
+  <main class="site-width profile-page">
+
+    <section class="profile-section edit-profile-panel">
+
+      <div class="profile-section-heading">
+        <h1>
+          EDIT PROFILE
+        </h1>
+      </div>
+
+
+      <form
+        id="edit-profile-form"
+        class="auth-form edit-profile-form"
+      >
+
+        <div class="edit-avatar-area">
+
+          <div class="edit-avatar-preview-frame">
+
+            <img
+              id="edit-avatar-preview"
+              src="images/avatar.png"
+              alt="Avatar preview"
+            >
+
+          </div>
+
+
+          <div class="edit-avatar-controls">
+
+            <label
+              class="profile-button avatar-upload-button"
+              for="edit-avatar-file"
+            >
+              CHOOSE IMAGE
+            </label>
+
+            <input
+              id="edit-avatar-file"
+              name="avatar"
+              type="file"
+              accept="image/png, image/jpeg, image/webp, image/gif"
+            >
+
+            <p>
+              PNG, JPG, WebP or GIF. Maximum size: 5 MB.
+            </p>
+
+            <button
+              id="remove-avatar-button"
+              class="secondary-profile-button"
+              type="button"
+            >
+              REMOVE IMAGE
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-username">
+            Username
+          </label>
+
+          <input
+            id="edit-username"
+            name="username"
+            type="text"
+            maxlength="30"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-bio">
+            Bio
+          </label>
+
+          <textarea
+            id="edit-bio"
+            name="bio"
+            rows="5"
+            maxlength="300"
+            placeholder="Tell people a little about yourself."
+          ></textarea>
+
+          <small id="bio-character-count">
+            0 / 300
+          </small>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-location">
+            Location
+          </label>
+
+          <input
+            id="edit-location"
+            name="location"
+            type="text"
+            maxlength="60"
+            placeholder="Maine, United States"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-favorite-genre">
+            Favorite genre
+          </label>
+
+          <input
+            id="edit-favorite-genre"
+            name="favorite-genre"
+            type="text"
+            maxlength="60"
+            placeholder="Horror, RPG, racing..."
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-gamerscore">
+            Gamerscore
+          </label>
+
+          <input
+            id="edit-gamerscore"
+            name="gamerscore"
+            type="number"
+            min="0"
+            max="999999999"
+            value="0"
+          >
+
+        </div>
+
+
+        <div class="profile-actions edit-profile-actions">
+
+          <button
+            class="profile-button"
+            id="save-profile-button"
+            type="submit"
+          >
+            SAVE PROFILE
+          </button>
+
+          <a
+            class="profile-button cancel-profile-button"
+            href="profile.html"
+          >
+            CANCEL
+          </a>
+
+        </div>
+
+
+        <p
+          id="edit-profile-message"
+          class="form-message"
+          aria-live="polite"
+        ></p>
+
+      </form>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="site-width footer-inner">
+
+      <p>
+        *name here* © 2026
+      </p>
+
+      <p>
+        Unofficial fan community
+      </p>
+
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/edit-profile.js?v=2"></script>
+
+</body>
+</html>
