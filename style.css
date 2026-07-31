@@ -5605,3 +5605,224 @@ footer {
     align-items: flex-start;
   }
 }
+
+
+/* ==================================================
+   GAME SEARCH RESULTS
+   ================================================== */
+
+.game-result-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+
+
+.game-platform-badge,
+.compatibility-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 5px 10px;
+  border-radius: 12px 4px 12px 4px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.45),
+    0 2px 5px rgba(0, 0, 0, 0.28);
+}
+
+
+.game-platform-badge {
+  border: 1px solid #5f6b60;
+  color: #1f281f;
+  background:
+    linear-gradient(
+      180deg,
+      #f1f3ef,
+      #aeb7ad 58%,
+      #7a857a
+    );
+}
+
+
+.game-platform-badge.original-xbox {
+  border-color: #667467;
+  color: #202a20;
+  background:
+    radial-gradient(
+      circle at 50% 0,
+      rgba(255, 255, 255, 0.7),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #edf2eb,
+      #aeb9ad 58%,
+      #6f7c70
+    );
+}
+
+
+.compatibility-badge.compatible {
+  position: relative;
+  padding-left: 27px;
+  border: 1px solid #397a22;
+  color: #10210d;
+  background:
+    radial-gradient(
+      circle at 50% 0,
+      rgba(255, 255, 255, 0.62),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #b9f176,
+      #65bf34 58%,
+      #347b1b
+    );
+  text-shadow:
+    0 1px rgba(255, 255, 255, 0.35);
+}
+
+
+.compatibility-badge.compatible::before {
+  content: "✓";
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #efffe7;
+  background: #296717;
+  font-size: 8px;
+  transform: translateY(-50%);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.25);
+}
+
+
+.compatibility-badge.incompatible {
+  border: 1px solid #716c5c;
+  color: #ded9ca;
+  background:
+    linear-gradient(
+      180deg,
+      #555246,
+      #323129 58%,
+      #22221d
+    );
+}
+
+
+.game-result-description {
+  position: relative;
+  max-width: 820px;
+  max-height: 105px;
+  margin: 14px 0 16px;
+  padding: 13px 15px;
+  overflow: hidden;
+  border: 1px solid rgba(113, 130, 111, 0.36);
+  border-radius: 13px 5px 13px 5px;
+  color: #c5cec4;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(43, 51, 44, 0.92),
+      rgba(22, 27, 23, 0.95)
+    );
+  font-size: 11px;
+  line-height: 1.65;
+  white-space: normal;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.06);
+}
+
+
+.game-result-description::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 30px;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      transparent,
+      rgba(22, 27, 23, 0.98)
+    );
+}
+
+
+.compatibility-note {
+  margin: 0 0 15px;
+  padding: 11px 13px;
+  border-left: 4px solid #65ba35;
+  border-radius: 4px 11px 11px 4px;
+  color: #bdc7bc;
+  background:
+    rgba(107, 187, 58, 0.09);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+
+.compatibility-note strong {
+  color: #96dd62;
+  font-size: 9px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+
+.game-search-result-info h2 {
+  margin: 0 0 5px;
+  color: #f1f4ef;
+  font-size: 22px;
+  line-height: 1.12;
+}
+
+
+.game-result-date,
+.game-result-genres {
+  margin: 4px 0;
+  color: #929d92;
+  font-size: 10px;
+}
+
+
+.game-result-genres {
+  color: #9ed36e;
+}
+
+
+@media (max-width: 600px) {
+  .game-result-badges {
+    gap: 5px;
+  }
+
+  .game-platform-badge,
+  .compatibility-badge {
+    padding: 5px 8px;
+    font-size: 8px;
+  }
+
+  .compatibility-badge.compatible {
+    padding-left: 25px;
+  }
+
+  .game-result-description {
+    max-height: 120px;
+    font-size: 10px;
+  }
+}
