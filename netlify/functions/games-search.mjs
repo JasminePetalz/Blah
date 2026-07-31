@@ -1,11 +1,11 @@
-const THEGAMESDB_BASE_URL =
+const THEGAMESDB_API_URL =
   "https://api.thegamesdb.net/v1/Games/ByGameName";
 
-const XBOX_PLATFORM_ID = 14;
+const ORIGINAL_XBOX_PLATFORM_ID = 14;
 const XBOX_360_PLATFORM_ID = 15;
 
-const ALLOWED_PLATFORM_IDS = [
-  XBOX_PLATFORM_ID,
+const SUPPORTED_PLATFORM_IDS = [
+  ORIGINAL_XBOX_PLATFORM_ID,
   XBOX_360_PLATFORM_ID
 ];
 
@@ -14,7 +14,7 @@ const ALLOWED_PLATFORM_IDS = [
    RESPONSE HELPERS
    ================================================== */
 
-function jsonResponse(
+function createJsonResponse(
   statusCode,
   body
 ) {
@@ -35,40 +35,19 @@ function jsonResponse(
 }
 
 
-function parsePlatformIds(value) {
-  if (!value) {
-    return [
-      XBOX_PLATFORM_ID,
-      XBOX_360_PLATFORM_ID
-    ];
-  }
-
-  const requestedIds =
-    String(value)
-      .split(",")
-      .map((id) =>
-        Number(id.trim())
-      )
-      .filter((id) =>
-        ALLOWED_PLATFORM_IDS.includes(id)
-      );
-
-  return [
-    ...new Set(requestedIds)
-  ];
-}
-
-
 function getPlatformName(platformId) {
+  const numericPlatformId =
+    Number(platformId);
+
   if (
-    Number(platformId) ===
-    XBOX_PLATFORM_ID
+    numericPlatformId ===
+    ORIGINAL_XBOX_PLATFORM_ID
   ) {
     return "Original Xbox";
   }
 
   if (
-    Number(platformId) ===
+    numericPlatformId ===
     XBOX_360_PLATFORM_ID
   ) {
     return "Xbox 360";
@@ -78,13 +57,17 @@ function getPlatformName(platformId) {
 }
 
 
-function getFirstValue(
+/* ==================================================
+   INCLUDED DATA HELPERS
+   ================================================== */
+
+function getLookupValue(
   values,
   lookup
 ) {
   if (
     !Array.isArray(values) ||
-    !values.length
+    values.length === 0
   ) {
     return "";
   }
@@ -94,53 +77,57 @@ function getFirstValue(
 
   if (
     typeof firstValue ===
-    "string"
+    "string" ||
+    typeof firstValue ===
+    "number"
   ) {
     return (
-      lookup?.[firstValue] ??
-      firstValue
+      lookup?.[firstValue] ||
+      lookup?.[String(firstValue)] ||
+      String(firstValue)
     );
   }
 
-  const id =
-    firstValue?.id ??
-    firstValue;
+  const valueId =
+    firstValue?.id;
 
   return (
-    lookup?.[id] ??
-    firstValue?.name ??
+    lookup?.[valueId] ||
+    lookup?.[String(valueId)] ||
+    firstValue?.name ||
     ""
   );
 }
 
 
-function getGenres(
-  genreIds,
+function getGenreNames(
+  genres,
   genreLookup
 ) {
-  if (!Array.isArray(genreIds)) {
+  if (!Array.isArray(genres)) {
     return [];
   }
 
-  return genreIds
+  return genres
     .map((genre) => {
       if (
-        typeof genre ===
-        "string"
+        typeof genre === "string" ||
+        typeof genre === "number"
       ) {
         return (
-          genreLookup?.[genre] ??
-          genre
+          genreLookup?.[genre] ||
+          genreLookup?.[String(genre)] ||
+          String(genre)
         );
       }
 
-      const id =
-        genre?.id ??
-        genre;
+      const genreId =
+        genre?.id;
 
       return (
-        genreLookup?.[id] ??
-        genre?.name ??
+        genreLookup?.[genreId] ||
+        genreLookup?.[String(genreId)] ||
+        genre?.name ||
         ""
       );
     })
@@ -148,233 +135,177 @@ function getGenres(
 }
 
 
-function buildImageUrl(
+function getCoverUrl(
   gameId,
   include
 ) {
-  const boxart =
+  const boxartInclude =
     include?.boxart;
 
+  if (!boxartInclude) {
+    return "";
+  }
+
   const baseUrl =
-    include?.boxart?.base_url?.original ??
-    include?.boxart?.base_url?.large ??
-    include?.boxart?.base_url?.medium ??
+    boxartInclude
+      ?.base_url
+      ?.original ||
+    boxartInclude
+      ?.base_url
+      ?.large ||
+    boxartInclude
+      ?.base_url
+      ?.medium ||
+    boxartInclude
+      ?.base_url
+      ?.small ||
     "";
 
-  const gameImages =
-    boxart?.data?.[gameId] ??
-    boxart?.data?.[String(gameId)] ??
+  const gameArtwork =
+    boxartInclude?.data?.[gameId] ||
+    boxartInclude?.data?.[String(gameId)] ||
     [];
 
   if (
     !baseUrl ||
-    !Array.isArray(gameImages)
+    !Array.isArray(gameArtwork) ||
+    gameArtwork.length === 0
   ) {
     return "";
   }
 
-  const frontImage =
-    gameImages.find(
+  const frontCover =
+    gameArtwork.find(
       (image) =>
         image?.type === "boxart" &&
         image?.side === "front"
-    ) ??
-    gameImages.find(
+    ) ||
+    gameArtwork.find(
       (image) =>
         image?.type === "boxart"
-    ) ??
-    gameImages[0];
+    ) ||
+    gameArtwork[0];
 
-  if (!frontImage?.filename) {
+  if (!frontCover?.filename) {
     return "";
   }
 
-  return `${baseUrl}${frontImage.filename}`;
+  return `${baseUrl}${frontCover.filename}`;
 }
 
 
 /* ==================================================
-   API REQUEST
+   NORMALIZE GAMES
    ================================================== */
 
-async function fetchGamesForPlatform(
-  searchTerm,
-  platformId,
-  apiKey
-) {
-  const parameters =
-    new URLSearchParams({
-      apikey:
-        apiKey,
+function normalizeGames(apiResponse) {
+  const rawGames =
+    apiResponse?.data?.games;
 
-      name:
-        searchTerm,
-
-      filter:
-        `[{"field":"players","values":[]}]`,
-
-      fields:
-        "players,publishers,genres,overview,last_updated,rating,platform,coop,youtube,os",
-
-      include:
-        "boxart",
-
-      platform:
-        String(platformId)
-    });
-
-  /*
-    TheGamesDB's ByGameName endpoint supports
-    game-name searches and returns game records
-    plus optional included artwork data.
-  */
-
-  const response =
-    await fetch(
-      `${THEGAMESDB_BASE_URL}?${parameters.toString()}`
-    );
-
-  const responseText =
-    await response.text();
-
-  let responseData;
-
-  try {
-    responseData =
-      JSON.parse(responseText);
-
-  } catch {
-    throw new Error(
-      `TheGamesDB returned an invalid response for platform ${platformId}.`
-    );
-  }
-
-  if (!response.ok) {
-    const apiMessage =
-      responseData?.error ??
-      responseData?.message ??
-      `TheGamesDB request failed with status ${response.status}.`;
-
-    throw new Error(apiMessage);
-  }
-
-  return {
-    platformId,
-    responseData
-  };
-}
-
-
-/* ==================================================
-   NORMALIZE RESPONSE
-   ================================================== */
-
-function normalizePlatformResults(
-  platformResult
-) {
-  const {
-    platformId,
-    responseData
-  } = platformResult;
-
-  const games =
-    responseData?.data?.games ??
-    [];
-
-  const include =
-    responseData?.include ??
-    {};
-
-  const developerLookup =
-    include?.developer?.data ??
-    include?.developers?.data ??
-    {};
-
-  const publisherLookup =
-    include?.publisher?.data ??
-    include?.publishers?.data ??
-    {};
-
-  const genreLookup =
-    include?.genre?.data ??
-    include?.genres?.data ??
-    {};
-
-  if (!Array.isArray(games)) {
+  if (!Array.isArray(rawGames)) {
     return [];
   }
 
-  return games.map((game) => {
-    const actualPlatformId =
-      Number(
-        game.platform ??
-        game.platform_id ??
-        platformId
-      );
+  const include =
+    apiResponse?.include ||
+    {};
 
-    return {
-      id:
-        Number(game.id),
+  const developerLookup =
+    include?.developer?.data ||
+    include?.developers?.data ||
+    {};
 
-      title:
-        game.game_title ??
-        game.title ??
-        "Unknown game",
+  const publisherLookup =
+    include?.publisher?.data ||
+    include?.publishers?.data ||
+    {};
 
-      release_date:
-        game.release_date ??
-        game.released ??
-        null,
+  const genreLookup =
+    include?.genre?.data ||
+    include?.genres?.data ||
+    {};
 
-      overview:
-        game.overview ??
-        "",
+  return rawGames
+    .map((game) => {
+      const platformId =
+        Number(
+          game.platform ||
+          game.platform_id ||
+          game.platformId
+        );
 
-      cover_url:
-        buildImageUrl(
-          game.id,
-          include
-        ),
+      return {
+        id:
+          Number(game.id),
 
-      developer:
-        getFirstValue(
-          game.developers,
-          developerLookup
-        ),
+        title:
+          game.game_title ||
+          game.title ||
+          "Unknown game",
 
-      publisher:
-        getFirstValue(
-          game.publishers,
-          publisherLookup
-        ),
+        release_date:
+          game.release_date ||
+          game.released ||
+          null,
 
-      genres:
-        getGenres(
-          game.genres,
-          genreLookup
-        ),
+        overview:
+          game.overview ||
+          "",
 
-      platform_id:
-        actualPlatformId,
+        cover_url:
+          getCoverUrl(
+            game.id,
+            include
+          ),
 
-      platform_name:
-        getPlatformName(
-          actualPlatformId
+        developer:
+          getLookupValue(
+            game.developers,
+            developerLookup
+          ),
+
+        publisher:
+          getLookupValue(
+            game.publishers,
+            publisherLookup
+          ),
+
+        genres:
+          getGenreNames(
+            game.genres,
+            genreLookup
+          ),
+
+        platform_id:
+          platformId,
+
+        platform_name:
+          getPlatformName(
+            platformId
+          )
+      };
+    })
+    .filter((game) => {
+      return (
+        game.id &&
+        game.title &&
+        SUPPORTED_PLATFORM_IDS.includes(
+          game.platform_id
         )
-    };
-  });
+      );
+    });
 }
 
 
 /* ==================================================
-   NETLIFY HANDLER
+   NETLIFY FUNCTION
    ================================================== */
 
 export async function handler(event) {
   if (
     event.httpMethod !== "GET"
   ) {
-    return jsonResponse(
+    return createJsonResponse(
       405,
       {
         error:
@@ -388,7 +319,7 @@ export async function handler(event) {
       .THEGAMESDB_API_KEY;
 
   if (!apiKey) {
-    return jsonResponse(
+    return createJsonResponse(
       500,
       {
         error:
@@ -398,12 +329,13 @@ export async function handler(event) {
   }
 
   const searchTerm =
-    event.queryStringParameters
+    event
+      .queryStringParameters
       ?.search
       ?.trim();
 
   if (!searchTerm) {
-    return jsonResponse(
+    return createJsonResponse(
       400,
       {
         error:
@@ -412,83 +344,125 @@ export async function handler(event) {
     );
   }
 
-  const platformIds =
-    parsePlatformIds(
-      event.queryStringParameters
-        ?.platforms
-    );
-
-  if (!platformIds.length) {
-    return jsonResponse(
-      400,
-      {
-        error:
-          "No supported platforms were requested."
-      }
-    );
-  }
-
   try {
-    /*
-      TheGamesDB's name-search endpoint takes one
-      platform filter at a time, so we make one request
-      for Original Xbox and another for Xbox 360.
-    */
+    const queryParameters =
+      new URLSearchParams({
+        apikey:
+          apiKey,
 
-    const platformResults =
-      await Promise.all(
-        platformIds.map(
-          (platformId) =>
-            fetchGamesForPlatform(
-              searchTerm,
-              platformId,
-              apiKey
-            )
+        name:
+          searchTerm,
+
+        fields:
+          [
+            "players",
+            "publishers",
+            "genres",
+            "overview",
+            "last_updated",
+            "rating",
+            "platform",
+            "coop",
+            "youtube",
+            "os"
+          ].join(","),
+
+        include:
+          "boxart"
+      });
+
+    const apiResponse =
+      await fetch(
+        `${THEGAMESDB_API_URL}?${queryParameters.toString()}`
+      );
+
+    const responseText =
+      await apiResponse.text();
+
+    let responseData;
+
+    try {
+      responseData =
+        JSON.parse(responseText);
+
+    } catch {
+      console.error(
+        "Non-JSON TheGamesDB response:",
+        responseText.slice(
+          0,
+          500
         )
       );
 
-    const games =
-      platformResults
-        .flatMap(
-          normalizePlatformResults
-        );
+      return createJsonResponse(
+        502,
+        {
+          error:
+            "TheGamesDB returned something other than game data.",
 
-    /*
-      Remove duplicates while keeping the platform-specific
-      version of a title when the same title exists on both.
-    */
+          status:
+            apiResponse.status
+        }
+      );
+    }
 
-    const uniqueGames =
-      Array.from(
-        new Map(
-          games.map((game) => [
-            `${game.id}-${game.platform_id}`,
-            game
-          ])
-        ).values()
+    if (!apiResponse.ok) {
+      console.error(
+        "TheGamesDB API error:",
+        responseData
       );
 
-    return jsonResponse(
+      return createJsonResponse(
+        apiResponse.status,
+        {
+          error:
+            responseData?.error ||
+            responseData?.message ||
+            "TheGamesDB search failed."
+        }
+      );
+    }
+
+    const games =
+      normalizeGames(
+        responseData
+      );
+
+    return createJsonResponse(
       200,
       {
-        games:
-          uniqueGames,
-
-        platforms:
-          platformIds,
+        games,
 
         count:
-          uniqueGames.length
+          games.length,
+
+        platforms: [
+          {
+            id:
+              ORIGINAL_XBOX_PLATFORM_ID,
+
+            name:
+              "Original Xbox"
+          },
+
+          {
+            id:
+              XBOX_360_PLATFORM_ID,
+
+            name:
+              "Xbox 360"
+          }
+        ]
       }
     );
 
   } catch (error) {
     console.error(
-      "TheGamesDB search error:",
+      "Game search function error:",
       error
     );
 
-    return jsonResponse(
+    return createJsonResponse(
       500,
       {
         error:
