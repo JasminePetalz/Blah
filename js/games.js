@@ -22,6 +22,9 @@ const searchResults =
 let currentUser =
   null;
 
+let authReady =
+  false;
+
 
 /* ==================================================
    BASIC HELPERS
@@ -42,10 +45,12 @@ function formatDate(dateValue) {
     return "Release date unavailable";
   }
 
+
   const parsedDate =
     new Date(
       `${dateValue}T00:00:00`
     );
+
 
   if (
     Number.isNaN(
@@ -54,6 +59,7 @@ function formatDate(dateValue) {
   ) {
     return dateValue;
   }
+
 
   return parsedDate.toLocaleDateString(
     undefined,
@@ -74,19 +80,27 @@ function getNames(
     return [];
   }
 
+
   return values
     .map((value) => {
       const valueKey =
         String(value);
 
-      if (includedValues[valueKey]) {
+
+      const includedValue =
+        includedValues[valueKey];
+
+
+      if (includedValue) {
         return (
-          includedValues[valueKey].name ||
-          includedValues[valueKey].publisher ||
-          includedValues[valueKey].genre ||
+          includedValue.name ||
+          includedValue.publisher ||
+          includedValue.developer ||
+          includedValue.genre ||
           null
         );
       }
+
 
       if (
         typeof value === "object" &&
@@ -95,10 +109,12 @@ function getNames(
         return (
           value.name ||
           value.publisher ||
+          value.developer ||
           value.genre ||
           null
         );
       }
+
 
       return value;
     })
@@ -115,9 +131,11 @@ function getGameImage(
     boxartData?.[String(gameId)] ||
     [];
 
+
   if (!Array.isArray(images)) {
     return null;
   }
+
 
   const frontCover =
     images.find(
@@ -126,24 +144,142 @@ function getGameImage(
         image.side === "front"
     );
 
+
   const anyCover =
     images.find(
       (image) =>
         image.type === "boxart"
     );
 
+
   const selectedCover =
     frontCover ||
     anyCover;
+
 
   if (!selectedCover?.filename) {
     return null;
   }
 
+
   return (
     baseUrl +
     selectedCover.filename
   );
+}
+
+
+/* ==================================================
+   AUTHENTICATION
+   ================================================== */
+
+function updateGameButtons() {
+  const buttons =
+    document.querySelectorAll(
+      ".select-game-button"
+    );
+
+
+  buttons.forEach(
+    (button) => {
+      button.textContent =
+        currentUser
+          ? "SELECT GAME"
+          : "LOG IN TO SELECT";
+    }
+  );
+}
+
+
+async function loadCurrentSession() {
+  try {
+    const {
+      data: {
+        session
+      },
+      error
+    } = await supabaseClient
+      .auth
+      .getSession();
+
+
+    if (error) {
+      console.error(
+        "Session loading error:",
+        error
+      );
+    }
+
+
+    currentUser =
+      session?.user ||
+      null;
+
+
+    return currentUser;
+
+  } catch (error) {
+    console.error(
+      "Session loading error:",
+      error
+    );
+
+
+    currentUser =
+      null;
+
+
+    return null;
+  }
+}
+
+
+async function initializeGamesPage() {
+  if (searchInput) {
+    searchInput.disabled =
+      true;
+  }
+
+
+  if (searchMessage) {
+    searchMessage.textContent =
+      "Checking login status...";
+  }
+
+
+  await loadCurrentSession();
+
+
+  supabaseClient.auth
+    .onAuthStateChange(
+      (
+        event,
+        session
+      ) => {
+        currentUser =
+          session?.user ||
+          null;
+
+
+        updateGameButtons();
+      }
+    );
+
+
+  authReady =
+    true;
+
+
+  if (searchInput) {
+    searchInput.disabled =
+      false;
+  }
+
+
+  if (searchMessage) {
+    searchMessage.textContent =
+      "";
+  }
 }
 
 
@@ -155,24 +291,64 @@ async function saveGameToArchive(
   gameData,
   button
 ) {
+  /*
+    Check the session again here instead of trusting
+    an older value stored when the page first opened.
+  */
+
+  const {
+    data: {
+      session
+    },
+    error: sessionError
+  } = await supabaseClient
+    .auth
+    .getSession();
+
+
+  if (sessionError) {
+    console.error(
+      "Session check error:",
+      sessionError
+    );
+  }
+
+
+  currentUser =
+    session?.user ||
+    null;
+
+
   if (!currentUser) {
+    sessionStorage.setItem(
+      "loginReturnUrl",
+      window.location.href
+    );
+
+
     window.location.href =
       "login.html";
+
 
     return;
   }
 
+
   const originalText =
     button.textContent;
+
 
   button.disabled =
     true;
 
+
   button.textContent =
     "CHECKING...";
 
+
   searchMessage.textContent =
     "Checking the archive...";
+
 
   try {
     const {
@@ -187,25 +363,32 @@ async function saveGameToArchive(
       )
       .maybeSingle();
 
+
     if (existingError) {
       throw existingError;
     }
+
 
     if (existingGame) {
       button.textContent =
         "OPENING...";
 
+
       window.location.href =
         `game.html?id=${encodeURIComponent(existingGame.id)}`;
+
 
       return;
     }
 
+
     button.textContent =
       "ADDING...";
 
+
     searchMessage.textContent =
       "Adding game to the archive...";
+
 
     const {
       data: insertedGame,
@@ -246,10 +429,11 @@ async function saveGameToArchive(
       .select("id")
       .single();
 
+
     if (insertError) {
       /*
-        23505 means another person added the same
-        game between our check and insert.
+        PostgreSQL error 23505 means the unique
+        TheGamesDB ID already exists.
       */
 
       if (
@@ -268,6 +452,7 @@ async function saveGameToArchive(
           )
           .single();
 
+
         if (
           duplicateError ||
           !duplicateGame
@@ -278,20 +463,26 @@ async function saveGameToArchive(
           );
         }
 
+
         window.location.href =
           `game.html?id=${encodeURIComponent(duplicateGame.id)}`;
+
 
         return;
       }
 
+
       throw insertError;
     }
+
 
     button.textContent =
       "ADDED";
 
+
     searchMessage.textContent =
       `${gameData.title} was added to the archive.`;
+
 
     window.location.href =
       `game.html?id=${encodeURIComponent(insertedGame.id)}`;
@@ -302,11 +493,14 @@ async function saveGameToArchive(
       error
     );
 
+
     button.disabled =
       false;
 
+
     button.textContent =
       originalText;
+
 
     searchMessage.textContent =
       error.message ||
@@ -330,12 +524,15 @@ function createGameCard(
       "article"
     );
 
+
   card.className =
     "game-search-card";
+
 
   const gameTitle =
     game.game_title ||
     "Unknown game";
+
 
   const coverUrl =
     getGameImage(
@@ -344,11 +541,13 @@ function createGameCard(
       imageBaseUrl
     );
 
+
   const publishers =
     getNames(
       game.publishers,
       includedData.publishers
     );
+
 
   const developers =
     getNames(
@@ -356,11 +555,13 @@ function createGameCard(
       includedData.developers
     );
 
+
   const genres =
     getNames(
       game.genres,
       includedData.genres
     );
+
 
   const coverHtml =
     coverUrl
@@ -375,6 +576,7 @@ function createGameCard(
             NO IMAGE
           </div>
         `;
+
 
   card.innerHTML = `
     <div class="game-search-cover">
@@ -457,21 +659,16 @@ function createGameCard(
     </div>
   `;
 
+
   const selectButton =
     card.querySelector(
       ".select-game-button"
     );
 
+
   selectButton.addEventListener(
     "click",
     () => {
-      if (!currentUser) {
-        window.location.href =
-          "login.html";
-
-        return;
-      }
-
       saveGameToArchive(
         {
           thegamesdb_id:
@@ -499,13 +696,13 @@ function createGameCard(
             publishers.join(", ") ||
             null,
 
-          genres:
-            genres
+          genres
         },
         selectButton
       );
     }
   );
+
 
   return card;
 }
@@ -518,18 +715,32 @@ function createGameCard(
 async function searchGames(event) {
   event.preventDefault();
 
+
+  if (!authReady) {
+    searchMessage.textContent =
+      "Please wait while your login is checked.";
+
+
+    return;
+  }
+
+
   const searchTerm =
     searchInput.value.trim();
+
 
   if (!searchTerm) {
     searchMessage.textContent =
       "Enter a game title.";
 
+
     return;
   }
 
+
   searchMessage.textContent =
     "Searching...";
+
 
   searchResults.innerHTML = `
     <p class="empty-message">
@@ -537,17 +748,22 @@ async function searchGames(event) {
     </p>
   `;
 
+
   try {
     const functionUrl =
       `/.netlify/functions/games-search?search=${encodeURIComponent(searchTerm)}`;
 
+
     const response =
       await fetch(functionUrl);
+
 
     const responseText =
       await response.text();
 
+
     let responseData;
+
 
     try {
       responseData =
@@ -559,11 +775,13 @@ async function searchGames(event) {
       );
     }
 
+
     if (!response.ok) {
       console.error(
         "Function response:",
         responseData
       );
+
 
       throw new Error(
         responseData.error ||
@@ -571,9 +789,11 @@ async function searchGames(event) {
       );
     }
 
+
     const games =
       responseData?.data?.games ||
       [];
+
 
     const includedData = {
       publishers:
@@ -595,11 +815,13 @@ async function searchGames(event) {
         {}
     };
 
+
     const boxartData =
       responseData?.include
         ?.boxart
         ?.data ||
       {};
+
 
     const imageBaseUrl =
       responseData?.include
@@ -608,8 +830,10 @@ async function searchGames(event) {
         ?.original ||
       "https://cdn.thegamesdb.net/images/original/";
 
+
     searchResults.innerHTML =
       "";
+
 
     if (!games.length) {
       searchResults.innerHTML = `
@@ -618,25 +842,28 @@ async function searchGames(event) {
         </p>
       `;
 
+
       searchMessage.textContent =
         "No matching games found.";
+
 
       return;
     }
 
+
     games.forEach(
       (game) => {
-        const card =
+        searchResults.append(
           createGameCard(
             game,
             includedData,
             boxartData,
             imageBaseUrl
-          );
-
-        searchResults.append(card);
+          )
+        );
       }
     );
+
 
     searchMessage.textContent =
       `${games.length} result${
@@ -651,11 +878,13 @@ async function searchGames(event) {
       error
     );
 
+
     searchResults.innerHTML = `
       <p class="empty-message">
         The games could not be loaded.
       </p>
     `;
+
 
     searchMessage.textContent =
       error.message ||
@@ -665,41 +894,8 @@ async function searchGames(event) {
 
 
 /* ==================================================
-   INITIALIZE
+   START PAGE
    ================================================== */
-
-async function initializeGamesPage() {
-  try {
-    const {
-      data: {
-        user
-      },
-      error
-    } = await supabaseClient
-      .auth
-      .getUser();
-
-    if (error) {
-      console.error(
-        "User loading error:",
-        error
-      );
-    }
-
-    currentUser =
-      user || null;
-
-  } catch (error) {
-    console.error(
-      "Games page initialization error:",
-      error
-    );
-
-    currentUser =
-      null;
-  }
-}
-
 
 if (
   searchForm &&
@@ -711,6 +907,7 @@ if (
     "submit",
     searchGames
   );
+
 
   initializeGamesPage();
 

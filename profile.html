@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
 
@@ -8,10 +9,14 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>User Profile | *name here*</title>
+  <title>Profile | 360 Archive</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css?v=6"
+  >
 </head>
+
 
 <body>
 
@@ -20,7 +25,7 @@
     <div class="site-width top-bar-inner">
 
       <span>
-        *NAME HERE*
+        360 ARCHIVE
       </span>
 
       <span class="online-status">
@@ -40,7 +45,10 @@
 
     <div class="site-width header-inner">
 
-      <a class="site-logo" href="index.html">
+      <a
+        class="site-logo"
+        href="index.html"
+      >
 
         <span class="logo-circle">
           X
@@ -49,11 +57,11 @@
         <span class="logo-name">
 
           <strong>
-            *NAME
+            360
           </strong>
 
           <span>
-            HERE*
+            ARCHIVE
           </span>
 
         </span>
@@ -64,11 +72,11 @@
       <div class="header-text">
 
         <p>
-          Xbox 360 games, posts and recommendations
+          Xbox 360 games, clips, posts and community discussions
         </p>
 
         <span>
-          unofficial fan community
+          unofficial fan site
         </span>
 
       </div>
@@ -86,23 +94,26 @@
         HOME
       </a>
 
-      <a href="#">
-        DISCOVER
-      </a>
-
-      <a href="#">
+      <a href="games.html">
         GAMES
       </a>
 
       <a href="#">
-        COMMUNITIES
+        POSTS
       </a>
 
       <a href="#">
-        MEMBERS
+        CLIPS
       </a>
 
-      <a class="active" href="profile.html">
+      <a href="#">
+        FORUM
+      </a>
+
+      <a
+        class="active"
+        href="profile.html"
+      >
         PROFILE
       </a>
 
@@ -113,618 +124,350 @@
 
   <main class="site-width profile-page">
 
-
-    <section class="profile-header">
-
-      <div class="profile-banner">
-
-        <img
-          src="images/profile-banner.jpg"
-          alt=""
-        >
-
-      </div>
+    <p
+      id="profile-message"
+      class="form-message"
+      aria-live="polite"
+    >
+      Loading profile...
+    </p>
 
 
-      <div class="profile-header-content">
+    <section
+      id="profile-content"
+      hidden
+    >
 
-        <img
-          class="large-avatar"
-          id="profile-avatar"
-          src="images/avatar.png"
-          alt="User avatar"
-        >
+      <section class="profile-header">
 
+        <div class="profile-header-content">
 
-        <div class="profile-main-info">
-
-          <div class="profile-name-row">
-
-            <div>
-
-              <h1 id="profile-username">
-                user
-              </h1>
-
-              <span class="profile-online">
-
-                <span class="online-dot"></span>
-
-                Online
-
-              </span>
-
-            </div>
+          <img
+            id="profile-avatar"
+            class="large-avatar"
+            src="images/avatar.png"
+            alt="Profile avatar"
+          >
 
 
-            <div class="profile-actions">
+          <div class="profile-main-info">
+
+            <div class="profile-name-row">
+
+              <div>
+
+                <h1 id="profile-username">
+                  user
+                </h1>
+
+                <span class="profile-online">
+                  ● Online
+                </span>
+
+              </div>
+
 
               <a
-                class="profile-button"
+                class="main-button"
                 href="edit-profile.html"
               >
                 EDIT PROFILE
               </a>
 
-              <button
-                class="profile-button"
-                id="logout-button"
-                type="button"
-              >
-                LOG OUT
-              </button>
-
             </div>
 
-          </div>
+
+            <p
+              id="profile-bio"
+              class="profile-description"
+            >
+              No bio added yet.
+            </p>
 
 
-          <p
-            class="profile-description"
-            id="profile-bio"
-          >
-            profile information goes here
-          </p>
+            <div class="profile-meta">
 
+              <span id="profile-location">
+                Location: —
+              </span>
 
-          <div class="profile-meta">
+              <span id="profile-member-since">
+                Member since: —
+              </span>
 
-            <span id="profile-member-since">
-              Member since 2026
-            </span>
-
-            <span id="profile-gamerscore">
-              Gamerscore: 0
-            </span>
-
-            <span id="profile-location">
-              Location
-            </span>
+            </div>
 
           </div>
 
         </div>
 
-      </div>
-
-    </section>
-
-
-    <nav class="profile-tabs">
-
-      <a class="active" href="#">
-        OVERVIEW
-      </a>
-
-      <a href="#">
-        POSTS
-      </a>
-
-      <a href="#">
-        REVIEWS
-      </a>
-
-      <a href="#">
-        GAMES
-      </a>
-
-      <a href="#">
-        FRIENDS
-      </a>
-
-    </nav>
-
-
-    <div class="profile-layout">
-
-
-      <section class="profile-main-column">
-
-
-        <section class="profile-section">
-
-          <div class="profile-section-heading">
-
-            <h2>
-              CURRENTLY PLAYING
-            </h2>
-
-          </div>
-
-
-          <div class="current-game">
-
-            <img
-              src="images/current-game.jpg"
-              alt="Current game cover"
-            >
-
-
-            <div class="current-game-info">
-
-              <h3>
-                Game title
-              </h3>
-
-              <span>
-                Time played
-              </span>
-
-              <p>
-                Status or notes about the game go here.
-              </p>
-
-
-              <div class="game-progress">
-
-                <div class="game-progress-bar">
-
-                  <span></span>
-
-                </div>
-
-                <strong>
-                  65%
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <section class="profile-section">
-
-          <div class="profile-section-heading">
-
-            <h2>
-              FAVORITE GAMES
-            </h2>
-
-            <a href="#">
-              view all
-            </a>
-
-          </div>
-
-
-          <div class="favorite-games">
-
-            <a href="#">
-
-              <img
-                src="images/game-halo3.jpg"
-                alt="Game cover"
-              >
-
-              <span>
-                Game title
-              </span>
-
-            </a>
-
-
-            <a href="#">
-
-              <img
-                src="images/game-skate3.jpg"
-                alt="Game cover"
-              >
-
-              <span>
-                Game title
-              </span>
-
-            </a>
-
-
-            <a href="#">
-
-              <img
-                src="images/game-l4d2.jpg"
-                alt="Game cover"
-              >
-
-              <span>
-                Game title
-              </span>
-
-            </a>
-
-
-            <a href="#">
-
-              <img
-                src="images/game-fable2.jpg"
-                alt="Game cover"
-              >
-
-              <span>
-                Game title
-              </span>
-
-            </a>
-
-          </div>
-
-        </section>
-
-
-        <section class="profile-section">
-
-          <div class="profile-section-heading">
-
-            <h2>
-              RECENT ACTIVITY
-            </h2>
-
-          </div>
-
-
-          <div class="activity-list">
-
-
-            <article class="activity-item">
-
-              <img
-                src="images/avatar.png"
-                alt="User avatar"
-              >
-
-
-              <div>
-
-                <p>
-                  <strong>user</strong>
-                  recommended
-                  <a href="#">Game title</a>
-                </p>
-
-                <span>
-                  2 hours ago
-                </span>
-
-                <blockquote>
-                  Recommendation text goes here.
-                </blockquote>
-
-              </div>
-
-
-              <a
-                class="activity-comments"
-                href="#"
-              >
-                24 comments
-              </a>
-
-            </article>
-
-
-            <article class="activity-item">
-
-              <img
-                src="images/avatar.png"
-                alt="User avatar"
-              >
-
-
-              <div>
-
-                <p>
-                  <strong>user</strong>
-                  posted in
-                  <a href="#">Game title</a>
-                </p>
-
-                <span>
-                  yesterday
-                </span>
-
-                <blockquote>
-                  Post text goes here.
-                </blockquote>
-
-              </div>
-
-
-              <a
-                class="activity-comments"
-                href="#"
-              >
-                14 comments
-              </a>
-
-            </article>
-
-
-            <article class="activity-item">
-
-              <img
-                src="images/avatar.png"
-                alt="User avatar"
-              >
-
-
-              <div>
-
-                <p>
-                  <strong>user</strong>
-                  reviewed
-                  <a href="#">Game title</a>
-                </p>
-
-                <span>
-                  3 days ago
-                </span>
-
-                <div class="rating">
-                  ★★★★☆
-                </div>
-
-              </div>
-
-
-              <a
-                class="activity-comments"
-                href="#"
-              >
-                7 comments
-              </a>
-
-            </article>
-
-
-          </div>
-
-        </section>
-
       </section>
 
 
-      <aside class="profile-sidebar">
+      <div class="profile-layout">
+
+        <section class="profile-main-column">
 
 
-        <section class="profile-section">
+          <section class="profile-section">
 
-          <div class="profile-section-heading">
+            <div class="profile-section-heading">
 
-            <h2>
-              ABOUT
-            </h2>
-
-          </div>
-
-
-          <dl class="about-list">
-
-            <div>
-
-              <dt>
-                Favorite genre
-              </dt>
-
-              <dd id="profile-favorite-genre">
-                Genre
-              </dd>
+              <h2>
+                ABOUT
+              </h2>
 
             </div>
 
 
-            <div>
+            <dl class="about-list">
 
-              <dt>
-                First Xbox 360 game
-              </dt>
+              <div>
 
-              <dd>
-                Game title
-              </dd>
+                <dt>
+                  Username
+                </dt>
+
+                <dd id="profile-about-username">
+                  user
+                </dd>
+
+              </div>
+
+
+              <div>
+
+                <dt>
+                  Location
+                </dt>
+
+                <dd id="profile-about-location">
+                  —
+                </dd>
+
+              </div>
+
+
+              <div>
+
+                <dt>
+                  Favorite genre
+                </dt>
+
+                <dd id="profile-favorite-genre">
+                  —
+                </dd>
+
+              </div>
+
+
+              <div>
+
+                <dt>
+                  Gamerscore
+                </dt>
+
+                <dd id="profile-gamerscore">
+                  0
+                </dd>
+
+              </div>
+
+            </dl>
+
+          </section>
+
+
+          <section class="profile-section">
+
+            <div class="profile-section-heading">
+
+              <h2>
+                RECENT ACTIVITY
+              </h2>
 
             </div>
 
 
-            <div>
+            <div class="profile-activity">
 
-              <dt>
-                Gamertag
-              </dt>
+              <div class="activity-item">
 
-              <dd id="profile-gamertag">
-                profile
-              </dd>
+                <p>
+                  Reviews, clips and posts from this user will appear
+                  here.
+                </p>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section class="profile-section">
+
+            <div class="profile-section-heading">
+
+              <h2>
+                RECENT REVIEWS
+              </h2>
+
+              <a href="#">
+                view all
+              </a>
 
             </div>
 
 
-            <div>
+            <div class="profile-empty-state">
 
-              <dt>
-                Favorite achievement
-              </dt>
-
-              <dd>
-                Achievement name
-              </dd>
+              <p>
+                This user has not posted any reviews yet.
+              </p>
 
             </div>
 
-          </dl>
+          </section>
+
+
+          <section class="profile-section">
+
+            <div class="profile-section-heading">
+
+              <h2>
+                RECENT CLIPS
+              </h2>
+
+              <a href="#">
+                view all
+              </a>
+
+            </div>
+
+
+            <div class="profile-empty-state">
+
+              <p>
+                This user has not posted any clips yet.
+              </p>
+
+            </div>
+
+          </section>
 
         </section>
 
 
-        <section class="profile-section">
-
-          <div class="profile-section-heading">
-
-            <h2>
-              PROFILE STATS
-            </h2>
-
-          </div>
+        <aside class="profile-sidebar">
 
 
-          <div class="profile-stats">
+          <section class="profile-section">
 
-            <div>
+            <div class="profile-section-heading">
 
-              <strong>
-                0
-              </strong>
-
-              <span>
-                Posts
-              </span>
+              <h2>
+                PROFILE STATS
+              </h2>
 
             </div>
 
 
-            <div>
+            <div class="profile-stats">
 
-              <strong>
-                0
-              </strong>
+              <div>
 
-              <span>
-                Reviews
-              </span>
+                <strong id="profile-stat-posts">
+                  0
+                </strong>
+
+                <span>
+                  POSTS
+                </span>
+
+              </div>
+
+
+              <div>
+
+                <strong id="profile-stat-reviews">
+                  0
+                </strong>
+
+                <span>
+                  REVIEWS
+                </span>
+
+              </div>
+
+
+              <div>
+
+                <strong id="profile-stat-clips">
+                  0
+                </strong>
+
+                <span>
+                  CLIPS
+                </span>
+
+              </div>
+
+
+              <div>
+
+                <strong id="profile-stat-games">
+                  0
+                </strong>
+
+                <span>
+                  GAMES
+                </span>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section class="profile-section">
+
+            <div class="profile-section-heading">
+
+              <h2>
+                ACCOUNT
+              </h2>
 
             </div>
 
 
-            <div>
+            <nav class="side-links">
 
-              <strong>
-                0
-              </strong>
+              <a href="edit-profile.html">
+                Edit profile
+              </a>
 
-              <span>
-                Followers
-              </span>
+              <a href="games.html">
+                Browse games
+              </a>
 
-            </div>
-
-
-            <div>
-
-              <strong>
-                0
-              </strong>
-
-              <span>
-                Following
-              </span>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <section class="profile-section">
-
-          <div class="profile-section-heading">
-
-            <h2>
-              FRIENDS
-            </h2>
-
-            <a href="#">
-              view all
-            </a>
-
-          </div>
-
-
-          <div class="friend-grid">
-
-            <a href="#">
-
-              <img
-                src="images/friend-1.png"
-                alt="Friend avatar"
+              <a
+                id="profile-logout-button"
+                href="#"
               >
+                Log out
+              </a>
 
-              <span>
-                user
-              </span>
+            </nav>
 
-            </a>
+          </section>
 
+        </aside>
 
-            <a href="#">
+      </div>
 
-              <img
-                src="images/friend-2.png"
-                alt="Friend avatar"
-              >
-
-              <span>
-                user
-              </span>
-
-            </a>
-
-
-            <a href="#">
-
-              <img
-                src="images/friend-3.png"
-                alt="Friend avatar"
-              >
-
-              <span>
-                user
-              </span>
-
-            </a>
-
-
-            <a href="#">
-
-              <img
-                src="images/friend-4.png"
-                alt="Friend avatar"
-              >
-
-              <span>
-                user
-              </span>
-
-            </a>
-
-          </div>
-
-        </section>
-
-      </aside>
-
-    </div>
+    </section>
 
   </main>
 
@@ -734,11 +477,12 @@
     <div class="site-width footer-inner">
 
       <p>
-        *name here* © 2026
+        360 Archive © 2026
       </p>
 
       <p>
-        Unofficial fan community
+        360 Archive is an unofficial fan project and is not affiliated
+        with, endorsed by, or sponsored by Microsoft or Xbox.
       </p>
 
     </div>
@@ -750,7 +494,8 @@
 
   <script src="js/supabase.js"></script>
 
-  <script src="js/profile.js?v=2"></script>
+  <script src="js/profile.js?v=3"></script>
 
 </body>
+
 </html>
