@@ -13,7 +13,7 @@
 
   <link
     rel="stylesheet"
-    href="style.css?v=6"
+    href="style.css?v=7"
   >
 </head>
 
@@ -252,6 +252,7 @@
 
         </div>
 
+
         <p id="game-detail-description">
           No description available.
         </p>
@@ -263,9 +264,14 @@
 
         <div class="section-heading">
 
-          <h2>
-            USER REVIEWS
-          </h2>
+          <div class="section-heading-title">
+
+            <h2>
+              USER REVIEWS
+            </h2>
+
+          </div>
+
 
           <span id="game-average-rating">
             No ratings yet
@@ -323,16 +329,45 @@
                   Choose
                 </option>
 
-                <option value="10">10</option>
-                <option value="9">9</option>
-                <option value="8">8</option>
-                <option value="7">7</option>
-                <option value="6">6</option>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
+                <option value="10">
+                  10
+                </option>
+
+                <option value="9">
+                  9
+                </option>
+
+                <option value="8">
+                  8
+                </option>
+
+                <option value="7">
+                  7
+                </option>
+
+                <option value="6">
+                  6
+                </option>
+
+                <option value="5">
+                  5
+                </option>
+
+                <option value="4">
+                  4
+                </option>
+
+                <option value="3">
+                  3
+                </option>
+
+                <option value="2">
+                  2
+                </option>
+
+                <option value="1">
+                  1
+                </option>
               </select>
 
             </label>
@@ -417,9 +452,21 @@
 
         <div class="section-heading">
 
-          <h2>
-            CLIPS
-          </h2>
+          <div class="section-heading-title">
+
+            <h2>
+              CLIPS
+            </h2>
+
+            <span
+              class="section-count"
+              id="game-clip-count"
+            >
+              0 clips
+            </span>
+
+          </div>
+
 
           <button
             id="show-clip-form-button"
@@ -427,7 +474,7 @@
             class="section-action-button"
             hidden
           >
-            ADD A CLIP
+            + ADD A CLIP
           </button>
 
         </div>
@@ -442,25 +489,49 @@
             Log in
           </a>
 
-          to add a clip.
+          to share a clip.
 
         </div>
 
 
         <form
           id="clip-form"
-          class="review-form clip-form"
+          class="clip-upload-form"
           hidden
         >
 
-          <p class="small-heading">
-            ADD A CLIP
-          </p>
+          <div class="clip-form-header">
+
+            <div>
+
+              <p class="small-heading">
+                SHARE GAMEPLAY
+              </p>
+
+              <h3>
+                Add a clip
+              </h3>
+
+            </div>
 
 
-          <label>
+            <button
+              id="close-clip-form-button"
+              class="clip-close-button"
+              type="button"
+              aria-label="Close clip form"
+            >
+              ×
+            </button>
 
-            Clip title
+          </div>
+
+
+          <label class="clip-field">
+
+            <span>
+              Clip title
+            </span>
 
             <input
               id="clip-title"
@@ -473,23 +544,136 @@
           </label>
 
 
-          <label>
+          <fieldset class="clip-source-field">
 
-            YouTube URL
+            <legend>
+              Clip source
+            </legend>
 
-            <input
-              id="clip-youtube-url"
-              type="url"
-              placeholder="https://www.youtube.com/watch?v=..."
-              required
+
+            <div class="clip-source-options">
+
+              <label class="clip-source-option">
+
+                <input
+                  id="clip-source-youtube"
+                  type="radio"
+                  name="clip-source"
+                  value="youtube"
+                  checked
+                >
+
+                <span>
+
+                  <strong>
+                    YouTube
+                  </strong>
+
+                  <small>
+                    Paste a YouTube link
+                  </small>
+
+                </span>
+
+              </label>
+
+
+              <label class="clip-source-option">
+
+                <input
+                  id="clip-source-upload"
+                  type="radio"
+                  name="clip-source"
+                  value="upload"
+                >
+
+                <span>
+
+                  <strong>
+                    Upload file
+                  </strong>
+
+                  <small>
+                    MP4 or WebM, up to 25 MB
+                  </small>
+
+                </span>
+
+              </label>
+
+            </div>
+
+          </fieldset>
+
+
+          <div id="youtube-clip-fields">
+
+            <label class="clip-field">
+
+              <span>
+                YouTube URL
+              </span>
+
+              <input
+                id="clip-youtube-url"
+                type="url"
+                placeholder="https://www.youtube.com/watch?v=..."
+                required
+              >
+
+            </label>
+
+          </div>
+
+
+          <div
+            id="upload-clip-fields"
+            hidden
+          >
+
+            <label
+              class="clip-file-drop"
+              for="clip-video-file"
             >
 
-          </label>
+              <span class="clip-file-icon">
+                ▶
+              </span>
+
+              <strong id="clip-file-label">
+                Choose a video file
+              </strong>
+
+              <small>
+                MP4 or WebM · Maximum 25 MB
+              </small>
+
+            </label>
 
 
-          <label>
+            <input
+              id="clip-video-file"
+              type="file"
+              accept="video/mp4,video/webm"
+            >
 
-            Description
+
+            <video
+              id="clip-file-preview"
+              class="clip-file-preview"
+              controls
+              playsinline
+              hidden
+            ></video>
+
+          </div>
+
+
+          <label class="clip-field">
+
+            <span>
+              Description
+            </span>
 
             <textarea
               id="clip-description"
@@ -501,14 +685,38 @@
           </label>
 
 
-          <div class="review-form-actions">
+          <div
+            id="clip-upload-progress"
+            class="clip-upload-progress"
+            hidden
+          >
 
-            <button type="submit">
+            <div class="clip-upload-progress-bar">
+
+              <span></span>
+
+            </div>
+
+            <p>
+              Uploading clip…
+            </p>
+
+          </div>
+
+
+          <div class="clip-form-actions">
+
+            <button
+              id="clip-submit-button"
+              class="clip-submit-button"
+              type="submit"
+            >
               POST CLIP
             </button>
 
             <button
               id="cancel-clip-button"
+              class="clip-cancel-button"
               type="button"
             >
               CANCEL
@@ -583,9 +791,9 @@
 
   <script src="js/game.js?v=1"></script>
 
-  <script src="js/reviews.js?v=1"></script>
+  <script src="js/reviews.js?v=2"></script>
 
-  <script src="js/clips.js?v=1"></script>
+  <script src="js/clips.js?v=3"></script>
 
 </body>
 
