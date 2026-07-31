@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Article | 360 Archive</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css?v=17"
+  >
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="site-width top-bar-inner">
+      <span>360 ARCHIVE</span>
+
+      <span class="online-status">
+        <span class="online-dot"></span>
+        ONLINE
+      </span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-width header-inner">
+      <a
+        class="site-logo"
+        href="index.html"
+      >
+        <span class="logo-circle">X</span>
+
+        <span class="logo-name">
+          <strong>360</strong>
+          <span>ARCHIVE</span>
+        </span>
+      </a>
+
+      <div class="header-text">
+        <p>Archive Article</p>
+        <span>stories from Xbox history</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav">
+    <div class="site-width nav-inner">
+      <a href="index.html">HOME</a>
+      <a href="games.html">GAMES</a>
+      <a href="community.html">COMMUNITY</a>
+      <a href="forum.html">FORUM</a>
+      <a href="profile.html">PROFILE</a>
+    </div>
+  </nav>
+
+  <main class="site-width article-page">
+    <p
+      id="article-message"
+      class="form-message"
+      aria-live="polite"
+    >
+      Loading article...
+    </p>
+
+    <article
+      id="article-content"
+      class="published-article"
+      hidden
+    >
+      <img
+        id="article-cover"
+        class="article-cover-image"
+        alt=""
+        hidden
+      >
+
+      <header class="published-article-header">
+        <div class="article-header-meta">
+          <span id="article-game-label">
+            360 ARCHIVE
+          </span>
+
+          <span id="article-date"></span>
+        </div>
+
+        <h1 id="article-title"></h1>
+
+        <p
+          id="article-subtitle"
+          class="article-subtitle"
+          hidden
+        ></p>
+
+        <div class="article-author-row">
+          <a
+            id="article-author-link"
+            class="article-author"
+            href="#"
+          >
+            <img
+              id="article-author-avatar"
+              src="images/avatar.png"
+              alt=""
+            >
+
+            <span>
+              <small>WRITTEN BY</small>
+              <strong id="article-author-name">user</strong>
+            </span>
+          </a>
+
+          <div class="article-owner-actions">
+            <a
+              id="article-edit-link"
+              class="secondary-button"
+              href="#"
+              hidden
+            >
+              EDIT ARTICLE
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <div
+        id="article-body"
+        class="article-body"
+      ></div>
+
+      <footer class="article-footer">
+        <a
+          id="article-game-link"
+          class="main-button"
+          href="#"
+          hidden
+        >
+          VIEW CONNECTED GAME
+        </a>
+      </footer>
+    </article>
+  </main>
+
+  <footer>
+    <div class="site-width footer-inner">
+      <p>360 Archive © 2026</p>
+
+      <p>
+        360 Archive is an unofficial fan project and is not
+        affiliated with, endorsed by, or sponsored by Microsoft
+        or Xbox.
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/article.js?v=1"></script>
+</body>
+</html>

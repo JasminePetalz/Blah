@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Article Editor | 360 Archive</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css?v=17"
+  >
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="site-width top-bar-inner">
+      <span>360 ARCHIVE</span>
+
+      <span class="online-status">
+        <span class="online-dot"></span>
+        ONLINE
+      </span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-width header-inner">
+      <a
+        class="site-logo"
+        href="index.html"
+      >
+        <span class="logo-circle">
+          X
+        </span>
+
+        <span class="logo-name">
+          <strong>360</strong>
+          <span>ARCHIVE</span>
+        </span>
+      </a>
+
+      <div class="header-text">
+        <p>Article Editor</p>
+        <span>documenting Xbox history</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav">
+    <div class="site-width nav-inner">
+      <a href="index.html">HOME</a>
+      <a href="games.html">GAMES</a>
+      <a href="community.html">COMMUNITY</a>
+      <a href="forum.html">FORUM</a>
+      <a href="profile.html">PROFILE</a>
+    </div>
+  </nav>
+
+  <main class="site-width article-editor-page">
+    <p
+      id="article-editor-message"
+      class="form-message"
+      aria-live="polite"
+    >
+      Loading editor...
+    </p>
+
+    <section
+      id="article-editor-content"
+      class="article-editor-layout"
+      hidden
+    >
+      <section class="article-editor-panel">
+        <div class="article-editor-heading">
+          <div>
+            <p class="small-heading">
+              360 ARCHIVE EDITOR
+            </p>
+
+            <h1 id="article-editor-title">
+              Write an article
+            </h1>
+          </div>
+
+          <span
+            id="article-editor-status"
+            class="article-status-badge"
+          >
+            DRAFT
+          </span>
+        </div>
+
+        <form id="article-form">
+          <label class="article-field">
+            <span>CONNECTED GAME</span>
+
+            <select id="article-game">
+              <option value="">
+                No connected game
+              </option>
+            </select>
+          </label>
+
+          <label class="article-field">
+            <span>TITLE</span>
+
+            <input
+              id="article-title"
+              type="text"
+              maxlength="150"
+              placeholder="The history of..."
+              required
+            >
+          </label>
+
+          <label class="article-field">
+            <span>SUBTITLE</span>
+
+            <input
+              id="article-subtitle"
+              type="text"
+              maxlength="300"
+              placeholder="A short introduction or description"
+            >
+          </label>
+
+          <label class="article-field">
+            <span>COVER IMAGE URL</span>
+
+            <input
+              id="article-cover-url"
+              type="url"
+              placeholder="https://..."
+            >
+          </label>
+
+          <label class="article-field">
+            <span>ARTICLE BODY</span>
+
+            <textarea
+              id="article-body"
+              rows="24"
+              placeholder="# Introduction
+
+Write the article here..."
+              required
+            ></textarea>
+          </label>
+
+          <div class="article-format-help">
+            <strong>FORMATTING</strong>
+
+            <code># Heading</code>
+            <code>## Smaller heading</code>
+            <code>**bold**</code>
+            <code>*italic*</code>
+            <code>[link](https://example.com)</code>
+          </div>
+
+          <div class="article-editor-actions">
+            <button
+              id="article-save-draft"
+              class="secondary-button"
+              type="button"
+            >
+              SAVE DRAFT
+            </button>
+
+            <button
+              id="article-publish"
+              class="main-button"
+              type="submit"
+            >
+              PUBLISH ARTICLE
+            </button>
+
+            <button
+              id="article-delete"
+              class="danger-button"
+              type="button"
+              hidden
+            >
+              DELETE
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="article-preview-panel">
+        <div class="article-preview-heading">
+          <h2>PREVIEW</h2>
+
+          <button
+            id="article-refresh-preview"
+            type="button"
+          >
+            REFRESH
+          </button>
+        </div>
+
+        <article
+          id="article-preview"
+          class="article-body article-editor-preview"
+        >
+          <p>
+            Your article preview will appear here.
+          </p>
+        </article>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <div class="site-width footer-inner">
+      <p>360 Archive © 2026</p>
+
+      <p>
+        360 Archive is an unofficial fan project and is not
+        affiliated with, endorsed by, or sponsored by Microsoft
+        or Xbox.
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/article-editor.js?v=1"></script>
+</body>
+</html>
