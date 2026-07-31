@@ -13,9 +13,10 @@
 
   <link
     rel="stylesheet"
-    href="style.css?v=10"
+    href="style.css?v=13"
   >
 </head>
+
 
 <body>
 
@@ -155,9 +156,22 @@
 
               <div>
 
-                <h1 id="profile-username">
-                  user
-                </h1>
+                <div class="profile-name-with-role">
+
+                  <h1 id="profile-username">
+                    user
+                  </h1>
+
+                  <span
+                    id="profile-role-badge"
+                    class="profile-role-badge"
+                    hidden
+                  >
+                    CO-CREATOR
+                  </span>
+
+                </div>
+
 
                 <span class="profile-online">
                   ● Online
@@ -184,6 +198,31 @@
             </p>
 
 
+            <div
+              id="profile-staff-card"
+              class="profile-staff-card"
+              hidden
+            >
+
+              <div class="profile-staff-icon">
+                X
+              </div>
+
+              <div>
+
+                <strong id="profile-staff-title">
+                  360 ARCHIVE TEAM
+                </strong>
+
+                <p id="profile-staff-description">
+                  Member of the 360 Archive team.
+                </p>
+
+              </div>
+
+            </div>
+
+
             <div class="profile-meta">
 
               <span id="profile-location">
@@ -203,167 +242,254 @@
       </section>
 
 
+      <div
+        class="profile-tabs"
+        role="tablist"
+        aria-label="Profile sections"
+      >
+
+        <button
+          class="profile-tab-button active"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="profile-panel-overview"
+          data-profile-tab="overview"
+        >
+          OVERVIEW
+        </button>
+
+
+        <button
+          class="profile-tab-button"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="profile-panel-reviews"
+          data-profile-tab="reviews"
+        >
+          REVIEWS
+        </button>
+
+
+        <button
+          class="profile-tab-button"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="profile-panel-clips"
+          data-profile-tab="clips"
+        >
+          CLIPS
+        </button>
+
+      </div>
+
+
       <div class="profile-layout">
 
         <section class="profile-main-column">
 
+          <div
+            id="profile-panel-overview"
+            class="profile-tab-panel active"
+            role="tabpanel"
+            data-profile-panel="overview"
+          >
 
-          <section class="profile-section">
+            <section class="profile-section">
 
-            <div class="profile-section-heading">
+              <div class="profile-section-heading">
 
-              <h2>
-                ABOUT
-              </h2>
-
-            </div>
-
-
-            <dl class="about-list">
-
-              <div>
-
-                <dt>
-                  Username
-                </dt>
-
-                <dd id="profile-about-username">
-                  user
-                </dd>
+                <h2>
+                  ABOUT
+                </h2>
 
               </div>
 
 
-              <div>
+              <dl class="about-list">
 
-                <dt>
-                  Location
-                </dt>
+                <div>
 
-                <dd id="profile-about-location">
-                  —
-                </dd>
+                  <dt>
+                    Username
+                  </dt>
+
+                  <dd id="profile-about-username">
+                    user
+                  </dd>
+
+                </div>
+
+
+                <div>
+
+                  <dt>
+                    Location
+                  </dt>
+
+                  <dd id="profile-about-location">
+                    —
+                  </dd>
+
+                </div>
+
+
+                <div>
+
+                  <dt>
+                    Favorite genre
+                  </dt>
+
+                  <dd id="profile-favorite-genre">
+                    —
+                  </dd>
+
+                </div>
+
+
+                <div>
+
+                  <dt>
+                    Gamerscore
+                  </dt>
+
+                  <dd id="profile-gamerscore">
+                    0
+                  </dd>
+
+                </div>
+
+
+                <div
+                  id="profile-about-role-row"
+                  hidden
+                >
+
+                  <dt>
+                    Site role
+                  </dt>
+
+                  <dd id="profile-about-role">
+                    Co-creator
+                  </dd>
+
+                </div>
+
+              </dl>
+
+            </section>
+
+
+            <section class="profile-section">
+
+              <div class="profile-section-heading">
+
+                <h2>
+                  RECENT ACTIVITY
+                </h2>
 
               </div>
 
 
-              <div>
+              <div
+                id="profile-activity-list"
+                class="profile-activity"
+              >
 
-                <dt>
-                  Favorite genre
-                </dt>
+                <p class="profile-empty-message">
+                  Loading activity...
+                </p>
 
-                <dd id="profile-favorite-genre">
-                  —
-                </dd>
+              </div>
+
+            </section>
+
+          </div>
+
+
+          <div
+            id="profile-panel-reviews"
+            class="profile-tab-panel"
+            role="tabpanel"
+            data-profile-panel="reviews"
+            hidden
+          >
+
+            <section class="profile-section">
+
+              <div class="profile-section-heading">
+
+                <h2>
+                  REVIEWS
+                </h2>
+
+                <span id="profile-review-count-label">
+                  0 reviews
+                </span>
 
               </div>
 
 
-              <div>
+              <div
+                id="profile-review-list"
+                class="profile-review-list"
+              >
 
-                <dt>
-                  Gamerscore
-                </dt>
-
-                <dd id="profile-gamerscore">
-                  0
-                </dd>
+                <p class="profile-empty-message">
+                  Loading reviews...
+                </p>
 
               </div>
 
-            </dl>
+            </section>
 
-          </section>
-
-
-          <section class="profile-section">
-
-            <div class="profile-section-heading">
-
-              <h2>
-                RECENT ACTIVITY
-              </h2>
-
-            </div>
+          </div>
 
 
-            <div
-              id="profile-activity-list"
-              class="profile-activity"
-            >
+          <div
+            id="profile-panel-clips"
+            class="profile-tab-panel"
+            role="tabpanel"
+            data-profile-panel="clips"
+            hidden
+          >
 
-              <p class="profile-empty-message">
-                Loading activity...
-              </p>
+            <section class="profile-section">
 
-            </div>
+              <div class="profile-section-heading">
 
-          </section>
+                <h2>
+                  CLIPS
+                </h2>
 
+                <span id="profile-clip-count-label">
+                  0 clips
+                </span>
 
-          <section class="profile-section">
-
-            <div class="profile-section-heading">
-
-              <h2>
-                RECENT REVIEWS
-              </h2>
-
-              <span id="profile-review-count-label">
-                0 reviews
-              </span>
-
-            </div>
+              </div>
 
 
-            <div
-              id="profile-review-list"
-              class="profile-review-list"
-            >
+              <div
+                id="profile-clip-list"
+                class="profile-clip-list"
+              >
 
-              <p class="profile-empty-message">
-                Loading reviews...
-              </p>
+                <p class="profile-empty-message">
+                  Loading clips...
+                </p>
 
-            </div>
+              </div>
 
-          </section>
+            </section>
 
-
-          <section class="profile-section">
-
-            <div class="profile-section-heading">
-
-              <h2>
-                RECENT CLIPS
-              </h2>
-
-              <span id="profile-clip-count-label">
-                0 clips
-              </span>
-
-            </div>
-
-
-            <div
-              id="profile-clip-list"
-              class="profile-clip-list"
-            >
-
-              <p class="profile-empty-message">
-                Loading clips...
-              </p>
-
-            </div>
-
-          </section>
+          </div>
 
         </section>
 
 
         <aside class="profile-sidebar">
-
 
           <section class="profile-section">
 
@@ -497,7 +623,7 @@
 
   <script src="js/supabase.js"></script>
 
-  <script src="js/profile.js?v=5"></script>
+  <script src="js/profile.js?v=10"></script>
 
 </body>
 

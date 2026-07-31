@@ -31,6 +31,24 @@ const profileFavoriteGenre =
 const profileGamerscore =
   document.querySelector("#profile-gamerscore");
 
+const profileRoleBadge =
+  document.querySelector("#profile-role-badge");
+
+const profileStaffCard =
+  document.querySelector("#profile-staff-card");
+
+const profileStaffTitle =
+  document.querySelector("#profile-staff-title");
+
+const profileStaffDescription =
+  document.querySelector("#profile-staff-description");
+
+const profileAboutRoleRow =
+  document.querySelector("#profile-about-role-row");
+
+const profileAboutRole =
+  document.querySelector("#profile-about-role");
+
 const profileStatPosts =
   document.querySelector("#profile-stat-posts");
 
@@ -88,7 +106,8 @@ function escapeProfileHtml(value = "") {
 
 function setText(element, value) {
   if (element) {
-    element.textContent = value;
+    element.textContent =
+      value;
   }
 }
 
@@ -101,19 +120,26 @@ function showProfileMessage(
     return;
   }
 
-  profileMessage.hidden = false;
-  profileMessage.textContent = message;
-  profileMessage.dataset.status = status;
+  profileMessage.hidden =
+    false;
+
+  profileMessage.textContent =
+    message;
+
+  profileMessage.dataset.status =
+    status;
 }
 
 
 function showProfileContent() {
   if (profileMessage) {
-    profileMessage.hidden = true;
+    profileMessage.hidden =
+      true;
   }
 
   if (profileContent) {
-    profileContent.hidden = false;
+    profileContent.hidden =
+      false;
   }
 }
 
@@ -299,10 +325,134 @@ profileTabButtons.forEach(
 
 
 /* ==================================================
+   STAFF ROLE
+   ================================================== */
+
+function displayProfileRole(profile) {
+  const role =
+    String(
+      profile.role ||
+      "member"
+    ).toLowerCase();
+
+  const roleSettings = {
+    "co-creator": {
+      badge:
+        "CO-CREATOR",
+
+      title:
+        "360 ARCHIVE CO-CREATOR",
+
+      name:
+        "Co-creator"
+    },
+
+    "co-creator-dev": {
+      badge:
+        "CO-CREATOR · DEV",
+
+      title:
+        "360 ARCHIVE CO-CREATOR & DEVELOPER",
+
+      name:
+        "Co-creator and developer"
+    },
+
+    admin: {
+      badge:
+        "ADMIN",
+
+      title:
+        "360 ARCHIVE ADMINISTRATOR",
+
+      name:
+        "Administrator"
+    },
+
+    moderator: {
+      badge:
+        "MOD",
+
+      title:
+        "360 ARCHIVE MODERATOR",
+
+      name:
+        "Moderator"
+    }
+  };
+
+  const settings =
+    roleSettings[role];
+
+  if (!settings) {
+    if (profileRoleBadge) {
+      profileRoleBadge.hidden =
+        true;
+
+      profileRoleBadge.removeAttribute(
+        "data-role"
+      );
+    }
+
+    if (profileStaffCard) {
+      profileStaffCard.hidden =
+        true;
+    }
+
+    if (profileAboutRoleRow) {
+      profileAboutRoleRow.hidden =
+        true;
+    }
+
+    return;
+  }
+
+  if (profileRoleBadge) {
+    profileRoleBadge.textContent =
+      settings.badge;
+
+    profileRoleBadge.dataset.role =
+      role;
+
+    profileRoleBadge.hidden =
+      false;
+  }
+
+  if (profileStaffCard) {
+    profileStaffCard.hidden =
+      false;
+  }
+
+  setText(
+    profileStaffTitle,
+    settings.title
+  );
+
+  setText(
+    profileStaffDescription,
+    profile.staff_description ||
+      "Member of the 360 Archive team."
+  );
+
+  if (profileAboutRoleRow) {
+    profileAboutRoleRow.hidden =
+      false;
+  }
+
+  setText(
+    profileAboutRole,
+    settings.name
+  );
+}
+
+
+/* ==================================================
    BASIC PROFILE
    ================================================== */
 
 function displayProfile(profile) {
+  displayProfileRole(profile);
+
   const username =
     profile.username ||
     "user";
@@ -416,9 +566,11 @@ function renderProfileReviews(reviews) {
   if (!reviews.length) {
     profileReviewList.innerHTML = `
       <div class="profile-empty-state">
+
         <p>
           This user has not posted any reviews yet.
         </p>
+
       </div>
     `;
 
@@ -462,9 +614,11 @@ function renderProfileReviews(reviews) {
           </div>
 
           <h3>
+
             <a href="game.html?id=${encodeURIComponent(review.game_id)}">
               ${escapeProfileHtml(review.title)}
             </a>
+
           </h3>
 
           <p>
@@ -592,9 +746,11 @@ function renderProfileClips(clips) {
   if (!clips.length) {
     profileClipList.innerHTML = `
       <div class="profile-empty-state">
+
         <p>
           This user has not posted any clips yet.
         </p>
+
       </div>
     `;
 
@@ -810,24 +966,42 @@ function renderProfileActivity(
   const activity = [
     ...reviews.map(
       (review) => ({
-        type: "review",
-        created_at: review.created_at,
-        game_id: review.game_id,
+        type:
+          "review",
+
+        created_at:
+          review.created_at,
+
+        game_id:
+          review.game_id,
+
         game_title:
           getGameTitle(review),
-        title: review.title,
-        rating: review.rating
+
+        title:
+          review.title,
+
+        rating:
+          review.rating
       })
     ),
 
     ...clips.map(
       (clip) => ({
-        type: "clip",
-        created_at: clip.created_at,
-        game_id: clip.game_id,
+        type:
+          "clip",
+
+        created_at:
+          clip.created_at,
+
+        game_id:
+          clip.game_id,
+
         game_title:
           getGameTitle(clip),
-        title: clip.title
+
+        title:
+          clip.title
       })
     )
   ]
@@ -837,12 +1011,8 @@ function renderProfileActivity(
         second
       ) => {
         return (
-          new Date(
-            second.created_at
-          ) -
-          new Date(
-            first.created_at
-          )
+          new Date(second.created_at) -
+          new Date(first.created_at)
         );
       }
     )
@@ -854,9 +1024,11 @@ function renderProfileActivity(
   if (!activity.length) {
     profileActivityList.innerHTML = `
       <div class="profile-empty-state">
+
         <p>
           Reviews, clips and posts from this user will appear here.
         </p>
+
       </div>
     `;
 
@@ -891,6 +1063,7 @@ function renderProfileActivity(
         <div>
 
           <p>
+
             <strong>
               ${escapeProfileHtml(actionText)}
             </strong>
@@ -900,6 +1073,7 @@ function renderProfileActivity(
             <span>
               ${escapeProfileHtml(item.game_title)}
             </span>
+
           </p>
 
           <small>
@@ -970,7 +1144,7 @@ async function loadGameCount(userId) {
 
 
 /* ==================================================
-   LOAD MAIN PROFILE
+   LOAD PROFILE
    ================================================== */
 
 async function loadProfile() {
@@ -1027,6 +1201,8 @@ async function loadProfile() {
             gamerscore,
             location,
             favorite_genre,
+            role,
+            staff_description,
             created_at
           `)
           .eq(
@@ -1059,11 +1235,6 @@ async function loadProfile() {
       profileStatPosts,
       "0"
     );
-
-    /*
-      Show the main profile immediately.
-      Reviews and clips then load separately.
-    */
 
     showProfileContent();
 
@@ -1139,13 +1310,23 @@ profileLogoutButton
       profileLogoutButton.textContent =
         "Logging out...";
 
-      const {
-        error
-      } = await supabaseClient
-        .auth
-        .signOut();
+      try {
+        const result =
+          await withTimeout(
+            supabaseClient.auth
+              .signOut(),
+            5000,
+            "Logout took too long."
+          );
 
-      if (error) {
+        if (result.error) {
+          throw result.error;
+        }
+
+        window.location.href =
+          "index.html";
+
+      } catch (error) {
         console.error(
           "Logout error:",
           error
@@ -1154,11 +1335,11 @@ profileLogoutButton
         profileLogoutButton.textContent =
           "Log out";
 
-        return;
+        showProfileMessage(
+          "You could not be logged out.",
+          "error"
+        );
       }
-
-      window.location.href =
-        "index.html";
     }
   );
 
