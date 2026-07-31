@@ -1,147 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile | 360 Archive</title>
-
-  <link
-    rel="stylesheet"
-    href="style.css?v=13"
-  >
+  <link rel="stylesheet" href="style.css?v=16">
 </head>
 
-
 <body>
-
   <div class="top-bar">
-
     <div class="site-width top-bar-inner">
-
-      <span>
-        360 ARCHIVE
-      </span>
-
+      <span>360 ARCHIVE</span>
       <span class="online-status">
-
         <span class="online-dot"></span>
-
         ONLINE
-
       </span>
-
     </div>
-
   </div>
 
-
   <header class="site-header">
-
     <div class="site-width header-inner">
-
-      <a
-        class="site-logo"
-        href="index.html"
-      >
-
-        <span class="logo-circle">
-          X
-        </span>
-
+      <a class="site-logo" href="index.html">
+        <span class="logo-circle">X</span>
         <span class="logo-name">
-
-          <strong>
-            360
-          </strong>
-
-          <span>
-            ARCHIVE
-          </span>
-
+          <strong>360</strong>
+          <span>ARCHIVE</span>
         </span>
-
       </a>
 
-
-      <div class="header-text">
-
-        <p>
-          Xbox 360 games, clips, reviews and community discussions
-        </p>
-
-        <span>
-          unofficial fan site
-        </span>
-
-      </div>
-
+      <form class="site-search-form" action="search.html" method="get">
+        <input
+          type="search"
+          name="q"
+          placeholder="Search games, people, tags..."
+          aria-label="Search 360 Archive"
+        >
+        <button type="submit">SEARCH</button>
+      </form>
     </div>
-
   </header>
 
-
   <nav class="main-nav">
-
     <div class="site-width nav-inner">
-
-      <a href="index.html">
-        HOME
-      </a>
-
-      <a href="games.html">
-        GAMES
-      </a>
-
-      <a href="#">
-        POSTS
-      </a>
-
-      <a href="#">
-        CLIPS
-      </a>
-
-      <a href="#">
-        FORUM
-      </a>
-
-      <a
-        class="active"
-        href="profile.html"
-      >
-        PROFILE
-      </a>
-
+      <a href="index.html">HOME</a>
+      <a href="games.html">GAMES</a>
+      <a href="search.html">SEARCH</a>
+      <a href="#">COMMUNITY</a>
+      <a href="#">FORUM</a>
+      <a class="active" href="profile.html">PROFILE</a>
     </div>
-
   </nav>
 
-
   <main class="site-width profile-page">
-
-    <p
-      id="profile-message"
-      class="form-message"
-      aria-live="polite"
-    >
+    <p id="profile-message" class="form-message" aria-live="polite">
       Loading profile...
     </p>
 
-
-    <section
-      id="profile-content"
-      hidden
-    >
-
+    <section id="profile-content" hidden>
       <section class="profile-header">
-
         <div class="profile-header-content">
-
           <img
             id="profile-avatar"
             class="large-avatar"
@@ -149,67 +66,55 @@
             alt="Profile avatar"
           >
 
-
           <div class="profile-main-info">
-
             <div class="profile-name-row">
-
               <div>
-
                 <div class="profile-name-with-role">
-
-                  <h1 id="profile-username">
-                    user
-                  </h1>
+                  <h1 id="profile-username">user</h1>
 
                   <span
                     id="profile-role-badge"
                     class="profile-role-badge"
                     hidden
-                  >
-                    CO-CREATOR
-                  </span>
-
+                  ></span>
                 </div>
 
-
-                <span class="profile-online">
-                  ● Online
-                </span>
-
+                <span class="profile-online">● Profile</span>
               </div>
 
+              <div class="profile-header-actions">
+                <a
+                  id="profile-edit-button"
+                  class="main-button"
+                  href="edit-profile.html"
+                  hidden
+                >
+                  EDIT PROFILE
+                </a>
 
-              <a
-                class="main-button"
-                href="edit-profile.html"
-              >
-                EDIT PROFILE
-              </a>
-
+                <button
+                  id="profile-follow-button"
+                  class="main-button profile-follow-button"
+                  type="button"
+                  hidden
+                >
+                  FOLLOW
+                </button>
+              </div>
             </div>
 
-
-            <p
-              id="profile-bio"
-              class="profile-description"
-            >
+            <p id="profile-bio" class="profile-description">
               No bio added yet.
             </p>
-
 
             <div
               id="profile-staff-card"
               class="profile-staff-card"
               hidden
             >
-
-              <div class="profile-staff-icon">
-                X
-              </div>
+              <div class="profile-staff-icon">X</div>
 
               <div>
-
                 <strong id="profile-staff-title">
                   360 ARCHIVE TEAM
                 </strong>
@@ -217,414 +122,241 @@
                 <p id="profile-staff-description">
                   Member of the 360 Archive team.
                 </p>
-
               </div>
-
             </div>
-
 
             <div class="profile-meta">
-
-              <span id="profile-location">
-                Location: —
-              </span>
-
-              <span id="profile-member-since">
-                Member since: —
-              </span>
-
+              <span id="profile-location">Location: —</span>
+              <span id="profile-member-since">Member since: —</span>
             </div>
 
+            <div class="profile-follow-stats">
+              <button id="profile-followers-button" type="button">
+                <strong id="profile-follower-count">0</strong>
+                <span>FOLLOWERS</span>
+              </button>
+
+              <button id="profile-following-button" type="button">
+                <strong id="profile-following-count">0</strong>
+                <span>FOLLOWING</span>
+              </button>
+            </div>
+
+            <div id="profile-tag-list" class="profile-tag-list"></div>
           </div>
-
         </div>
-
       </section>
-
 
       <div
         class="profile-tabs"
         role="tablist"
         aria-label="Profile sections"
       >
-
         <button
           class="profile-tab-button active"
           type="button"
           role="tab"
           aria-selected="true"
-          aria-controls="profile-panel-overview"
           data-profile-tab="overview"
         >
           OVERVIEW
         </button>
 
-
         <button
           class="profile-tab-button"
           type="button"
           role="tab"
           aria-selected="false"
-          aria-controls="profile-panel-reviews"
           data-profile-tab="reviews"
         >
           REVIEWS
         </button>
 
-
         <button
           class="profile-tab-button"
           type="button"
           role="tab"
           aria-selected="false"
-          aria-controls="profile-panel-clips"
           data-profile-tab="clips"
         >
           CLIPS
         </button>
-
       </div>
 
-
       <div class="profile-layout">
-
         <section class="profile-main-column">
-
           <div
-            id="profile-panel-overview"
             class="profile-tab-panel active"
-            role="tabpanel"
             data-profile-panel="overview"
           >
-
             <section class="profile-section">
-
               <div class="profile-section-heading">
-
-                <h2>
-                  ABOUT
-                </h2>
-
+                <h2>ABOUT</h2>
               </div>
-
 
               <dl class="about-list">
+                <div>
+                  <dt>Username</dt>
+                  <dd id="profile-about-username">user</dd>
+                </div>
 
                 <div>
-
-                  <dt>
-                    Username
-                  </dt>
-
-                  <dd id="profile-about-username">
-                    user
-                  </dd>
-
+                  <dt>Location</dt>
+                  <dd id="profile-about-location">—</dd>
                 </div>
-
 
                 <div>
-
-                  <dt>
-                    Location
-                  </dt>
-
-                  <dd id="profile-about-location">
-                    —
-                  </dd>
-
+                  <dt>Favorite genre</dt>
+                  <dd id="profile-favorite-genre">—</dd>
                 </div>
-
 
                 <div>
-
-                  <dt>
-                    Favorite genre
-                  </dt>
-
-                  <dd id="profile-favorite-genre">
-                    —
-                  </dd>
-
+                  <dt>Gamerscore</dt>
+                  <dd id="profile-gamerscore">0</dd>
                 </div>
 
-
-                <div>
-
-                  <dt>
-                    Gamerscore
-                  </dt>
-
-                  <dd id="profile-gamerscore">
-                    0
-                  </dd>
-
+                <div id="profile-about-role-row" hidden>
+                  <dt>Site role</dt>
+                  <dd id="profile-about-role">Member</dd>
                 </div>
-
-
-                <div
-                  id="profile-about-role-row"
-                  hidden
-                >
-
-                  <dt>
-                    Site role
-                  </dt>
-
-                  <dd id="profile-about-role">
-                    Co-creator
-                  </dd>
-
-                </div>
-
               </dl>
-
             </section>
 
-
             <section class="profile-section">
-
               <div class="profile-section-heading">
-
-                <h2>
-                  RECENT ACTIVITY
-                </h2>
-
+                <h2>RECENT ACTIVITY</h2>
               </div>
 
-
-              <div
-                id="profile-activity-list"
-                class="profile-activity"
-              >
-
+              <div id="profile-activity-list" class="profile-activity">
                 <p class="profile-empty-message">
                   Loading activity...
                 </p>
-
               </div>
-
             </section>
-
           </div>
 
-
           <div
-            id="profile-panel-reviews"
             class="profile-tab-panel"
-            role="tabpanel"
             data-profile-panel="reviews"
             hidden
           >
-
             <section class="profile-section">
-
               <div class="profile-section-heading">
-
-                <h2>
-                  REVIEWS
-                </h2>
-
-                <span id="profile-review-count-label">
-                  0 reviews
-                </span>
-
+                <h2>REVIEWS</h2>
+                <span id="profile-review-count-label">0 reviews</span>
               </div>
 
-
-              <div
-                id="profile-review-list"
-                class="profile-review-list"
-              >
-
-                <p class="profile-empty-message">
-                  Loading reviews...
-                </p>
-
+              <div id="profile-review-list" class="profile-review-list">
+                <p class="profile-empty-message">Loading reviews...</p>
               </div>
-
             </section>
-
           </div>
 
-
           <div
-            id="profile-panel-clips"
             class="profile-tab-panel"
-            role="tabpanel"
             data-profile-panel="clips"
             hidden
           >
-
             <section class="profile-section">
-
               <div class="profile-section-heading">
-
-                <h2>
-                  CLIPS
-                </h2>
-
-                <span id="profile-clip-count-label">
-                  0 clips
-                </span>
-
+                <h2>CLIPS</h2>
+                <span id="profile-clip-count-label">0 clips</span>
               </div>
 
-
-              <div
-                id="profile-clip-list"
-                class="profile-clip-list"
-              >
-
-                <p class="profile-empty-message">
-                  Loading clips...
-                </p>
-
+              <div id="profile-clip-list" class="profile-clip-list">
+                <p class="profile-empty-message">Loading clips...</p>
               </div>
-
             </section>
-
           </div>
-
         </section>
 
-
         <aside class="profile-sidebar">
-
           <section class="profile-section">
-
             <div class="profile-section-heading">
-
-              <h2>
-                PROFILE STATS
-              </h2>
-
+              <h2>PROFILE STATS</h2>
             </div>
-
 
             <div class="profile-stats">
-
               <div>
-
-                <strong id="profile-stat-posts">
-                  0
-                </strong>
-
-                <span>
-                  POSTS
-                </span>
-
+                <strong id="profile-stat-posts">0</strong>
+                <span>POSTS</span>
               </div>
 
-
               <div>
-
-                <strong id="profile-stat-reviews">
-                  0
-                </strong>
-
-                <span>
-                  REVIEWS
-                </span>
-
+                <strong id="profile-stat-reviews">0</strong>
+                <span>REVIEWS</span>
               </div>
 
-
               <div>
-
-                <strong id="profile-stat-clips">
-                  0
-                </strong>
-
-                <span>
-                  CLIPS
-                </span>
-
+                <strong id="profile-stat-clips">0</strong>
+                <span>CLIPS</span>
               </div>
 
-
               <div>
-
-                <strong id="profile-stat-games">
-                  0
-                </strong>
-
-                <span>
-                  GAMES
-                </span>
-
+                <strong id="profile-stat-games">0</strong>
+                <span>GAMES</span>
               </div>
-
             </div>
-
           </section>
 
-
-          <section class="profile-section">
-
+          <section id="profile-account-section" class="profile-section" hidden>
             <div class="profile-section-heading">
-
-              <h2>
-                ACCOUNT
-              </h2>
-
+              <h2>ACCOUNT</h2>
             </div>
-
 
             <nav class="side-links">
-
-              <a href="edit-profile.html">
-                Edit profile
-              </a>
-
-              <a href="games.html">
-                Browse games
-              </a>
-
-              <a
-                id="profile-logout-button"
-                href="#"
-              >
-                Log out
-              </a>
-
+              <a href="edit-profile.html">Edit profile</a>
+              <a href="games.html">Browse games</a>
+              <a id="profile-logout-button" href="#">Log out</a>
             </nav>
-
           </section>
-
         </aside>
-
       </div>
-
     </section>
-
   </main>
 
+  <div
+    id="follow-list-modal"
+    class="follow-list-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="follow-list-title"
+    hidden
+  >
+    <div class="follow-list-backdrop" data-close-follow-modal></div>
+
+    <section class="follow-list-dialog">
+      <div class="follow-list-header">
+        <h2 id="follow-list-title">Followers</h2>
+
+        <button
+          id="follow-list-close"
+          type="button"
+          aria-label="Close"
+        >
+          ×
+        </button>
+      </div>
+
+      <div id="follow-list-results" class="follow-list-results">
+        <p class="profile-empty-message">Loading...</p>
+      </div>
+    </section>
+  </div>
 
   <footer>
-
     <div class="site-width footer-inner">
-
-      <p>
-        360 Archive © 2026
-      </p>
+      <p>360 Archive © 2026</p>
 
       <p>
         360 Archive is an unofficial fan project and is not affiliated
         with, endorsed by, or sponsored by Microsoft or Xbox.
       </p>
-
     </div>
-
   </footer>
 
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script src="js/supabase.js"></script>
-
-  <script src="js/profile.js?v=10"></script>
-
+  <script src="js/profile.js?v=11"></script>
 </body>
-
 </html>
