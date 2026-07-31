@@ -1,177 +1,542 @@
-async function loadProfile() {
-  const usernameElement =
-    document.querySelector("#profile-username");
+const profileMessage =
+  document.querySelector(
+    "#profile-message"
+  );
 
-  const bioElement =
-    document.querySelector("#profile-bio");
+const profileContent =
+  document.querySelector(
+    "#profile-content"
+  );
 
-  const gamerscoreElement =
-    document.querySelector("#profile-gamerscore");
+const profileAvatar =
+  document.querySelector(
+    "#profile-avatar"
+  );
 
-  const locationElement =
-    document.querySelector("#profile-location");
+const profileUsername =
+  document.querySelector(
+    "#profile-username"
+  );
 
-  const avatarElement =
-    document.querySelector("#profile-avatar");
+const profileBio =
+  document.querySelector(
+    "#profile-bio"
+  );
 
-  const memberSinceElement =
-    document.querySelector("#profile-member-since");
+const profileLocation =
+  document.querySelector(
+    "#profile-location"
+  );
 
-  const favoriteGenreElement =
-    document.querySelector("#profile-favorite-genre");
+const profileMemberSince =
+  document.querySelector(
+    "#profile-member-since"
+  );
 
-  const gamertagElement =
-    document.querySelector("#profile-gamertag");
+const profileAboutUsername =
+  document.querySelector(
+    "#profile-about-username"
+  );
+
+const profileAboutLocation =
+  document.querySelector(
+    "#profile-about-location"
+  );
+
+const profileFavoriteGenre =
+  document.querySelector(
+    "#profile-favorite-genre"
+  );
+
+const profileGamerscore =
+  document.querySelector(
+    "#profile-gamerscore"
+  );
+
+const profileStatReviews =
+  document.querySelector(
+    "#profile-stat-reviews"
+  );
+
+const profileStatClips =
+  document.querySelector(
+    "#profile-stat-clips"
+  );
+
+const profileStatGames =
+  document.querySelector(
+    "#profile-stat-games"
+  );
+
+const profileStatPosts =
+  document.querySelector(
+    "#profile-stat-posts"
+  );
+
+const profileLogoutButton =
+  document.querySelector(
+    "#profile-logout-button"
+  );
 
 
-  const {
-    data: { user },
-    error: userError
-  } = await supabaseClient.auth.getUser();
+/* ==================================================
+   HELPERS
+   ================================================== */
 
-
-  if (userError || !user) {
-    window.location.href = "login.html";
+function showProfileMessage(
+  message,
+  status = ""
+) {
+  if (!profileMessage) {
     return;
   }
 
 
-  const {
-    data: profile,
-    error: profileError
-  } = await supabaseClient
-    .from("profiles")
-    .select(
-      `
-      username,
-      bio,
-      avatar_url,
-      gamerscore,
-      location,
-      favorite_genre,
-      created_at
-      `
+  profileMessage.hidden =
+    false;
+
+
+  profileMessage.textContent =
+    message;
+
+
+  profileMessage.dataset.status =
+    status;
+}
+
+
+function showProfileContent() {
+  if (profileMessage) {
+    profileMessage.hidden =
+      true;
+  }
+
+
+  if (profileContent) {
+    profileContent.hidden =
+      false;
+  }
+}
+
+
+function formatMemberDate(value) {
+  if (!value) {
+    return "—";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
     )
-    .eq("id", user.id)
-    .single();
+  ) {
+    return "—";
+  }
 
 
-  if (profileError) {
-    console.error(
-      "Profile load error:",
-      profileError
+  return date.toLocaleDateString(
+    undefined,
+    {
+      year: "numeric",
+      month: "long"
+    }
+  );
+}
+
+
+function getSessionWithTimeout() {
+  const sessionRequest =
+    supabaseClient.auth
+      .getSession();
+
+
+  const timeoutRequest =
+    new Promise((resolve) => {
+      setTimeout(
+        () => {
+          resolve({
+            timedOut: true,
+
+            data: {
+              session: null
+            }
+          });
+        },
+        5000
+      );
+    });
+
+
+  return Promise.race([
+    sessionRequest,
+    timeoutRequest
+  ]);
+}
+
+
+/* ==================================================
+   PROFILE DATA
+   ================================================== */
+
+function displayProfile(profile) {
+  const username =
+    profile.username ||
+    "user";
+
+
+  const location =
+    profile.location ||
+    "Not added";
+
+
+  const favoriteGenre =
+    profile.favorite_genre ||
+    "Not added";
+
+
+  const gamerscore =
+    Number(
+      profile.gamerscore ||
+      0
+    ).toLocaleString();
+
+
+  const memberSince =
+    formatMemberDate(
+      profile.created_at
     );
 
-    if (bioElement) {
-      bioElement.textContent =
-        "Could not load profile information.";
+
+  profileUsername.textContent =
+    username;
+
+
+  profileBio.textContent =
+    profile.bio ||
+    "No bio added yet.";
+
+
+  profileLocation.textContent =
+    `Location: ${location}`;
+
+
+  profileMemberSince.textContent =
+    `Member since: ${memberSince}`;
+
+
+  profileAboutUsername.textContent =
+    username;
+
+
+  profileAboutLocation.textContent =
+    location;
+
+
+  profileFavoriteGenre.textContent =
+    favoriteGenre;
+
+
+  profileGamerscore.textContent =
+    gamerscore;
+
+
+  profileAvatar.src =
+    profile.avatar_url ||
+    "images/avatar.png";
+
+
+  profileAvatar.alt =
+    `${username} avatar`;
+
+
+  profileAvatar.onerror = () => {
+    profileAvatar.onerror =
+      null;
+
+
+    profileAvatar.src =
+      "images/avatar.png";
+  };
+}
+
+
+async function loadProfileStats(userId) {
+  const results =
+    await Promise.all([
+      supabaseClient
+        .from("reviews")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "user_id",
+          userId
+        ),
+
+      supabaseClient
+        .from("clips")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "user_id",
+          userId
+        ),
+
+      supabaseClient
+        .from("games")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "added_by",
+          userId
+        )
+    ]);
+
+
+  const reviewResult =
+    results[0];
+
+  const clipResult =
+    results[1];
+
+  const gameResult =
+    results[2];
+
+
+  profileStatReviews.textContent =
+    reviewResult.count ??
+    0;
+
+
+  profileStatClips.textContent =
+    clipResult.count ??
+    0;
+
+
+  profileStatGames.textContent =
+    gameResult.count ??
+    0;
+
+
+  /*
+    Posts are not connected yet.
+  */
+
+  profileStatPosts.textContent =
+    "0";
+
+
+  if (reviewResult.error) {
+    console.error(
+      "Review count error:",
+      reviewResult.error
+    );
+  }
+
+
+  if (clipResult.error) {
+    console.error(
+      "Clip count error:",
+      clipResult.error
+    );
+  }
+
+
+  if (gameResult.error) {
+    console.error(
+      "Game count error:",
+      gameResult.error
+    );
+  }
+}
+
+
+/* ==================================================
+   LOAD PROFILE
+   ================================================== */
+
+async function loadProfile() {
+  showProfileMessage(
+    "Loading profile..."
+  );
+
+
+  try {
+    const sessionResult =
+      await getSessionWithTimeout();
+
+
+    if (sessionResult.timedOut) {
+      showProfileMessage(
+        "Your login session took too long to load. Refresh the page and try again.",
+        "error"
+      );
+
+
+      return;
     }
 
-    return;
-  }
+
+    if (sessionResult.error) {
+      console.error(
+        "Profile session error:",
+        sessionResult.error
+      );
 
 
-  const username =
-    profile.username || "user";
+      showProfileMessage(
+        "Your login session could not be checked.",
+        "error"
+      );
 
 
-  if (usernameElement) {
-    usernameElement.textContent =
-      username;
-  }
+      return;
+    }
 
 
-  if (bioElement) {
-    bioElement.textContent =
-      profile.bio || "No bio added yet.";
-  }
+    const user =
+      sessionResult
+        .data
+        ?.session
+        ?.user;
 
 
-  if (gamerscoreElement) {
-    const gamerscore =
-      Number(
-        profile.gamerscore || 0
-      ).toLocaleString();
-
-    gamerscoreElement.textContent =
-      `Gamerscore: ${gamerscore}`;
-  }
+    if (!user) {
+      showProfileMessage(
+        "You need to log in to view your profile.",
+        "error"
+      );
 
 
-  if (locationElement) {
-    locationElement.textContent =
-      profile.location ||
-      "Location not added";
-  }
+      setTimeout(
+        () => {
+          window.location.href =
+            "login.html?return=profile.html";
+        },
+        1000
+      );
 
 
-  if (
-    avatarElement &&
-    profile.avatar_url
-  ) {
-    avatarElement.src =
-      profile.avatar_url;
-  }
+      return;
+    }
 
 
-  if (
-    memberSinceElement &&
-    profile.created_at
-  ) {
-    const createdDate =
-      new Date(profile.created_at);
-
-    const createdYear =
-      createdDate.getFullYear();
-
-    memberSinceElement.textContent =
-      `Member since ${createdYear}`;
-  }
-
-
-  if (favoriteGenreElement) {
-    favoriteGenreElement.textContent =
-      profile.favorite_genre ||
-      "Not added";
-  }
-
-
-  if (gamertagElement) {
-    gamertagElement.textContent =
-      username;
-  }
+    const {
+      data: profile,
+      error: profileError
+    } = await supabaseClient
+      .from("profiles")
+      .select(`
+        id,
+        username,
+        bio,
+        avatar_url,
+        gamerscore,
+        location,
+        favorite_genre,
+        created_at
+      `)
+      .eq(
+        "id",
+        user.id
+      )
+      .maybeSingle();
 
 
-  updateActivityUsernames(username);
-}
+    if (profileError) {
+      console.error(
+        "Profile loading error:",
+        profileError
+      );
 
 
-function updateActivityUsernames(username) {
-  const activityUsernames =
-    document.querySelectorAll(
-      ".activity-item strong"
+      showProfileMessage(
+        `The profile could not be loaded: ${profileError.message}`,
+        "error"
+      );
+
+
+      return;
+    }
+
+
+    if (!profile) {
+      showProfileMessage(
+        "Your account exists, but its profile row is missing.",
+        "error"
+      );
+
+
+      return;
+    }
+
+
+    displayProfile(
+      profile
     );
 
-  activityUsernames.forEach((element) => {
-    element.textContent = username;
-  });
+
+    showProfileContent();
+
+
+    loadProfileStats(
+      user.id
+    );
+
+  } catch (error) {
+    console.error(
+      "Unexpected profile error:",
+      error
+    );
+
+
+    showProfileMessage(
+      `The profile could not be loaded: ${error.message}`,
+      "error"
+    );
+  }
 }
 
 
-const logoutButton =
-  document.querySelector("#logout-button");
+/* ==================================================
+   LOGOUT
+   ================================================== */
 
-
-if (logoutButton) {
-  logoutButton.addEventListener(
+profileLogoutButton
+  ?.addEventListener(
     "click",
-    async () => {
-      logoutButton.disabled = true;
-      logoutButton.textContent =
-        "LOGGING OUT...";
+    async (event) => {
+      event.preventDefault();
 
-      const { error } =
-        await supabaseClient.auth.signOut();
+
+      profileLogoutButton.textContent =
+        "Logging out...";
+
+
+      const {
+        error
+      } = await supabaseClient
+        .auth
+        .signOut();
+
 
       if (error) {
         console.error(
@@ -179,18 +544,40 @@ if (logoutButton) {
           error
         );
 
-        logoutButton.disabled = false;
-        logoutButton.textContent =
-          "LOG OUT";
+
+        profileLogoutButton.textContent =
+          "Log out";
+
+
+        showProfileMessage(
+          "You could not be logged out.",
+          "error"
+        );
+
 
         return;
       }
 
+
       window.location.href =
-        "login.html";
+        "index.html";
     }
   );
+
+
+/* ==================================================
+   START
+   ================================================== */
+
+if (
+  typeof supabaseClient ===
+  "undefined"
+) {
+  showProfileMessage(
+    "Supabase did not load. Check js/supabase.js.",
+    "error"
+  );
+
+} else {
+  loadProfile();
 }
-
-
-loadProfile();

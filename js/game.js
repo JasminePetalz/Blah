@@ -54,17 +54,51 @@ const gameDescription =
   );
 
 
+/* ==================================================
+   HELPERS
+   ================================================== */
+
+function showGameMessage(
+  message,
+  status = ""
+) {
+  if (!pageMessage) {
+    return;
+  }
+
+  pageMessage.hidden =
+    false;
+
+  pageMessage.textContent =
+    message;
+
+  pageMessage.dataset.status =
+    status;
+}
+
+
+function showGameContent() {
+  if (pageMessage) {
+    pageMessage.hidden =
+      true;
+  }
+
+  if (pageContent) {
+    pageContent.hidden =
+      false;
+  }
+}
+
+
 function formatDate(dateValue) {
   if (!dateValue) {
     return "Unknown";
   }
 
-
   const date =
     new Date(
       `${dateValue}T00:00:00`
     );
-
 
   if (
     Number.isNaN(
@@ -73,7 +107,6 @@ function formatDate(dateValue) {
   ) {
     return dateValue;
   }
-
 
   return date.toLocaleDateString(
     undefined,
@@ -94,30 +127,59 @@ function formatGenres(values) {
     return "Unknown";
   }
 
-
   return values.join(", ");
 }
 
 
+function setFallbackCover() {
+  if (!gameCover) {
+    return;
+  }
+
+  gameCover.onerror =
+    null;
+
+  gameCover.src =
+    "images/feature-game.jpg";
+}
+
+
+/* ==================================================
+   LOAD GAME
+   ================================================== */
+
 async function loadGamePage() {
+  showGameMessage(
+    "Loading game..."
+  );
+
   const parameters =
     new URLSearchParams(
       window.location.search
     );
 
-
   const gameId =
     parameters.get("id");
 
-
   if (!gameId) {
-    pageMessage.textContent =
-      "No game was selected.";
-
+    showGameMessage(
+      "No game was selected.",
+      "error"
+    );
 
     return;
   }
 
+  if (
+    !/^\d+$/.test(gameId)
+  ) {
+    showGameMessage(
+      "That game link is invalid.",
+      "error"
+    );
+
+    return;
+  }
 
   try {
     const {
@@ -127,6 +189,7 @@ async function loadGamePage() {
       .from("games")
       .select(`
         id,
+        thegamesdb_id,
         title,
         released,
         description,
@@ -134,120 +197,170 @@ async function loadGamePage() {
         developer,
         publisher,
         genres,
-        platform
+        platform,
+        added_by,
+        created_at
       `)
       .eq(
         "id",
-        gameId
+        Number(gameId)
       )
-      .single();
+      .maybeSingle();
 
-
-    if (
-      error ||
-      !game
-    ) {
+    if (error) {
       console.error(
-        "Game page error:",
+        "Game page query error:",
         error
       );
 
-
-      pageMessage.textContent =
-        "That game could not be found.";
-
+      showGameMessage(
+        `The game could not be loaded: ${error.message}`,
+        "error"
+      );
 
       return;
     }
 
+    if (!game) {
+      showGameMessage(
+        "That game could not be found.",
+        "error"
+      );
+
+      return;
+    }
 
     document.title =
       `${game.title} | 360 Archive`;
 
+    if (gameTitle) {
+      gameTitle.textContent =
+        game.title ||
+        "Unknown game";
+    }
 
-    gameTitle.textContent =
-      game.title;
+    if (gameReleased) {
+      gameReleased.textContent =
+        formatDate(
+          game.released
+        );
+    }
 
+    if (gameDeveloper) {
+      gameDeveloper.textContent =
+        game.developer ||
+        "Unknown";
+    }
 
-    gameReleased.textContent =
-      formatDate(
-        game.released
-      );
+    if (gamePublisher) {
+      gamePublisher.textContent =
+        game.publisher ||
+        "Unknown";
+    }
 
+    if (gamePlatform) {
+      gamePlatform.textContent =
+        game.platform ||
+        "Xbox 360";
+    }
 
-    gameDeveloper.textContent =
-      game.developer ||
-      "Unknown";
+    if (gameGenres) {
+      gameGenres.textContent =
+        formatGenres(
+          game.genres
+        );
+    }
 
+    if (gameDescription) {
+      gameDescription.textContent =
+        game.description ||
+        "No description is available for this game.";
+    }
 
-    gamePublisher.textContent =
-      game.publisher ||
-      "Unknown";
-
-
-    gamePlatform.textContent =
-      game.platform ||
-      "Xbox 360";
-
-
-    gameGenres.textContent =
-      formatGenres(
-        game.genres
-      );
-
-
-    gameDescription.textContent =
-      game.description ||
-      "No description is available for this game.";
-
-
-    if (game.cover_url) {
+    if (
+      gameCover &&
+      game.cover_url
+    ) {
       gameCover.src =
         game.cover_url;
-
 
       gameCover.alt =
         `${game.title} cover`;
 
-
-      gameBackground.style
-        .backgroundImage =
-          `linear-gradient(
-            rgba(5, 10, 6, 0.35),
-            rgba(5, 10, 6, 0.8)
-          ),
-          url("${game.cover_url}")`;
+      gameCover.onerror =
+        setFallbackCover;
+    } else {
+      setFallbackCover();
     }
 
+    if (
+      gameBackground &&
+      game.cover_url
+    ) {
+      const safeCoverUrl =
+        String(
+          game.cover_url
+        )
+          .replaceAll("\\", "\\\\")
+          .replaceAll('"', '\\"');
 
-    gameCover.onerror = () => {
-      gameCover.onerror =
-        null;
+      gameBackground.style.backgroundImage = `
+        linear-gradient(
+          rgba(5, 10, 6, 0.4),
+          rgba(5, 10, 6, 0.88)
+        ),
+        url("${safeCoverUrl}")
+      `;
+    }
 
+    showGameContent();
 
-      gameCover.src =
-        "images/feature-game.jpg";
-    };
-
-
-    pageMessage.hidden =
-      true;
-
-
-    pageContent.hidden =
-      false;
+    window.dispatchEvent(
+      new CustomEvent(
+        "gameLoaded",
+        {
+          detail: {
+            game
+          }
+        }
+      )
+    );
 
   } catch (error) {
     console.error(
-      "Game page error:",
+      "Unexpected game page error:",
       error
     );
 
-
-    pageMessage.textContent =
-      "That game could not be loaded.";
+    showGameMessage(
+      `The game could not be loaded: ${error.message}`,
+      "error"
+    );
   }
 }
 
 
-loadGamePage();
+/* ==================================================
+   START
+   ================================================== */
+
+if (
+  typeof supabaseClient ===
+  "undefined"
+) {
+  showGameMessage(
+    "Supabase did not load. Check js/supabase.js.",
+    "error"
+  );
+
+} else if (
+  !pageMessage ||
+  !pageContent
+) {
+  console.error(
+    "The required game page elements were not found."
+  );
+
+} else {
+  loadGamePage();
+}

@@ -13,10 +13,9 @@
 
   <link
     rel="stylesheet"
-    href="style.css?v=7"
+    href="style.css?v=9"
   >
 </head>
-
 
 <body>
 
@@ -300,7 +299,7 @@
           hidden
         >
 
-          <div class="review-form-heading">
+          <div class="review-form-header">
 
             <div>
 
@@ -312,62 +311,81 @@
                 Review this game
               </h3>
 
+              <p class="review-form-description">
+                Share your thoughts and give the game a score out of 10.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="review-rating-panel">
+
+            <div>
+
+              <strong>
+                Your rating
+              </strong>
+
+              <small>
+                Choose a score from 1 to 10
+              </small>
+
             </div>
 
 
-            <label class="rating-field">
-
-              <span>
-                RATING
-              </span>
+            <label class="review-rating-field">
 
               <select
                 id="review-rating"
                 required
               >
+
                 <option value="">
                   Choose
                 </option>
 
                 <option value="10">
-                  10
+                  10 / 10
                 </option>
 
                 <option value="9">
-                  9
+                  9 / 10
                 </option>
 
                 <option value="8">
-                  8
+                  8 / 10
                 </option>
 
                 <option value="7">
-                  7
+                  7 / 10
                 </option>
 
                 <option value="6">
-                  6
+                  6 / 10
                 </option>
 
                 <option value="5">
-                  5
+                  5 / 10
                 </option>
 
                 <option value="4">
-                  4
+                  4 / 10
                 </option>
 
                 <option value="3">
-                  3
+                  3 / 10
                 </option>
 
                 <option value="2">
-                  2
+                  2 / 10
                 </option>
 
                 <option value="1">
-                  1
+                  1 / 10
                 </option>
+
               </select>
 
             </label>
@@ -375,9 +393,11 @@
           </div>
 
 
-          <label>
+          <label class="review-field">
 
-            Review title
+            <span>
+              Review title
+            </span>
 
             <input
               id="review-title"
@@ -390,37 +410,50 @@
           </label>
 
 
-          <label>
+          <label class="review-field">
 
-            Review
+            <span>
+              Your review
+            </span>
 
             <textarea
               id="review-body"
               maxlength="5000"
-              rows="6"
-              placeholder="What did you like or dislike?"
+              rows="7"
+              placeholder="What did you like or dislike about the game?"
               required
             ></textarea>
 
           </label>
 
 
-          <div class="review-form-actions">
+          <div class="review-form-footer">
 
-            <button
-              id="review-submit-button"
-              type="submit"
-            >
-              POST REVIEW
-            </button>
+            <div class="review-form-actions">
 
-            <button
-              id="review-delete-button"
-              type="button"
-              hidden
-            >
-              DELETE REVIEW
-            </button>
+              <button
+                id="review-submit-button"
+                class="review-submit-button"
+                type="submit"
+              >
+                POST REVIEW
+              </button>
+
+              <button
+                id="review-delete-button"
+                class="review-delete-button"
+                type="button"
+                hidden
+              >
+                DELETE REVIEW
+              </button>
+
+            </div>
+
+
+            <span class="review-character-note">
+              One review per user
+            </span>
 
           </div>
 
@@ -459,8 +492,8 @@
             </h2>
 
             <span
-              class="section-count"
               id="game-clip-count"
+              class="section-count"
             >
               0 clips
             </span>
@@ -789,11 +822,11 @@
 
   <script src="js/supabase.js"></script>
 
-  <script src="js/game.js?v=1"></script>
+  <script src="js/game.js?v=2"></script>
 
-  <script src="js/reviews.js?v=2"></script>
+  <script src="js/reviews.js?v=3"></script>
 
-  <script src="js/clips.js?v=3"></script>
+  <script src="js/clips.js?v=4"></script>
 
 </body>
 
