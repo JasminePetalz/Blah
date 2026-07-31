@@ -1,33 +1,35 @@
-const searchForm =
-  document.querySelector(
-    "#game-search-form"
-  );
+/* ==================================================
+   GAMES SEARCH
+   Xbox 360 + Original Xbox compatibility
+   ================================================== */
 
-const searchInput =
-  document.querySelector(
-    "#game-search-input"
-  );
+const gamesSearchForm =
+  document.querySelector("#game-search-form");
 
-const searchMessage =
-  document.querySelector(
-    "#game-search-message"
-  );
+const gamesSearchInput =
+  document.querySelector("#game-search-input");
 
-const searchResults =
-  document.querySelector(
-    "#game-search-results"
-  );
+const gamesSearchButton =
+  document.querySelector("#game-search-button");
+
+const gamesSearchMessage =
+  document.querySelector("#game-search-message");
+
+const gamesSearchResults =
+  document.querySelector("#game-search-results");
 
 
-let currentUser =
-  null;
+const XBOX_PLATFORM_ID = 14;
+const XBOX_360_PLATFORM_ID = 15;
+
+let currentSearchResults = [];
 
 
 /* ==================================================
-   BASIC HELPERS
+   GENERAL HELPERS
    ================================================== */
 
-function escapeHtml(value = "") {
+function escapeGamesHtml(value = "") {
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -37,332 +39,801 @@ function escapeHtml(value = "") {
 }
 
 
-function formatDate(dateValue) {
-  if (!dateValue) {
-    return "Release date unavailable";
+function normalizeGameTitle(title = "") {
+  return String(title)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+
+function showGamesMessage(
+  message,
+  status = ""
+) {
+  if (!gamesSearchMessage) {
+    return;
   }
 
+  gamesSearchMessage.hidden = false;
+  gamesSearchMessage.textContent = message;
+  gamesSearchMessage.dataset.status = status;
+}
 
-  const parsedDate =
-    new Date(
-      `${dateValue}T00:00:00`
-    );
 
+function hideGamesMessage() {
+  if (gamesSearchMessage) {
+    gamesSearchMessage.hidden = true;
+  }
+}
+
+
+function setSearchButtonLoading(loading) {
+  if (!gamesSearchButton) {
+    return;
+  }
+
+  gamesSearchButton.disabled = loading;
+
+  gamesSearchButton.textContent =
+    loading
+      ? "SEARCHING..."
+      : "SEARCH";
+}
+
+
+function setResultButtonLoading(
+  button,
+  loading
+) {
+  if (!button) {
+    return;
+  }
+
+  button.disabled = loading;
+
+  button.textContent =
+    loading
+      ? "ADDING..."
+      : "ADD TO ARCHIVE";
+}
+
+
+function formatReleaseDate(value) {
+  if (!value) {
+    return "Release date unknown";
+  }
+
+  const date =
+    new Date(`${value}T00:00:00`);
 
   if (
     Number.isNaN(
-      parsedDate.getTime()
+      date.getTime()
     )
   ) {
-    return dateValue;
+    return value;
   }
 
-
-  return parsedDate.toLocaleDateString(
+  return date.toLocaleDateString(
     undefined,
     {
       year: "numeric",
-      month: "short",
+      month: "long",
       day: "numeric"
     }
   );
 }
 
 
-function getNames(
-  values,
-  includedValues = {}
-) {
-  if (!Array.isArray(values)) {
-    return [];
-  }
+function getSessionWithTimeout() {
+  const sessionRequest =
+    supabaseClient.auth.getSession();
 
+  const timeoutRequest =
+    new Promise((resolve) => {
+      setTimeout(
+        () => {
+          resolve({
+            timedOut: true,
+            data: {
+              session: null
+            }
+          });
+        },
+        5000
+      );
+    });
 
-  return values
-    .map((value) => {
-      const valueKey =
-        String(value);
-
-
-      const includedValue =
-        includedValues[valueKey];
-
-
-      if (includedValue) {
-        return (
-          includedValue.name ||
-          includedValue.publisher ||
-          includedValue.developer ||
-          includedValue.genre ||
-          null
-        );
-      }
-
-
-      if (
-        typeof value === "object" &&
-        value !== null
-      ) {
-        return (
-          value.name ||
-          value.publisher ||
-          value.developer ||
-          value.genre ||
-          null
-        );
-      }
-
-
-      return value;
-    })
-    .filter(Boolean);
+  return Promise.race([
+    sessionRequest,
+    timeoutRequest
+  ]);
 }
 
 
-function getGameImage(
-  gameId,
-  boxartData,
-  baseUrl
-) {
-  const images =
-    boxartData?.[String(gameId)] ||
-    [];
+/* ==================================================
+   PLATFORM HELPERS
+   ================================================== */
 
+function getPlatformId(game) {
+  const possibleId =
+    game.platform_id ??
+    game.platformId ??
+    game.platform?.id ??
+    game.platforms?.[0]?.id ??
+    null;
 
-  if (!Array.isArray(images)) {
-    return null;
+  const numericId =
+    Number(possibleId);
+
+  if (
+    Number.isFinite(numericId)
+  ) {
+    return numericId;
   }
 
+  const platformName =
+    String(
+      game.platform_name ??
+      game.platformName ??
+      game.platform?.name ??
+      game.platform ??
+      ""
+    ).toLowerCase();
 
-  const frontCover =
-    images.find(
-      (image) =>
-        image.type === "boxart" &&
-        image.side === "front"
-    );
-
-
-  const anyCover =
-    images.find(
-      (image) =>
-        image.type === "boxart"
-    );
-
-
-  const selectedCover =
-    frontCover ||
-    anyCover;
-
-
-  if (!selectedCover?.filename) {
-    return null;
+  if (
+    platformName.includes("xbox 360")
+  ) {
+    return XBOX_360_PLATFORM_ID;
   }
 
+  if (
+    platformName.includes("microsoft xbox") ||
+    platformName === "xbox" ||
+    platformName.includes("original xbox")
+  ) {
+    return XBOX_PLATFORM_ID;
+  }
+
+  return null;
+}
+
+
+function getPlatformName(game) {
+  const platformId =
+    getPlatformId(game);
+
+  if (
+    platformId ===
+    XBOX_360_PLATFORM_ID
+  ) {
+    return "Xbox 360";
+  }
+
+  if (
+    platformId ===
+    XBOX_PLATFORM_ID
+  ) {
+    return "Original Xbox";
+  }
 
   return (
-    baseUrl +
-    selectedCover.filename
+    game.platform_name ||
+    game.platformName ||
+    game.platform?.name ||
+    game.platform ||
+    "Unknown platform"
+  );
+}
+
+
+function isOriginalXboxGame(game) {
+  return (
+    getPlatformId(game) ===
+    XBOX_PLATFORM_ID
+  );
+}
+
+
+function isXbox360Game(game) {
+  return (
+    getPlatformId(game) ===
+    XBOX_360_PLATFORM_ID
   );
 }
 
 
 /* ==================================================
-   AUTHENTICATION
+   NORMALIZE API RESULTS
    ================================================== */
 
-function updateGameButtons() {
-  const buttons =
-    document.querySelectorAll(
-      ".select-game-button"
-    );
+function normalizeGameResult(game) {
+  const genres =
+    Array.isArray(game.genres)
+      ? game.genres
+          .map((genre) => {
+            if (
+              typeof genre === "string"
+            ) {
+              return genre;
+            }
 
+            return (
+              genre?.name ||
+              genre?.genre ||
+              ""
+            );
+          })
+          .filter(Boolean)
+      : [];
 
-  buttons.forEach((button) => {
-    button.textContent =
-      currentUser
-        ? "SELECT GAME"
-        : "LOG IN TO SELECT";
-  });
+  return {
+    thegamesdb_id:
+      Number(
+        game.id ??
+        game.thegamesdb_id ??
+        game.game_id
+      ),
+
+    title:
+      game.title ??
+      game.game_title ??
+      game.gameTitle ??
+      "Unknown game",
+
+    released:
+      game.released ??
+      game.release_date ??
+      game.releaseDate ??
+      null,
+
+    description:
+      game.description ??
+      game.overview ??
+      game.plot ??
+      "",
+
+    cover_url:
+      game.cover_url ??
+      game.coverUrl ??
+      game.boxart_url ??
+      game.boxart ??
+      game.image_url ??
+      game.image ??
+      "",
+
+    developer:
+      game.developer ??
+      game.developers?.[0]?.name ??
+      game.developers?.[0] ??
+      "",
+
+    publisher:
+      game.publisher ??
+      game.publishers?.[0]?.name ??
+      game.publishers?.[0] ??
+      "",
+
+    genres,
+
+    platform_id:
+      getPlatformId(game),
+
+    platform:
+      getPlatformName(game),
+
+    backward_compatible_360:
+      false,
+
+    compatibility_notes:
+      null
+  };
 }
 
 
-async function loadCurrentSession() {
-  try {
-    const sessionRequest =
-      supabaseClient.auth
-        .getSession();
+function extractGamesFromResponse(response) {
+  const possibleArrays = [
+    response?.games,
+    response?.data?.games,
+    response?.data,
+    response?.results,
+    response
+  ];
 
+  const games =
+    possibleArrays.find(
+      (value) =>
+        Array.isArray(value)
+    ) || [];
 
-    const timeout =
-      new Promise((resolve) => {
-        setTimeout(
-          () => {
-            resolve({
-              data: {
-                session: null
-              },
-
-              timedOut: true
-            });
-          },
-          3000
-        );
-      });
-
-
-    const result =
-      await Promise.race([
-        sessionRequest,
-        timeout
-      ]);
-
-
-    if (result.timedOut) {
-      console.warn(
-        "Supabase session check timed out."
+  return games
+    .map(normalizeGameResult)
+    .filter((game) => {
+      return (
+        game.thegamesdb_id &&
+        game.title &&
+        (
+          isXbox360Game(game) ||
+          isOriginalXboxGame(game)
+        )
       );
-
-
-      currentUser =
-        null;
-
-
-      return null;
-    }
-
-
-    if (result.error) {
-      console.error(
-        "Session loading error:",
-        result.error
-      );
-    }
-
-
-    currentUser =
-      result.data?.session?.user ||
-      null;
-
-
-    return currentUser;
-
-  } catch (error) {
-    console.error(
-      "Session loading error:",
-      error
-    );
-
-
-    currentUser =
-      null;
-
-
-    return null;
-  }
-}
-
-
-async function initializeGamesPage() {
-  /*
-    Game search works immediately.
-    Login status loads quietly in the background.
-  */
-
-  searchMessage.textContent =
-    "";
-
-
-  await loadCurrentSession();
-
-
-  updateGameButtons();
-
-
-  supabaseClient.auth
-    .onAuthStateChange(
-      (
-        event,
-        session
-      ) => {
-        currentUser =
-          session?.user ||
-          null;
-
-
-        updateGameButtons();
-      }
-    );
+    });
 }
 
 
 /* ==================================================
-   SAVE SELECTED GAME
+   COMPATIBILITY LOOKUP
    ================================================== */
 
-async function saveGameToArchive(
-  gameData,
-  button
-) {
-  /*
-    Check the session again when the button is clicked.
-    This prevents an old login value from causing a loop.
-  */
-
-  const {
-    data: {
-      session
-    },
-    error: sessionError
-  } = await supabaseClient
-    .auth
-    .getSession();
-
-
-  if (sessionError) {
-    console.error(
-      "Session check error:",
-      sessionError
+async function addCompatibilityData(games) {
+  const originalXboxGames =
+    games.filter(
+      isOriginalXboxGame
     );
+
+  if (!originalXboxGames.length) {
+    return games;
   }
 
+  const normalizedTitles = [
+    ...new Set(
+      originalXboxGames
+        .map((game) =>
+          normalizeGameTitle(
+            game.title
+          )
+        )
+        .filter(Boolean)
+    )
+  ];
 
-  currentUser =
-    session?.user ||
-    null;
+  if (!normalizedTitles.length) {
+    return games;
+  }
 
+  try {
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("xbox_360_compatibility")
+      .select(`
+        title,
+        normalized_title,
+        notes,
+        region
+      `)
+      .in(
+        "normalized_title",
+        normalizedTitles
+      );
 
-  if (!currentUser) {
-    sessionStorage.setItem(
-      "loginReturnUrl",
-      window.location.href
+    if (error) {
+      throw error;
+    }
+
+    const compatibilityMap =
+      new Map();
+
+    for (
+      const entry of data || []
+    ) {
+      /*
+        Prefer North American entries when the
+        same title exists for multiple regions.
+      */
+
+      const existing =
+        compatibilityMap.get(
+          entry.normalized_title
+        );
+
+      if (
+        !existing ||
+        entry.region ===
+          "North America"
+      ) {
+        compatibilityMap.set(
+          entry.normalized_title,
+          entry
+        );
+      }
+    }
+
+    return games.map((game) => {
+      if (!isOriginalXboxGame(game)) {
+        return game;
+      }
+
+      const compatibility =
+        compatibilityMap.get(
+          normalizeGameTitle(
+            game.title
+          )
+        );
+
+      return {
+        ...game,
+
+        backward_compatible_360:
+          Boolean(compatibility),
+
+        compatibility_notes:
+          compatibility?.notes ||
+          null
+      };
+    });
+
+  } catch (error) {
+    console.error(
+      "Compatibility lookup error:",
+      error
     );
 
+    /*
+      Do not accidentally mark games as compatible
+      when the lookup itself failed.
+    */
 
-    window.location.href =
-      "login.html";
+    return games;
+  }
+}
 
+
+/* ==================================================
+   SEARCH RESULTS
+   ================================================== */
+
+function createPlatformBadge(game) {
+  if (isXbox360Game(game)) {
+    return `
+      <span class="game-platform-badge">
+        XBOX 360
+      </span>
+    `;
+  }
+
+  return `
+    <span class="game-platform-badge original-xbox">
+      ORIGINAL XBOX
+    </span>
+  `;
+}
+
+
+function createCompatibilityBadge(game) {
+  if (!isOriginalXboxGame(game)) {
+    return "";
+  }
+
+  if (game.backward_compatible_360) {
+    return `
+      <span class="compatibility-badge compatible">
+        PLAYS ON XBOX 360
+      </span>
+    `;
+  }
+
+  return `
+    <span class="compatibility-badge incompatible">
+      NOT CONFIRMED FOR XBOX 360
+    </span>
+  `;
+}
+
+
+function renderGamesSearchResults(games) {
+  if (!gamesSearchResults) {
+    return;
+  }
+
+  gamesSearchResults.innerHTML = "";
+
+  if (!games.length) {
+    gamesSearchResults.innerHTML = `
+      <div class="games-empty-state">
+
+        <h2>
+          No games found
+        </h2>
+
+        <p>
+          Try another title or check the spelling.
+        </p>
+
+      </div>
+    `;
 
     return;
   }
 
+  games.forEach(
+    (
+      game,
+      index
+    ) => {
+      const result =
+        document.createElement(
+          "article"
+        );
 
-  const originalText =
-    button.textContent;
+      result.className =
+        "game-search-result";
+
+      const cannotAdd =
+        isOriginalXboxGame(game) &&
+        !game.backward_compatible_360;
+
+      const genresText =
+        game.genres.length
+          ? game.genres.join(", ")
+          : "Genre unknown";
+
+      result.innerHTML = `
+        <div class="game-search-result-cover">
+
+          ${
+            game.cover_url
+              ? `
+                  <img
+                    src="${escapeGamesHtml(game.cover_url)}"
+                    alt="${escapeGamesHtml(game.title)} cover"
+                    loading="lazy"
+                  >
+                `
+              : `
+                  <div class="game-cover-placeholder">
+                    NO COVER
+                  </div>
+                `
+          }
+
+        </div>
 
 
-  button.disabled =
-    true;
+        <div class="game-search-result-info">
+
+          <div class="game-result-badges">
+
+            ${createPlatformBadge(game)}
+
+            ${createCompatibilityBadge(game)}
+
+          </div>
 
 
-  button.textContent =
-    "CHECKING...";
+          <h2>
+            ${escapeGamesHtml(game.title)}
+          </h2>
 
 
-  searchMessage.textContent =
-    "Checking the archive...";
+          <p class="game-result-date">
+            ${escapeGamesHtml(
+              formatReleaseDate(
+                game.released
+              )
+            )}
+          </p>
 
+
+          <p class="game-result-genres">
+            ${escapeGamesHtml(genresText)}
+          </p>
+
+
+          ${
+            game.description
+              ? `
+                  <p class="game-result-description">
+                    ${escapeGamesHtml(game.description)}
+                  </p>
+                `
+              : ""
+          }
+
+
+          ${
+            game.compatibility_notes
+              ? `
+                  <div class="compatibility-note">
+
+                    <strong>
+                      Compatibility note:
+                    </strong>
+
+                    ${escapeGamesHtml(
+                      game.compatibility_notes
+                    )}
+
+                  </div>
+                `
+              : ""
+          }
+
+
+          <button
+            class="game-add-button"
+            type="button"
+            data-game-index="${index}"
+            ${cannotAdd ? "disabled" : ""}
+          >
+            ${
+              cannotAdd
+                ? "NOT 360 COMPATIBLE"
+                : "ADD TO ARCHIVE"
+            }
+          </button>
+
+        </div>
+      `;
+
+      const image =
+        result.querySelector("img");
+
+      if (image) {
+        image.addEventListener(
+          "error",
+          () => {
+            image.remove();
+          }
+        );
+      }
+
+      gamesSearchResults.append(
+        result
+      );
+    }
+  );
+}
+
+
+/* ==================================================
+   SEARCH
+   ================================================== */
+
+async function searchGames(searchTerm) {
+  setSearchButtonLoading(true);
+
+  showGamesMessage(
+    "Searching Xbox 360 and Original Xbox games..."
+  );
+
+  if (gamesSearchResults) {
+    gamesSearchResults.innerHTML = "";
+  }
 
   try {
+    const requestUrl =
+      `/.netlify/functions/games-search` +
+      `?search=${encodeURIComponent(searchTerm)}` +
+      `&platforms=${XBOX_PLATFORM_ID},${XBOX_360_PLATFORM_ID}`;
+
+    const response =
+      await fetch(requestUrl);
+
+    if (!response.ok) {
+      let errorMessage =
+        `Search failed with status ${response.status}.`;
+
+      try {
+        const errorResponse =
+          await response.json();
+
+        errorMessage =
+          errorResponse.error ||
+          errorResponse.message ||
+          errorMessage;
+
+      } catch {
+        /*
+          The response was not JSON.
+        */
+      }
+
+      throw new Error(errorMessage);
+    }
+
+    const responseData =
+      await response.json();
+
+    const games =
+      extractGamesFromResponse(
+        responseData
+      );
+
+    const gamesWithCompatibility =
+      await addCompatibilityData(
+        games
+      );
+
+    currentSearchResults =
+      gamesWithCompatibility;
+
+    hideGamesMessage();
+
+    renderGamesSearchResults(
+      currentSearchResults
+    );
+
+  } catch (error) {
+    console.error(
+      "Game search error:",
+      error
+    );
+
+    showGamesMessage(
+      `Games could not be searched: ${
+        error.message ||
+        "Unknown error"
+      }`,
+      "error"
+    );
+  } finally {
+    setSearchButtonLoading(false);
+  }
+}
+
+
+/* ==================================================
+   SAVE GAME
+   ================================================== */
+
+async function saveGameToArchive(
+  game,
+  button
+) {
+  if (
+    isOriginalXboxGame(game) &&
+    !game.backward_compatible_360
+  ) {
+    showGamesMessage(
+      "That Original Xbox game is not confirmed as playable on Xbox 360.",
+      "error"
+    );
+
+    return;
+  }
+
+  setResultButtonLoading(
+    button,
+    true
+  );
+
+  showGamesMessage(
+    "Adding game to the archive..."
+  );
+
+  try {
+    const sessionResult =
+      await getSessionWithTimeout();
+
+    if (sessionResult.timedOut) {
+      throw new Error(
+        "Your login session took too long to load."
+      );
+    }
+
+    if (sessionResult.error) {
+      throw sessionResult.error;
+    }
+
+    const user =
+      sessionResult
+        .data
+        ?.session
+        ?.user;
+
+    if (!user) {
+      window.location.href =
+        "login.html?return=games.html";
+
+      return;
+    }
+
+    /*
+      Check whether the game has already been saved.
+    */
+
     const {
       data: existingGame,
       error: existingError
@@ -371,86 +842,89 @@ async function saveGameToArchive(
       .select("id")
       .eq(
         "thegamesdb_id",
-        gameData.thegamesdb_id
+        game.thegamesdb_id
       )
       .maybeSingle();
-
 
     if (existingError) {
       throw existingError;
     }
 
-
     if (existingGame) {
-      button.textContent =
-        "OPENING...";
-
-
       window.location.href =
         `game.html?id=${encodeURIComponent(existingGame.id)}`;
-
 
       return;
     }
 
+    const gameRecord = {
+      thegamesdb_id:
+        game.thegamesdb_id,
 
-    button.textContent =
-      "ADDING...";
+      title:
+        game.title,
 
+      released:
+        game.released ||
+        null,
 
-    searchMessage.textContent =
-      "Adding game to the archive...";
+      description:
+        game.description ||
+        null,
 
+      cover_url:
+        game.cover_url ||
+        null,
+
+      developer:
+        game.developer ||
+        null,
+
+      publisher:
+        game.publisher ||
+        null,
+
+      genres:
+        game.genres,
+
+      platform:
+        game.platform,
+
+      added_by:
+        user.id,
+
+      backward_compatible_360:
+        Boolean(
+          game.backward_compatible_360
+        ),
+
+      compatibility_notes:
+        game.compatibility_notes ||
+        null,
+
+      compatibility_checked_at:
+        isOriginalXboxGame(game)
+          ? new Date().toISOString()
+          : null
+    };
 
     const {
-      data: insertedGame,
-      error: insertError
+      data: savedGame,
+      error: saveError
     } = await supabaseClient
       .from("games")
-      .insert({
-        thegamesdb_id:
-          gameData.thegamesdb_id,
-
-        title:
-          gameData.title,
-
-        released:
-          gameData.released,
-
-        description:
-          gameData.description,
-
-        cover_url:
-          gameData.cover_url,
-
-        developer:
-          gameData.developer,
-
-        publisher:
-          gameData.publisher,
-
-        genres:
-          gameData.genres,
-
-        platform:
-          "Xbox 360",
-
-        added_by:
-          currentUser.id
-      })
+      .insert(gameRecord)
       .select("id")
       .single();
 
-
-    if (insertError) {
+    if (saveError) {
       /*
-        PostgreSQL code 23505 means the game
-        was added by someone else already.
+        Another user might have inserted the same game
+        between our duplicate check and this insert.
       */
 
       if (
-        insertError.code ===
-        "23505"
+        saveError.code === "23505"
       ) {
         const {
           data: duplicateGame,
@@ -460,44 +934,25 @@ async function saveGameToArchive(
           .select("id")
           .eq(
             "thegamesdb_id",
-            gameData.thegamesdb_id
+            game.thegamesdb_id
           )
           .single();
 
-
-        if (
-          duplicateError ||
-          !duplicateGame
-        ) {
-          throw (
-            duplicateError ||
-            insertError
-          );
+        if (duplicateError) {
+          throw duplicateError;
         }
-
 
         window.location.href =
           `game.html?id=${encodeURIComponent(duplicateGame.id)}`;
 
-
         return;
       }
 
-
-      throw insertError;
+      throw saveError;
     }
 
-
-    button.textContent =
-      "ADDED";
-
-
-    searchMessage.textContent =
-      `${gameData.title} was added to the archive.`;
-
-
     window.location.href =
-      `game.html?id=${encodeURIComponent(insertedGame.id)}`;
+      `game.html?id=${encodeURIComponent(savedGame.id)}`;
 
   } catch (error) {
     console.error(
@@ -505,417 +960,108 @@ async function saveGameToArchive(
       error
     );
 
+    showGamesMessage(
+      `The game could not be added: ${
+        error.message ||
+        "Unknown error"
+      }`,
+      "error"
+    );
 
-    button.disabled =
-      false;
-
-
-    button.textContent =
-      originalText;
-
-
-    searchMessage.textContent =
-      error.message ||
-      "The game could not be added.";
+    setResultButtonLoading(
+      button,
+      false
+    );
   }
 }
 
 
 /* ==================================================
-   CREATE RESULT CARD
+   EVENTS
    ================================================== */
 
-function createGameCard(
-  game,
-  includedData,
-  boxartData,
-  imageBaseUrl
-) {
-  const card =
-    document.createElement(
-      "article"
-    );
+gamesSearchForm
+  ?.addEventListener(
+    "submit",
+    async (event) => {
+      event.preventDefault();
 
+      const searchTerm =
+        gamesSearchInput
+          ?.value
+          .trim();
 
-  card.className =
-    "game-search-card";
+      if (!searchTerm) {
+        showGamesMessage(
+          "Enter a game title to search.",
+          "error"
+        );
 
+        gamesSearchInput?.focus();
 
-  const gameTitle =
-    game.game_title ||
-    "Unknown game";
-
-
-  const coverUrl =
-    getGameImage(
-      game.id,
-      boxartData,
-      imageBaseUrl
-    );
-
-
-  const publishers =
-    getNames(
-      game.publishers,
-      includedData.publishers
-    );
-
-
-  const developers =
-    getNames(
-      game.developers,
-      includedData.developers
-    );
-
-
-  const genres =
-    getNames(
-      game.genres,
-      includedData.genres
-    );
-
-
-  const coverHtml =
-    coverUrl
-      ? `
-          <img
-            src="${escapeHtml(coverUrl)}"
-            alt="${escapeHtml(gameTitle)} cover"
-          >
-        `
-      : `
-          <div class="game-cover-placeholder">
-            NO IMAGE
-          </div>
-        `;
-
-
-  card.innerHTML = `
-    <div class="game-search-cover">
-      ${coverHtml}
-    </div>
-
-    <div class="game-search-info">
-
-      <h3>
-        ${escapeHtml(gameTitle)}
-      </h3>
-
-      <p class="game-search-date">
-        ${escapeHtml(
-          formatDate(
-            game.release_date
-          )
-        )}
-      </p>
-
-      <p>
-        <strong>Platform:</strong>
-        Xbox 360
-      </p>
-
-      ${
-        developers.length
-          ? `
-              <p>
-                <strong>Developer:</strong>
-                ${escapeHtml(
-                  developers.join(", ")
-                )}
-              </p>
-            `
-          : ""
+        return;
       }
 
-      ${
-        publishers.length
-          ? `
-              <p>
-                <strong>Publisher:</strong>
-                ${escapeHtml(
-                  publishers.join(", ")
-                )}
-              </p>
-            `
-          : ""
-      }
-
-      ${
-        genres.length
-          ? `
-              <p>
-                <strong>Genres:</strong>
-                ${escapeHtml(
-                  genres.join(", ")
-                )}
-              </p>
-            `
-          : ""
-      }
-
-      <div class="game-card-actions">
-
-        <button
-          type="button"
-          class="main-button select-game-button"
-        >
-          ${
-            currentUser
-              ? "SELECT GAME"
-              : "LOG IN TO SELECT"
-          }
-        </button>
-
-      </div>
-
-    </div>
-  `;
-
-
-  const selectButton =
-    card.querySelector(
-      ".select-game-button"
-    );
-
-
-  selectButton.addEventListener(
-    "click",
-    () => {
-      saveGameToArchive(
-        {
-          thegamesdb_id:
-            Number(game.id),
-
-          title:
-            gameTitle,
-
-          released:
-            game.release_date ||
-            null,
-
-          description:
-            game.overview ||
-            null,
-
-          cover_url:
-            coverUrl,
-
-          developer:
-            developers.join(", ") ||
-            null,
-
-          publisher:
-            publishers.join(", ") ||
-            null,
-
-          genres
-        },
-        selectButton
+      await searchGames(
+        searchTerm
       );
     }
   );
 
 
-  return card;
-}
-
-
-/* ==================================================
-   SEARCH
-   ================================================== */
-
-async function searchGames(event) {
-  event.preventDefault();
-
-
-  const searchTerm =
-    searchInput.value.trim();
-
-
-  if (!searchTerm) {
-    searchMessage.textContent =
-      "Enter a game title.";
-
-
-    return;
-  }
-
-
-  searchMessage.textContent =
-    "Searching...";
-
-
-  searchResults.innerHTML = `
-    <p class="empty-message">
-      Loading results...
-    </p>
-  `;
-
-
-  try {
-    const functionUrl =
-      `/.netlify/functions/games-search?search=${encodeURIComponent(searchTerm)}`;
-
-
-    const response =
-      await fetch(functionUrl);
-
-
-    const responseText =
-      await response.text();
-
-
-    let responseData;
-
-
-    try {
-      responseData =
-        JSON.parse(responseText);
-
-    } catch {
-      throw new Error(
-        "The game search returned an invalid response."
-      );
-    }
-
-
-    if (!response.ok) {
-      console.error(
-        "Function response:",
-        responseData
-      );
-
-
-      throw new Error(
-        responseData.error ||
-        `Search failed with error ${response.status}.`
-      );
-    }
-
-
-    const games =
-      responseData?.data?.games ||
-      [];
-
-
-    const includedData = {
-      publishers:
-        responseData?.include
-          ?.publishers
-          ?.data ||
-        {},
-
-      developers:
-        responseData?.include
-          ?.developers
-          ?.data ||
-        {},
-
-      genres:
-        responseData?.include
-          ?.genres
-          ?.data ||
-        {}
-    };
-
-
-    const boxartData =
-      responseData?.include
-        ?.boxart
-        ?.data ||
-      {};
-
-
-    const imageBaseUrl =
-      responseData?.include
-        ?.boxart
-        ?.base_url
-        ?.original ||
-      "https://cdn.thegamesdb.net/images/original/";
-
-
-    searchResults.innerHTML =
-      "";
-
-
-    if (!games.length) {
-      searchResults.innerHTML = `
-        <p class="empty-message">
-          No Xbox 360 games were found.
-        </p>
-      `;
-
-
-      searchMessage.textContent =
-        "No matching games found.";
-
-
-      return;
-    }
-
-
-    games.forEach(
-      (game) => {
-        searchResults.append(
-          createGameCard(
-            game,
-            includedData,
-            boxartData,
-            imageBaseUrl
-          )
+gamesSearchResults
+  ?.addEventListener(
+    "click",
+    async (event) => {
+      const button =
+        event.target.closest(
+          "[data-game-index]"
         );
+
+      if (
+        !button ||
+        button.disabled
+      ) {
+        return;
       }
-    );
 
+      const gameIndex =
+        Number(
+          button.dataset.gameIndex
+        );
 
-    searchMessage.textContent =
-      `${games.length} result${
-        games.length === 1
-          ? ""
-          : "s"
-      } found.`;
+      const game =
+        currentSearchResults[
+          gameIndex
+        ];
 
-  } catch (error) {
-    console.error(
-      "Game search error:",
-      error
-    );
+      if (!game) {
+        showGamesMessage(
+          "That search result could not be found.",
+          "error"
+        );
 
+        return;
+      }
 
-    searchResults.innerHTML = `
-      <p class="empty-message">
-        The games could not be loaded.
-      </p>
-    `;
-
-
-    searchMessage.textContent =
-      error.message ||
-      "Something went wrong while searching.";
-  }
-}
+      await saveGameToArchive(
+        game,
+        button
+      );
+    }
+  );
 
 
 /* ==================================================
-   START PAGE
+   STARTUP CHECK
    ================================================== */
 
 if (
-  searchForm &&
-  searchInput &&
-  searchMessage &&
-  searchResults
+  typeof supabaseClient ===
+  "undefined"
 ) {
-  searchForm.addEventListener(
-    "submit",
-    searchGames
-  );
-
-
-  initializeGamesPage();
-
-} else {
-  console.error(
-    "The game search elements could not be found."
+  showGamesMessage(
+    "Supabase did not load. Check js/supabase.js.",
+    "error"
   );
 }
