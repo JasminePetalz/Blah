@@ -22,9 +22,6 @@ const searchResults =
 let currentUser =
   null;
 
-let authReady =
-  false;
-
 
 /* ==================================================
    BASIC HELPERS
@@ -180,39 +177,70 @@ function updateGameButtons() {
     );
 
 
-  buttons.forEach(
-    (button) => {
-      button.textContent =
-        currentUser
-          ? "SELECT GAME"
-          : "LOG IN TO SELECT";
-    }
-  );
+  buttons.forEach((button) => {
+    button.textContent =
+      currentUser
+        ? "SELECT GAME"
+        : "LOG IN TO SELECT";
+  });
 }
 
 
 async function loadCurrentSession() {
   try {
-    const {
-      data: {
-        session
-      },
-      error
-    } = await supabaseClient
-      .auth
-      .getSession();
+    const sessionRequest =
+      supabaseClient.auth
+        .getSession();
 
 
-    if (error) {
+    const timeout =
+      new Promise((resolve) => {
+        setTimeout(
+          () => {
+            resolve({
+              data: {
+                session: null
+              },
+
+              timedOut: true
+            });
+          },
+          3000
+        );
+      });
+
+
+    const result =
+      await Promise.race([
+        sessionRequest,
+        timeout
+      ]);
+
+
+    if (result.timedOut) {
+      console.warn(
+        "Supabase session check timed out."
+      );
+
+
+      currentUser =
+        null;
+
+
+      return null;
+    }
+
+
+    if (result.error) {
       console.error(
         "Session loading error:",
-        error
+        result.error
       );
     }
 
 
     currentUser =
-      session?.user ||
+      result.data?.session?.user ||
       null;
 
 
@@ -235,19 +263,19 @@ async function loadCurrentSession() {
 
 
 async function initializeGamesPage() {
-  if (searchInput) {
-    searchInput.disabled =
-      true;
-  }
+  /*
+    Game search works immediately.
+    Login status loads quietly in the background.
+  */
 
-
-  if (searchMessage) {
-    searchMessage.textContent =
-      "Checking login status...";
-  }
+  searchMessage.textContent =
+    "";
 
 
   await loadCurrentSession();
+
+
+  updateGameButtons();
 
 
   supabaseClient.auth
@@ -264,22 +292,6 @@ async function initializeGamesPage() {
         updateGameButtons();
       }
     );
-
-
-  authReady =
-    true;
-
-
-  if (searchInput) {
-    searchInput.disabled =
-      false;
-  }
-
-
-  if (searchMessage) {
-    searchMessage.textContent =
-      "";
-  }
 }
 
 
@@ -292,8 +304,8 @@ async function saveGameToArchive(
   button
 ) {
   /*
-    Check the session again here instead of trusting
-    an older value stored when the page first opened.
+    Check the session again when the button is clicked.
+    This prevents an old login value from causing a loop.
   */
 
   const {
@@ -432,8 +444,8 @@ async function saveGameToArchive(
 
     if (insertError) {
       /*
-        PostgreSQL error 23505 means the unique
-        TheGamesDB ID already exists.
+        PostgreSQL code 23505 means the game
+        was added by someone else already.
       */
 
       if (
@@ -714,15 +726,6 @@ function createGameCard(
 
 async function searchGames(event) {
   event.preventDefault();
-
-
-  if (!authReady) {
-    searchMessage.textContent =
-      "Please wait while your login is checked.";
-
-
-    return;
-  }
 
 
   const searchTerm =
