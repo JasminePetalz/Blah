@@ -98,6 +98,7 @@ export default async function handler(
     apiUrl.searchParams.set(
       "fields",
       [
+        "developers",
         "publishers",
         "genres",
         "overview",
@@ -110,7 +111,13 @@ export default async function handler(
 
     apiUrl.searchParams.set(
       "include",
-      "boxart,platform"
+      [
+        "boxart",
+        "platform",
+        "developers",
+        "publishers",
+        "genres"
+      ].join(",")
     );
 
 
