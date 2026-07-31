@@ -13,10 +13,9 @@
 
   <link
     rel="stylesheet"
-    href="style.css?v=6"
+    href="style.css?v=10"
   >
 </head>
-
 
 <body>
 
@@ -72,7 +71,7 @@
       <div class="header-text">
 
         <p>
-          Xbox 360 games, clips, posts and community discussions
+          Xbox 360 games, clips, reviews and community discussions
         </p>
 
         <span>
@@ -289,16 +288,14 @@
             </div>
 
 
-            <div class="profile-activity">
+            <div
+              id="profile-activity-list"
+              class="profile-activity"
+            >
 
-              <div class="activity-item">
-
-                <p>
-                  Reviews, clips and posts from this user will appear
-                  here.
-                </p>
-
-              </div>
+              <p class="profile-empty-message">
+                Loading activity...
+              </p>
 
             </div>
 
@@ -313,17 +310,20 @@
                 RECENT REVIEWS
               </h2>
 
-              <a href="#">
-                view all
-              </a>
+              <span id="profile-review-count-label">
+                0 reviews
+              </span>
 
             </div>
 
 
-            <div class="profile-empty-state">
+            <div
+              id="profile-review-list"
+              class="profile-review-list"
+            >
 
-              <p>
-                This user has not posted any reviews yet.
+              <p class="profile-empty-message">
+                Loading reviews...
               </p>
 
             </div>
@@ -339,17 +339,20 @@
                 RECENT CLIPS
               </h2>
 
-              <a href="#">
-                view all
-              </a>
+              <span id="profile-clip-count-label">
+                0 clips
+              </span>
 
             </div>
 
 
-            <div class="profile-empty-state">
+            <div
+              id="profile-clip-list"
+              class="profile-clip-list"
+            >
 
-              <p>
-                This user has not posted any clips yet.
+              <p class="profile-empty-message">
+                Loading clips...
               </p>
 
             </div>
@@ -494,7 +497,7 @@
 
   <script src="js/supabase.js"></script>
 
-  <script src="js/profile.js?v=3"></script>
+  <script src="js/profile.js?v=5"></script>
 
 </body>
 
