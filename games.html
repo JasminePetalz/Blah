@@ -13,9 +13,10 @@
 
   <link
     rel="stylesheet"
-    href="style.css"
+    href="style.css?v=4"
   >
 </head>
+
 
 <body>
 
@@ -123,34 +124,83 @@
 
   <main class="site-width games-page">
 
+    <section class="games-hero">
+
+      <div class="games-hero-copy">
+
+        <p class="small-heading">
+          360 ARCHIVE DATABASE
+        </p>
+
+        <h1>
+          Find an Xbox 360 game
+        </h1>
+
+        <p>
+          Search the archive by title. Choose a game to view its
+          information and eventually connect posts, clips, reviews
+          and discussions to it.
+        </p>
+
+      </div>
+
+
+      <div class="games-hero-stat">
+
+        <span>
+          POWERED BY
+        </span>
+
+        <strong>
+          TheGamesDB
+        </strong>
+
+        <small>
+          Xbox 360 results only
+        </small>
+
+      </div>
+
+    </section>
+
+
     <section class="game-search-panel">
 
-      <p class="small-heading">
-        GAME DATABASE
-      </p>
+      <div class="game-search-heading">
 
-      <h1>
-        Search Xbox 360 games
-      </h1>
+        <div>
 
-      <p>
-        Search for a game and choose the correct result.
-        Games can later be connected to posts and clips.
-      </p>
+          <p class="small-heading">
+            GAME SEARCH
+          </p>
+
+          <h2>
+            Search the database
+          </h2>
+
+        </div>
+
+
+        <span class="game-search-platform">
+          XBOX 360
+        </span>
+
+      </div>
 
 
       <form id="game-search-form">
 
         <label for="game-search-input">
-          Game title
+          Enter a game title
         </label>
+
 
         <div class="game-search-row">
 
           <input
             id="game-search-input"
             type="search"
-            placeholder="Try Halo 3 or Skate 3"
+            placeholder="Halo 3, Skate 3, Fable II..."
             autocomplete="off"
             required
           >
@@ -164,6 +214,19 @@
       </form>
 
 
+      <div class="game-search-help">
+
+        <span>
+          Try searching the exact title for better results.
+        </span>
+
+        <span>
+          Results may include special editions and bundles.
+        </span>
+
+      </div>
+
+
       <p
         id="game-search-message"
         class="form-message"
@@ -173,13 +236,17 @@
     </section>
 
 
-    <section class="content-section">
+    <section class="content-section game-results-section">
 
       <div class="section-heading">
 
         <h2>
           SEARCH RESULTS
         </h2>
+
+        <span class="results-label">
+          Xbox 360 database
+        </span>
 
       </div>
 
@@ -189,28 +256,53 @@
         class="game-search-results"
       >
 
-        <p class="empty-message">
-          Search for a game to get started.
-        </p>
+        <div class="game-search-empty">
+
+          <div class="game-search-empty-icon">
+            ?
+          </div>
+
+          <h3>
+            Nothing searched yet
+          </h3>
+
+          <p>
+            Enter a game title above to search the Xbox 360 archive.
+          </p>
+
+        </div>
 
       </div>
 
     </section>
 
 
-    <p class="game-source">
+    <section class="game-search-about">
 
-      Game information and artwork provided by
+      <div>
+
+        <strong>
+          How this works
+        </strong>
+
+        <p>
+          Game information is loaded from TheGamesDB. Later, games
+          selected for the archive will have their own pages containing
+          community posts, clips, ratings and discussions.
+        </p>
+
+      </div>
+
 
       <a
         href="https://thegamesdb.net/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        TheGamesDB
-      </a>.
+        VISIT THEGAMESDB
+      </a>
 
-    </p>
+    </section>
 
   </main>
 
@@ -224,8 +316,8 @@
       </p>
 
       <p>
-        360 Archive is an unofficial fan project and is not
-        affiliated with Microsoft or Xbox.
+        360 Archive is an unofficial fan project and is not affiliated
+        with, endorsed by, or sponsored by Microsoft or Xbox.
       </p>
 
     </div>
@@ -233,7 +325,7 @@
   </footer>
 
 
-  <script src="js/games.js?v=3"></script>
+  <script src="js/games.js?v=4"></script>
 
 </body>
 

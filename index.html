@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
 
@@ -10,12 +11,17 @@
 
   <title>360 Archive</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css?v=4"
+  >
 </head>
+
 
 <body>
 
   <div class="top-bar">
+
     <div class="site-width top-bar-inner">
 
       <span>
@@ -23,11 +29,15 @@
       </span>
 
       <span class="online-status">
+
         <span class="online-dot"></span>
+
         ONLINE
+
       </span>
 
     </div>
+
   </div>
 
 
@@ -35,15 +45,25 @@
 
     <div class="site-width header-inner">
 
-      <a class="site-logo" href="index.html">
+      <a
+        class="site-logo"
+        href="index.html"
+      >
 
         <span class="logo-circle">
           X
         </span>
 
         <span class="logo-name">
-          <strong>360</strong>
-          <span>ARCHIVE</span>
+
+          <strong>
+            360
+          </strong>
+
+          <span>
+            ARCHIVE
+          </span>
+
         </span>
 
       </a>
@@ -52,7 +72,7 @@
       <div class="header-text">
 
         <p>
-          Xbox 360 games, screenshots, guides and forum posts
+          Xbox 360 games, clips, posts and community discussions
         </p>
 
         <span>
@@ -70,11 +90,14 @@
 
     <div class="site-width nav-inner">
 
-      <a class="active" href="index.html">
+      <a
+        class="active"
+        href="index.html"
+      >
         HOME
       </a>
 
-      <a href="#games">
+      <a href="games.html">
         GAMES
       </a>
 
@@ -82,8 +105,8 @@
         POSTS
       </a>
 
-      <a href="#screenshots">
-        SCREENSHOTS
+      <a href="#clips">
+        CLIPS
       </a>
 
       <a href="#forum">
@@ -132,12 +155,15 @@
 
           <p>
             Halo 3 was released in 2007 and became one of the biggest
-            games on the Xbox 360. This section includes campaign
-            information, multiplayer maps, screenshots and forum posts.
+            games on the Xbox 360. Explore game information, clips,
+            community posts and discussions.
           </p>
 
-          <a class="main-button" href="#">
-            VIEW GAME PAGE
+          <a
+            class="main-button"
+            href="games.html"
+          >
+            SEARCH GAMES
           </a>
 
         </div>
@@ -145,7 +171,10 @@
       </section>
 
 
-      <section class="content-section" id="games">
+      <section
+        class="content-section"
+        id="games"
+      >
 
         <div class="section-heading">
 
@@ -153,7 +182,7 @@
             POPULAR GAMES
           </h2>
 
-          <a href="#">
+          <a href="games.html">
             browse all
           </a>
 
@@ -234,13 +263,15 @@
 
           </article>
 
-
         </div>
 
       </section>
 
 
-      <section class="content-section" id="posts">
+      <section
+        class="content-section"
+        id="posts"
+      >
 
         <div class="section-heading">
 
@@ -273,9 +304,11 @@
           <div class="post-content">
 
             <h3>
+
               <a href="#">
                 Xbox 360 dashboard timeline
               </a>
+
             </h3>
 
             <p>
@@ -310,9 +343,11 @@
           <div class="post-content">
 
             <h3>
+
               <a href="#">
                 Local multiplayer games
               </a>
+
             </h3>
 
             <p>
@@ -347,9 +382,11 @@
           <div class="post-content">
 
             <h3>
+
               <a href="#">
                 Gamer picture archive update
               </a>
+
             </h3>
 
             <p>
@@ -368,16 +405,19 @@
       </section>
 
 
-      <section class="content-section" id="screenshots">
+      <section
+        class="content-section"
+        id="clips"
+      >
 
         <div class="section-heading">
 
           <h2>
-            NEW SCREENSHOTS
+            NEW CLIPS
           </h2>
 
           <a href="#">
-            full gallery
+            view all clips
           </a>
 
         </div>
@@ -386,24 +426,30 @@
         <div class="screenshot-grid">
 
           <a href="#">
+
             <img
               src="images/screenshot-1.jpg"
-              alt="Xbox 360 game screenshot"
+              alt="Xbox 360 game clip preview"
             >
+
           </a>
 
           <a href="#">
+
             <img
               src="images/screenshot-2.jpg"
-              alt="Xbox 360 game screenshot"
+              alt="Xbox 360 game clip preview"
             >
+
           </a>
 
           <a href="#">
+
             <img
               src="images/screenshot-3.jpg"
-              alt="Xbox 360 game screenshot"
+              alt="Xbox 360 game clip preview"
             >
+
           </a>
 
         </div>
@@ -472,7 +518,6 @@
 
           </article>
 
-
         </div>
 
       </section>
@@ -483,7 +528,10 @@
     <aside class="sidebar">
 
 
-      <section class="sidebar-section" id="profile">
+      <section
+        class="sidebar-section"
+        id="profile"
+      >
 
         <div class="sidebar-heading">
           USER PROFILE
@@ -493,6 +541,7 @@
         <div class="profile">
 
           <img
+            id="home-profile-avatar"
             src="images/avatar.png"
             alt="User avatar"
           >
@@ -500,20 +549,20 @@
 
           <div class="profile-details">
 
-            <strong>
+            <strong id="home-profile-username">
               user
             </strong>
 
-            <span>
-              Gamerscore: 24,560
+            <span id="home-profile-gamerscore">
+              Gamerscore: 0
             </span>
 
-            <span>
-              Member since: 2009
+            <span id="home-profile-member-since">
+              Member since: —
             </span>
 
-            <span>
-              Status: Online
+            <span id="home-profile-status">
+              Status: Checking...
             </span>
 
           </div>
@@ -521,18 +570,27 @@
         </div>
 
 
-        <p class="profile-bio">
+        <p
+          class="profile-bio"
+          id="home-profile-bio"
+        >
           profile information goes here
         </p>
 
 
         <div class="profile-links">
 
-          <a href="profile.html">
-            View profile
+          <a
+            id="home-profile-primary-link"
+            href="login.html"
+          >
+            Log in
           </a>
 
-          <a href="signup.html">
+          <a
+            id="home-profile-secondary-link"
+            href="signup.html"
+          >
             Create account
           </a>
 
@@ -551,6 +609,7 @@
         <div class="site-stats">
 
           <div>
+
             <span>
               Games
             </span>
@@ -558,21 +617,25 @@
             <strong>
               246
             </strong>
+
           </div>
 
 
           <div>
+
             <span>
-              Screenshots
+              Clips
             </span>
 
             <strong>
               1,308
             </strong>
+
           </div>
 
 
           <div>
+
             <span>
               Members
             </span>
@@ -580,10 +643,12 @@
             <strong>
               482
             </strong>
+
           </div>
 
 
           <div>
+
             <span>
               Posts
             </span>
@@ -591,6 +656,7 @@
             <strong>
               3,891
             </strong>
+
           </div>
 
         </div>
@@ -598,7 +664,10 @@
       </section>
 
 
-      <section class="sidebar-section" id="forum">
+      <section
+        class="sidebar-section"
+        id="forum"
+      >
 
         <div class="sidebar-heading">
           FORUM ACTIVITY
@@ -674,7 +743,10 @@
         </ul>
 
 
-        <a class="sidebar-bottom-link" href="#">
+        <a
+          class="sidebar-bottom-link"
+          href="#"
+        >
           GO TO FORUM
         </a>
 
@@ -715,6 +787,7 @@
             >
 
             New Xbox Experience
+
           </label>
 
 
@@ -726,6 +799,7 @@
             >
 
             Metro
+
           </label>
 
 
@@ -737,6 +811,7 @@
             >
 
             I don't remember
+
           </label>
 
 
@@ -759,33 +834,43 @@
         <ol class="popular-list">
 
           <li>
+
             <a href="#">
               Halo 3 multiplayer maps
             </a>
+
           </li>
 
           <li>
+
             <a href="#">
               Xbox 360 dashboard archive
             </a>
+
           </li>
 
           <li>
+
             <a href="#">
               Best local multiplayer games
             </a>
+
           </li>
 
           <li>
+
             <a href="#">
               Original gamer pictures
             </a>
+
           </li>
 
           <li>
+
             <a href="#">
               Backward-compatible games
             </a>
+
           </li>
 
         </ol>
@@ -806,12 +891,12 @@
             About
           </a>
 
-          <a href="#">
+          <a href="games.html">
             Game list
           </a>
 
           <a href="#">
-            Screenshot archive
+            Clip archive
           </a>
 
           <a href="#">
@@ -857,12 +942,21 @@
       </p>
 
       <p>
-        Unofficial Xbox 360 fan site
+        360 Archive is an unofficial fan project and is not affiliated
+        with, endorsed by, or sponsored by Microsoft or Xbox.
       </p>
 
     </div>
 
   </footer>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/supabase.js"></script>
+
+  <script src="js/home.js?v=2"></script>
+
 </body>
+
 </html>
