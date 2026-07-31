@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Games | 360 Archive</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+</head>
+
+<body>
+
+  <div class="top-bar">
+
+    <div class="site-width top-bar-inner">
+
+      <span>
+        360 ARCHIVE
+      </span>
+
+      <span class="online-status">
+
+        <span class="online-dot"></span>
+
+        ONLINE
+
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <header class="site-header">
+
+    <div class="site-width header-inner">
+
+      <a
+        class="site-logo"
+        href="index.html"
+      >
+
+        <span class="logo-circle">
+          X
+        </span>
+
+        <span class="logo-name">
+
+          <strong>
+            360
+          </strong>
+
+          <span>
+            ARCHIVE
+          </span>
+
+        </span>
+
+      </a>
+
+
+      <div class="header-text">
+
+        <p>
+          Search the Xbox 360 game archive
+        </p>
+
+        <span>
+          unofficial fan site
+        </span>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <nav class="main-nav">
+
+    <div class="site-width nav-inner">
+
+      <a href="index.html">
+        HOME
+      </a>
+
+      <a
+        class="active"
+        href="games.html"
+      >
+        GAMES
+      </a>
+
+      <a href="#">
+        POSTS
+      </a>
+
+      <a href="#">
+        CLIPS
+      </a>
+
+      <a href="#">
+        FORUM
+      </a>
+
+      <a href="profile.html">
+        PROFILE
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <main class="site-width games-page">
+
+    <section class="game-search-panel">
+
+      <p class="small-heading">
+        GAME DATABASE
+      </p>
+
+      <h1>
+        Search Xbox 360 games
+      </h1>
+
+      <p>
+        Search for a game and choose the correct result.
+        Games can later be connected to posts and clips.
+      </p>
+
+
+      <form id="game-search-form">
+
+        <label for="game-search-input">
+          Game title
+        </label>
+
+        <div class="game-search-row">
+
+          <input
+            id="game-search-input"
+            type="search"
+            placeholder="Try Halo 3 or Skate 3"
+            autocomplete="off"
+            required
+          >
+
+          <button type="submit">
+            SEARCH
+          </button>
+
+        </div>
+
+      </form>
+
+
+      <p
+        id="game-search-message"
+        class="form-message"
+        aria-live="polite"
+      ></p>
+
+    </section>
+
+
+    <section class="content-section">
+
+      <div class="section-heading">
+
+        <h2>
+          SEARCH RESULTS
+        </h2>
+
+      </div>
+
+
+      <div
+        id="game-search-results"
+        class="game-search-results"
+      >
+
+        <p class="empty-message">
+          Search for a game to get started.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <p class="game-source">
+
+      Game information and artwork provided by
+
+      <a
+        href="https://thegamesdb.net/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        TheGamesDB
+      </a>.
+
+    </p>
+
+  </main>
+
+
+  <footer>
+
+    <div class="site-width footer-inner">
+
+      <p>
+        360 Archive © 2026
+      </p>
+
+      <p>
+        360 Archive is an unofficial fan project and is not
+        affiliated with Microsoft or Xbox.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script src="js/games.js?v=3"></script>
+
+</body>
+
+</html>
