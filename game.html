@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Game | 360 Archive</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css?v=6"
+  >
+</head>
+
+
+<body>
+
+  <div class="top-bar">
+
+    <div class="site-width top-bar-inner">
+
+      <span>
+        360 ARCHIVE
+      </span>
+
+      <span class="online-status">
+
+        <span class="online-dot"></span>
+
+        ONLINE
+
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <header class="site-header">
+
+    <div class="site-width header-inner">
+
+      <a
+        class="site-logo"
+        href="index.html"
+      >
+
+        <span class="logo-circle">
+          X
+        </span>
+
+        <span class="logo-name">
+
+          <strong>
+            360
+          </strong>
+
+          <span>
+            ARCHIVE
+          </span>
+
+        </span>
+
+      </a>
+
+
+      <div class="header-text">
+
+        <p>
+          Xbox 360 games, clips, reviews and discussions
+        </p>
+
+        <span>
+          unofficial fan site
+        </span>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <nav class="main-nav">
+
+    <div class="site-width nav-inner">
+
+      <a href="index.html">
+        HOME
+      </a>
+
+      <a
+        class="active"
+        href="games.html"
+      >
+        GAMES
+      </a>
+
+      <a href="#">
+        POSTS
+      </a>
+
+      <a href="#">
+        CLIPS
+      </a>
+
+      <a href="#">
+        FORUM
+      </a>
+
+      <a href="profile.html">
+        PROFILE
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <main class="site-width game-page">
+
+    <p
+      id="game-page-message"
+      class="form-message"
+      aria-live="polite"
+    >
+      Loading game...
+    </p>
+
+
+    <article
+      id="game-page-content"
+      class="game-detail"
+      hidden
+    >
+
+      <div
+        id="game-detail-background"
+        class="game-detail-background"
+      ></div>
+
+
+      <div class="game-detail-main">
+
+        <div class="game-detail-cover">
+
+          <img
+            id="game-detail-cover"
+            src="images/feature-game.jpg"
+            alt="Game cover"
+          >
+
+        </div>
+
+
+        <div class="game-detail-info">
+
+          <p class="small-heading">
+            GAME ARCHIVE
+          </p>
+
+          <h1 id="game-detail-title">
+            Game title
+          </h1>
+
+
+          <dl class="game-information">
+
+            <div>
+
+              <dt>
+                Released
+              </dt>
+
+              <dd id="game-detail-released">
+                —
+              </dd>
+
+            </div>
+
+
+            <div>
+
+              <dt>
+                Developer
+              </dt>
+
+              <dd id="game-detail-developer">
+                —
+              </dd>
+
+            </div>
+
+
+            <div>
+
+              <dt>
+                Publisher
+              </dt>
+
+              <dd id="game-detail-publisher">
+                —
+              </dd>
+
+            </div>
+
+
+            <div>
+
+              <dt>
+                Platform
+              </dt>
+
+              <dd id="game-detail-platform">
+                Xbox 360
+              </dd>
+
+            </div>
+
+
+            <div>
+
+              <dt>
+                Genres
+              </dt>
+
+              <dd id="game-detail-genres">
+                —
+              </dd>
+
+            </div>
+
+          </dl>
+
+        </div>
+
+      </div>
+
+
+      <section class="content-section">
+
+        <div class="section-heading">
+
+          <h2>
+            ABOUT THIS GAME
+          </h2>
+
+        </div>
+
+        <p id="game-detail-description">
+          No description available.
+        </p>
+
+      </section>
+
+
+      <section class="content-section game-reviews-section">
+
+        <div class="section-heading">
+
+          <h2>
+            USER REVIEWS
+          </h2>
+
+          <span id="game-average-rating">
+            No ratings yet
+          </span>
+
+        </div>
+
+
+        <div
+          id="review-login-message"
+          class="review-login-message"
+        >
+
+          <a href="login.html">
+            Log in
+          </a>
+
+          to review this game.
+
+        </div>
+
+
+        <form
+          id="review-form"
+          class="review-form"
+          hidden
+        >
+
+          <div class="review-form-heading">
+
+            <div>
+
+              <p class="small-heading">
+                YOUR REVIEW
+              </p>
+
+              <h3>
+                Review this game
+              </h3>
+
+            </div>
+
+
+            <label class="rating-field">
+
+              <span>
+                RATING
+              </span>
+
+              <select
+                id="review-rating"
+                required
+              >
+                <option value="">
+                  Choose
+                </option>
+
+                <option value="10">10</option>
+                <option value="9">9</option>
+                <option value="8">8</option>
+                <option value="7">7</option>
+                <option value="6">6</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+
+            </label>
+
+          </div>
+
+
+          <label>
+
+            Review title
+
+            <input
+              id="review-title"
+              type="text"
+              maxlength="80"
+              placeholder="Sum up your thoughts"
+              required
+            >
+
+          </label>
+
+
+          <label>
+
+            Review
+
+            <textarea
+              id="review-body"
+              maxlength="5000"
+              rows="6"
+              placeholder="What did you like or dislike?"
+              required
+            ></textarea>
+
+          </label>
+
+
+          <div class="review-form-actions">
+
+            <button
+              id="review-submit-button"
+              type="submit"
+            >
+              POST REVIEW
+            </button>
+
+            <button
+              id="review-delete-button"
+              type="button"
+              hidden
+            >
+              DELETE REVIEW
+            </button>
+
+          </div>
+
+
+          <p
+            id="review-form-message"
+            class="form-message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+
+        <div
+          id="game-review-list"
+          class="game-review-list"
+        >
+
+          <p class="empty-message">
+            Loading reviews...
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section class="content-section game-clips-section">
+
+        <div class="section-heading">
+
+          <h2>
+            CLIPS
+          </h2>
+
+          <button
+            id="show-clip-form-button"
+            type="button"
+            class="section-action-button"
+            hidden
+          >
+            ADD A CLIP
+          </button>
+
+        </div>
+
+
+        <div
+          id="clip-login-message"
+          class="review-login-message"
+        >
+
+          <a href="login.html">
+            Log in
+          </a>
+
+          to add a clip.
+
+        </div>
+
+
+        <form
+          id="clip-form"
+          class="review-form clip-form"
+          hidden
+        >
+
+          <p class="small-heading">
+            ADD A CLIP
+          </p>
+
+
+          <label>
+
+            Clip title
+
+            <input
+              id="clip-title"
+              type="text"
+              maxlength="100"
+              placeholder="Give your clip a title"
+              required
+            >
+
+          </label>
+
+
+          <label>
+
+            YouTube URL
+
+            <input
+              id="clip-youtube-url"
+              type="url"
+              placeholder="https://www.youtube.com/watch?v=..."
+              required
+            >
+
+          </label>
+
+
+          <label>
+
+            Description
+
+            <textarea
+              id="clip-description"
+              maxlength="2000"
+              rows="4"
+              placeholder="Optional description"
+            ></textarea>
+
+          </label>
+
+
+          <div class="review-form-actions">
+
+            <button type="submit">
+              POST CLIP
+            </button>
+
+            <button
+              id="cancel-clip-button"
+              type="button"
+            >
+              CANCEL
+            </button>
+
+          </div>
+
+
+          <p
+            id="clip-form-message"
+            class="form-message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+
+        <div
+          id="game-clip-list"
+          class="game-clip-list"
+        >
+
+          <p class="empty-message">
+            Loading clips...
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <p class="game-source">
+
+        Game information and artwork provided by
+
+        <a
+          href="https://thegamesdb.net/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TheGamesDB
+        </a>.
+
+      </p>
+
+    </article>
+
+  </main>
+
+
+  <footer>
+
+    <div class="site-width footer-inner">
+
+      <p>
+        360 Archive © 2026
+      </p>
+
+      <p>
+        360 Archive is an unofficial fan project and is not affiliated
+        with, endorsed by, or sponsored by Microsoft or Xbox.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/supabase.js"></script>
+
+  <script src="js/game.js?v=1"></script>
+
+  <script src="js/reviews.js?v=1"></script>
+
+  <script src="js/clips.js?v=1"></script>
+
+</body>
+
+</html>
