@@ -3981,3 +3981,763 @@ footer {
     font-size: 16px;
   }
 }
+
+/* ==================================================
+   POLISHED REVIEWS AND CLIPS
+   ================================================== */
+
+.section-heading-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.section-count {
+  padding: 3px 8px;
+  border: 1px solid rgba(24, 54, 18, 0.45);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.28);
+  color: #173017;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+
+/* Review form */
+
+.review-form {
+  position: relative;
+  margin: 18px;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid #111711;
+  border-radius: 18px 7px 18px 7px;
+  background:
+    radial-gradient(
+      circle at 90% 0,
+      rgba(139, 219, 72, 0.15),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      #272d28,
+      #151a16 68%
+    );
+  color: #e8ede7;
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px rgba(255, 255, 255, 0.07);
+}
+
+
+.review-form h3 {
+  color: #f3f6f2;
+}
+
+
+.review-form label {
+  color: #aeb7ae;
+}
+
+
+.review-form input,
+.review-form textarea,
+.review-form select {
+  border: 1px solid #596359;
+  border-radius: 9px;
+  background:
+    linear-gradient(
+      180deg,
+      #f8faf7,
+      #dce1da
+    );
+}
+
+
+.review-form input:focus,
+.review-form textarea:focus,
+.review-form select:focus {
+  border-color: #75c946;
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(117, 201, 70, 0.2);
+}
+
+
+.game-review-list {
+  display: grid;
+  gap: 15px;
+  padding: 18px;
+}
+
+
+.game-review-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  overflow: hidden;
+  border: 1px solid #111711;
+  border-radius: 18px 7px 18px 7px;
+  background:
+    linear-gradient(
+      145deg,
+      #282e29,
+      #171c18
+    );
+  color: #e9ede8;
+  box-shadow:
+    0 4px 11px rgba(0, 0, 0, 0.3);
+}
+
+
+.game-review-score {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(255, 255, 255, 0.42),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #a3e760,
+      #57ad2c 60%,
+      #347a1b
+    );
+  color: #10200d;
+  font-size: 34px;
+  font-weight: bold;
+  text-shadow:
+    0 1px rgba(255, 255, 255, 0.35);
+}
+
+
+.game-review-score::after {
+  content: "/10";
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  font-size: 8px;
+  letter-spacing: 0.4px;
+}
+
+
+.game-review-content {
+  padding: 17px 20px;
+}
+
+
+.game-review-content h3 {
+  margin: 2px 0 8px;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+
+.game-review-content p {
+  color: #cbd1cb;
+  line-height: 1.6;
+}
+
+
+.game-review-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.game-review-user img {
+  width: 38px;
+  height: 38px;
+  border: 2px solid #70bf42;
+  border-radius: 9px;
+  object-fit: cover;
+}
+
+
+.game-review-user strong {
+  color: #9fe365;
+}
+
+
+.game-review-user span {
+  color: #8f998f;
+}
+
+
+/* Clip form */
+
+.clip-upload-form {
+  margin: 18px;
+  padding: 22px;
+  border: 1px solid #111711;
+  border-radius: 22px 8px 22px 8px;
+  background:
+    radial-gradient(
+      circle at 90% 0,
+      rgba(131, 216, 65, 0.18),
+      transparent 34%
+    ),
+    linear-gradient(
+      145deg,
+      #292f2a,
+      #131815
+    );
+  color: #e9eee8;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.38),
+    inset 0 1px rgba(255, 255, 255, 0.07);
+}
+
+
+.clip-form-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+
+.clip-form-header h3 {
+  margin: 2px 0 0;
+  color: #ffffff;
+  font-size: 23px;
+}
+
+
+.clip-close-button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #596259;
+  border-radius: 50%;
+  background: #171c18;
+  color: #bfc7bf;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.clip-close-button:hover {
+  border-color: #7bc84d;
+  color: #9be166;
+}
+
+
+.clip-field {
+  display: block;
+  margin-bottom: 17px;
+}
+
+
+.clip-field > span,
+.clip-source-field legend {
+  display: block;
+  margin-bottom: 7px;
+  color: #b9c1b9;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+
+.clip-field input,
+.clip-field textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #606960;
+  border-radius: 9px;
+  outline: none;
+  background:
+    linear-gradient(
+      180deg,
+      #fafbf9,
+      #dce1da
+    );
+  color: #222722;
+  font: inherit;
+}
+
+
+.clip-field input:focus,
+.clip-field textarea:focus {
+  border-color: #79ca4b;
+  box-shadow:
+    0 0 0 3px rgba(121, 202, 75, 0.2);
+}
+
+
+.clip-source-field {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+}
+
+
+.clip-source-options {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+
+.clip-source-option {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 13px;
+  border: 1px solid #596259;
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.025)
+    );
+  cursor: pointer;
+}
+
+
+.clip-source-option:has(input:checked) {
+  border-color: #79cb49;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(132, 216, 73, 0.22),
+      rgba(68, 135, 37, 0.12)
+    );
+  box-shadow:
+    0 0 0 2px rgba(121, 203, 73, 0.13);
+}
+
+
+.clip-source-option input {
+  accent-color: #72c747;
+}
+
+
+.clip-source-option strong,
+.clip-source-option small {
+  display: block;
+}
+
+
+.clip-source-option strong {
+  color: #f3f6f2;
+  font-size: 12px;
+}
+
+
+.clip-source-option small {
+  margin-top: 2px;
+  color: #9fa89f;
+  font-size: 9px;
+}
+
+
+#clip-video-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+
+.clip-file-drop {
+  display: flex;
+  min-height: 130px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  border: 2px dashed #657065;
+  border-radius: 15px;
+  background:
+    rgba(255, 255, 255, 0.035);
+  text-align: center;
+  cursor: pointer;
+}
+
+
+.clip-file-drop:hover {
+  border-color: #7ed04f;
+  background:
+    rgba(126, 208, 79, 0.08);
+}
+
+
+.clip-file-icon {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 9px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #73c444;
+  border-radius: 50%;
+  background:
+    linear-gradient(
+      180deg,
+      #8fda57,
+      #458f24
+    );
+  color: #10200d;
+  font-size: 15px;
+}
+
+
+.clip-file-drop strong {
+  color: #e9ede8;
+}
+
+
+.clip-file-drop small {
+  margin-top: 4px;
+  color: #98a298;
+}
+
+
+.clip-file-preview {
+  display: block;
+  width: 100%;
+  max-height: 430px;
+  margin-top: 13px;
+  border: 1px solid #596259;
+  border-radius: 12px;
+  background: #050705;
+}
+
+
+.clip-upload-progress {
+  margin: 16px 0;
+}
+
+
+.clip-upload-progress-bar {
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid #485248;
+  border-radius: 8px;
+  background: #0c100d;
+}
+
+
+.clip-upload-progress-bar span {
+  display: block;
+  width: 45%;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      90deg,
+      #4a9827,
+      #9ae45c,
+      #4a9827
+    );
+  animation:
+    clip-upload-moving 1.1s linear infinite;
+}
+
+
+.clip-upload-progress p {
+  margin: 6px 0 0;
+  color: #9fab9f;
+  font-size: 10px;
+}
+
+
+@keyframes clip-upload-moving {
+  from {
+    transform: translateX(-110%);
+  }
+
+  to {
+    transform: translateX(230%);
+  }
+}
+
+
+.clip-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+
+.clip-submit-button,
+.section-action-button {
+  padding: 10px 15px;
+  border: 1px solid #367321;
+  border-radius: 10px;
+  background:
+    linear-gradient(
+      180deg,
+      #a0e65e,
+      #59ad2d 60%,
+      #377c1d
+    );
+  color: #10200d;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.6),
+    0 2px 5px rgba(0, 0, 0, 0.28);
+}
+
+
+.clip-cancel-button {
+  padding: 10px 15px;
+  border: 1px solid #626b62;
+  border-radius: 10px;
+  background:
+    linear-gradient(
+      180deg,
+      #e8ebe6,
+      #aeb6ad
+    );
+  color: #293029;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+/* Clip cards */
+
+.game-clip-list {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(300px, 1fr)
+    );
+  gap: 18px;
+  padding: 18px;
+}
+
+
+.game-clip-card {
+  overflow: hidden;
+  border: 1px solid #111711;
+  border-radius: 21px 8px 21px 8px;
+  background:
+    linear-gradient(
+      145deg,
+      #282e29,
+      #151a16
+    );
+  color: #e9ede8;
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.34);
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+
+.game-clip-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.42);
+}
+
+
+.game-clip-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #050705;
+}
+
+
+.game-clip-media iframe,
+.game-clip-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: contain;
+}
+
+
+.clip-type-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background:
+    rgba(12, 17, 13, 0.83);
+  color: #9ee167;
+  font-size: 8px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+  backdrop-filter: blur(5px);
+}
+
+
+.game-clip-info {
+  padding: 15px 16px 17px;
+}
+
+
+.game-clip-author {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
+.game-clip-author img {
+  width: 34px;
+  height: 34px;
+  border: 2px solid #65b53b;
+  border-radius: 9px;
+  object-fit: cover;
+}
+
+
+.game-clip-author strong,
+.game-clip-author span {
+  display: block;
+}
+
+
+.game-clip-author strong {
+  color: #9ee166;
+  font-size: 11px;
+}
+
+
+.game-clip-author span {
+  margin-top: 2px;
+  color: #8e988e;
+  font-size: 9px;
+}
+
+
+.game-clip-info h3 {
+  margin: 0 0 7px;
+  color: #ffffff;
+  font-size: 17px;
+}
+
+
+.game-clip-info p {
+  margin: 0 0 13px;
+  color: #c4cbc4;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+
+.game-clip-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding-top: 11px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.game-clip-actions a {
+  color: #91db5c;
+  font-size: 9px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+
+.delete-clip-button {
+  border: 0;
+  background: transparent;
+  color: #c78585;
+  font-size: 9px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.delete-clip-button:hover {
+  color: #eea1a1;
+}
+
+
+.clips-empty-state {
+  grid-column: 1 / -1;
+  padding: 45px 20px;
+  text-align: center;
+}
+
+
+.clips-empty-icon {
+  display: flex;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 13px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #71c146;
+  border-radius: 50%;
+  background:
+    linear-gradient(
+      180deg,
+      #3a433a,
+      #171c18
+    );
+  color: #94dc5f;
+}
+
+
+.clips-empty-state h3 {
+  margin: 0 0 5px;
+  color: #eef2ed;
+}
+
+
+.clips-empty-state p {
+  margin: 0;
+  color: #9fa79f;
+}
+
+
+@media (max-width: 650px) {
+  .game-review-card {
+    grid-template-columns: 60px 1fr;
+  }
+
+
+  .game-review-score {
+    font-size: 26px;
+  }
+
+
+  .clip-source-options {
+    grid-template-columns: 1fr;
+  }
+
+
+  .game-clip-list {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+
+
+  .clip-upload-form,
+  .review-form {
+    margin: 12px;
+    padding: 17px;
+  }
+}
