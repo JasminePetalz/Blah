@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Community | 360 Archive</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css?v=18"
+  >
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="site-width top-bar-inner">
+      <span>360 ARCHIVE</span>
+
+      <span class="online-status">
+        <span class="online-dot"></span>
+        ONLINE
+      </span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-width header-inner">
+      <a
+        class="site-logo"
+        href="index.html"
+      >
+        <span class="logo-circle">X</span>
+
+        <span class="logo-name">
+          <strong>360</strong>
+          <span>ARCHIVE</span>
+        </span>
+      </a>
+
+      <div class="header-text">
+        <p>Community</p>
+        <span>people, stories, reviews, and clips</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav">
+    <div class="site-width nav-inner">
+      <a href="index.html">HOME</a>
+      <a href="games.html">GAMES</a>
+
+      <a
+        class="active"
+        href="community.html"
+      >
+        COMMUNITY
+      </a>
+
+      <a href="forum.html">FORUM</a>
+      <a href="profile.html">PROFILE</a>
+    </div>
+  </nav>
+
+  <main class="site-width community-page">
+    <section class="community-hero">
+      <div class="community-hero-copy">
+        <p class="small-heading">
+          DISCOVER THE COMMUNITY
+        </p>
+
+        <h1>
+          Find your corner of the archive.
+        </h1>
+
+        <p>
+          Search members, articles, reviews, clips,
+          and community tags from across 360 Archive.
+        </p>
+      </div>
+
+      <form
+        id="community-search-form"
+        class="community-search-form"
+      >
+        <input
+          id="community-search-input"
+          type="search"
+          placeholder="Search people, articles, clips, reviews, or tags..."
+          autocomplete="off"
+          aria-label="Search the community"
+        >
+
+        <button type="submit">
+          SEARCH
+        </button>
+      </form>
+
+      <div
+        id="community-search-filters"
+        class="community-search-filters"
+        role="tablist"
+        aria-label="Community search filters"
+      >
+        <button
+          class="active"
+          type="button"
+          data-community-type="all"
+        >
+          ALL
+        </button>
+
+        <button
+          type="button"
+          data-community-type="people"
+        >
+          PEOPLE
+        </button>
+
+        <button
+          type="button"
+          data-community-type="articles"
+        >
+          ARTICLES
+        </button>
+
+        <button
+          type="button"
+          data-community-type="clips"
+        >
+          CLIPS
+        </button>
+
+        <button
+          type="button"
+          data-community-type="reviews"
+        >
+          REVIEWS
+        </button>
+
+        <button
+          type="button"
+          data-community-type="tags"
+        >
+          TAGS
+        </button>
+      </div>
+    </section>
+
+    <p
+      id="community-message"
+      class="form-message community-message"
+      aria-live="polite"
+    >
+      Loading the community...
+    </p>
+
+    <section
+      id="community-default-view"
+      class="community-default-view"
+      hidden
+    >
+      <section class="community-section">
+        <div class="community-section-heading">
+          <div>
+            <p class="small-heading">
+              FROM THE ARCHIVE
+            </p>
+
+            <h2>Latest articles</h2>
+          </div>
+
+          <a href="community.html?type=articles">
+            VIEW ALL
+          </a>
+        </div>
+
+        <div
+          id="community-latest-articles"
+          class="community-article-grid"
+        >
+          <p class="community-empty-message">
+            Loading articles...
+          </p>
+        </div>
+      </section>
+
+      <section class="community-two-column">
+        <section class="community-section">
+          <div class="community-section-heading">
+            <div>
+              <p class="small-heading">
+                MEET THE COMMUNITY
+              </p>
+
+              <h2>New members</h2>
+            </div>
+
+            <a href="community.html?type=people">
+              VIEW ALL
+            </a>
+          </div>
+
+          <div
+            id="community-new-members"
+            class="community-member-list"
+          >
+            <p class="community-empty-message">
+              Loading members...
+            </p>
+          </div>
+        </section>
+
+        <section class="community-section">
+          <div class="community-section-heading">
+            <div>
+              <p class="small-heading">
+                RECENT ACTIVITY
+              </p>
+
+              <h2>Latest reviews</h2>
+            </div>
+
+            <a href="community.html?type=reviews">
+              VIEW ALL
+            </a>
+          </div>
+
+          <div
+            id="community-latest-reviews"
+            class="community-review-list"
+          >
+            <p class="community-empty-message">
+              Loading reviews...
+            </p>
+          </div>
+        </section>
+      </section>
+
+      <section class="community-section">
+        <div class="community-section-heading">
+          <div>
+            <p class="small-heading">
+              WATCH
+            </p>
+
+            <h2>Recent clips</h2>
+          </div>
+
+          <a href="community.html?type=clips">
+            VIEW ALL
+          </a>
+        </div>
+
+        <div
+          id="community-latest-clips"
+          class="community-clip-grid"
+        >
+          <p class="community-empty-message">
+            Loading clips...
+          </p>
+        </div>
+      </section>
+    </section>
+
+    <section
+      id="community-search-view"
+      class="community-search-view"
+      hidden
+    >
+      <div class="community-search-heading">
+        <div>
+          <p class="small-heading">
+            SEARCH RESULTS
+          </p>
+
+          <h2 id="community-search-title">
+            Results
+          </h2>
+        </div>
+
+        <button
+          id="community-clear-search"
+          type="button"
+        >
+          CLEAR SEARCH
+        </button>
+      </div>
+
+      <div
+        id="community-search-results"
+        class="community-search-results"
+      ></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="site-width footer-inner">
+      <p>360 Archive © 2026</p>
+
+      <p>
+        360 Archive is an unofficial fan project and is not
+        affiliated with, endorsed by, or sponsored by Microsoft
+        or Xbox.
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/community.js?v=1"></script>
+</body>
+</html>
