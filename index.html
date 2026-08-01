@@ -1,88 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360 Archive</title>
-
-  <link
-    rel="stylesheet"
-    href="style.css?v=4"
-  >
+  <link rel="stylesheet" href="style.css?v=20">
 </head>
-
-
 <body>
-
   <div class="top-bar">
-
     <div class="site-width top-bar-inner">
-
-      <span>
-        360 ARCHIVE
-      </span>
-
-      <span class="online-status">
-
-        <span class="online-dot"></span>
-
-        ONLINE
-
-      </span>
-
+      <span>360 ARCHIVE</span>
+      <span class="online-status"><span class="online-dot"></span>ONLINE</span>
     </div>
-
   </div>
 
-
   <header class="site-header">
-
     <div class="site-width header-inner">
-
-      <a
-        class="site-logo"
-        href="index.html"
-      >
-
-        <span class="logo-circle">
-          X
-        </span>
-
-        <span class="logo-name">
-
-          <strong>
-            360
-          </strong>
-
-          <span>
-            ARCHIVE
-          </span>
-
-        </span>
-
+      <a class="site-logo" href="index.html">
+        <span class="logo-circle">X</span>
+        <span class="logo-name"><strong>360</strong><span>ARCHIVE</span></span>
       </a>
-
-
       <div class="header-text">
-
-        <p>
-          Xbox 360 games, clips, posts and community discussions
-        </p>
-
-        <span>
-          unofficial fan site
-        </span>
-
+        <p>Xbox 360 games, clips, reviews, articles, and community history</p>
+        <span>unofficial fan archive</span>
       </div>
-
     </div>
-
   </header>
 
   <nav class="main-nav">
@@ -95,841 +37,128 @@
     </div>
   </nav>
 
-<main class="site-width page-layout">
-
+  <main class="site-width page-layout">
     <section class="main-column">
-
-
-      <section class="feature">
-
+      <section class="feature" id="home-feature">
         <div class="feature-image">
-
-          <img
-            src="images/feature-game.jpg"
-            alt="Featured Xbox 360 game"
-          >
-
-          <span class="feature-label">
-            FEATURED GAME
-          </span>
-
+          <img id="home-feature-image" src="images/feature-game.jpg" alt="Featured archive article">
+          <span class="feature-label">FEATURED ARTICLE</span>
         </div>
-
-
         <div class="feature-info">
-
-          <p class="small-heading">
-            THIS WEEK
-          </p>
-
-          <h1>
-            Halo 3
-          </h1>
-
-          <p>
-            Halo 3 was released in 2007 and became one of the biggest
-            games on the Xbox 360. Explore game information, clips,
-            community posts and discussions.
-          </p>
-
-          <a
-            class="main-button"
-            href="games.html"
-          >
-            SEARCH GAMES
-          </a>
-
+          <p class="small-heading" id="home-feature-kicker">FROM THE ARCHIVE</p>
+          <h1 id="home-feature-title">Loading the latest article...</h1>
+          <p id="home-feature-description">Stories, retrospectives, and history from the Xbox 360 era.</p>
+          <a class="main-button" id="home-feature-link" href="community.html?type=articles">BROWSE ARTICLES</a>
         </div>
-
       </section>
 
-
-      <section
-        class="content-section"
-        id="games"
-      >
-
+      <section class="content-section" id="games">
         <div class="section-heading">
-
-          <h2>
-            POPULAR GAMES
-          </h2>
-
-          <a href="games.html">
-            browse all
-          </a>
-
+          <h2>RECENTLY ARCHIVED GAMES</h2>
+          <a href="games.html">browse all</a>
         </div>
-
-
-        <div class="game-grid">
-
-
-          <article class="game-item">
-
-            <img
-              src="images/game-halo3.jpg"
-              alt="Halo 3 game cover"
-            >
-
-            <h3>
-              Halo 3
-            </h3>
-
-            <p>
-              Bungie · 2007
-            </p>
-
-          </article>
-
-
-          <article class="game-item">
-
-            <img
-              src="images/game-skate3.jpg"
-              alt="Skate 3 game cover"
-            >
-
-            <h3>
-              Skate 3
-            </h3>
-
-            <p>
-              EA Black Box · 2010
-            </p>
-
-          </article>
-
-
-          <article class="game-item">
-
-            <img
-              src="images/game-l4d2.jpg"
-              alt="Left 4 Dead 2 game cover"
-            >
-
-            <h3>
-              Left 4 Dead 2
-            </h3>
-
-            <p>
-              Valve · 2009
-            </p>
-
-          </article>
-
-
-          <article class="game-item">
-
-            <img
-              src="images/game-fable2.jpg"
-              alt="Fable II game cover"
-            >
-
-            <h3>
-              Fable II
-            </h3>
-
-            <p>
-              Lionhead Studios · 2008
-            </p>
-
-          </article>
-
+        <div class="game-grid" id="home-game-grid">
+          <p class="home-loading-message">Loading games...</p>
         </div>
-
       </section>
 
-
-      <section
-        class="content-section"
-        id="posts"
-      >
-
+      <section class="content-section" id="articles">
         <div class="section-heading">
-
-          <h2>
-            RECENT POSTS
-          </h2>
-
-          <a href="#">
-            older posts
-          </a>
-
+          <h2>LATEST ARTICLES</h2>
+          <a href="community.html?type=articles">view all articles</a>
         </div>
-
-
-        <article class="post">
-
-          <div class="post-date">
-
-            <strong>
-              24
-            </strong>
-
-            <span>
-              JUL
-            </span>
-
-          </div>
-
-
-          <div class="post-content">
-
-            <h3>
-
-              <a href="#">
-                Xbox 360 dashboard timeline
-              </a>
-
-            </h3>
-
-            <p>
-              A look through the major Xbox 360 dashboard updates,
-              starting with the original blades layout.
-            </p>
-
-            <span class="post-details">
-              posted by user · 12 replies
-            </span>
-
-          </div>
-
-        </article>
-
-
-        <article class="post">
-
-          <div class="post-date">
-
-            <strong>
-              19
-            </strong>
-
-            <span>
-              JUL
-            </span>
-
-          </div>
-
-
-          <div class="post-content">
-
-            <h3>
-
-              <a href="#">
-                Local multiplayer games
-              </a>
-
-            </h3>
-
-            <p>
-              A list of Xbox 360 games that support local co-op or
-              competitive split-screen multiplayer.
-            </p>
-
-            <span class="post-details">
-              posted by user · 8 replies
-            </span>
-
-          </div>
-
-        </article>
-
-
-        <article class="post">
-
-          <div class="post-date">
-
-            <strong>
-              11
-            </strong>
-
-            <span>
-              JUL
-            </span>
-
-          </div>
-
-
-          <div class="post-content">
-
-            <h3>
-
-              <a href="#">
-                Gamer picture archive update
-              </a>
-
-            </h3>
-
-            <p>
-              More gamer pictures have been added from old themes,
-              games and Xbox Live Marketplace downloads.
-            </p>
-
-            <span class="post-details">
-              posted by user · 5 replies
-            </span>
-
-          </div>
-
-        </article>
-
+        <div id="home-article-list">
+          <p class="home-loading-message">Loading articles...</p>
+        </div>
       </section>
 
-
-      <section
-        class="content-section"
-        id="clips"
-      >
-
+      <section class="content-section" id="clips">
         <div class="section-heading">
-
-          <h2>
-            NEW CLIPS
-          </h2>
-
-          <a href="#">
-            view all clips
-          </a>
-
+          <h2>NEW CLIPS</h2>
+          <a href="community.html?type=clips">view all clips</a>
         </div>
-
-
-        <div class="screenshot-grid">
-
-          <a href="#">
-
-            <img
-              src="images/screenshot-1.jpg"
-              alt="Xbox 360 game clip preview"
-            >
-
-          </a>
-
-          <a href="#">
-
-            <img
-              src="images/screenshot-2.jpg"
-              alt="Xbox 360 game clip preview"
-            >
-
-          </a>
-
-          <a href="#">
-
-            <img
-              src="images/screenshot-3.jpg"
-              alt="Xbox 360 game clip preview"
-            >
-
-          </a>
-
+        <div class="screenshot-grid" id="home-clip-grid">
+          <p class="home-loading-message">Loading clips...</p>
         </div>
-
       </section>
 
-
-      <section class="content-section">
-
+      <section class="content-section" id="reviews">
         <div class="section-heading">
-
-          <h2>
-            LATEST REVIEWS
-          </h2>
-
-          <a href="#">
-            all reviews
-          </a>
-
+          <h2>LATEST REVIEWS</h2>
+          <a href="community.html?type=reviews">all reviews</a>
         </div>
-
-
-        <div class="review-list">
-
-
-          <article class="review">
-
-            <div class="review-score">
-              9
-            </div>
-
-            <div>
-
-              <h3>
-                Halo: Reach
-              </h3>
-
-              <p>
-                A strong campaign, good multiplayer and one of the
-                better-looking games released for the console.
-              </p>
-
-            </div>
-
-          </article>
-
-
-          <article class="review">
-
-            <div class="review-score">
-              8
-            </div>
-
-            <div>
-
-              <h3>
-                Skate 3
-              </h3>
-
-              <p>
-                The story is forgettable, but the open areas and
-                controls make it easy to keep coming back to.
-              </p>
-
-            </div>
-
-          </article>
-
+        <div class="review-list" id="home-review-list">
+          <p class="home-loading-message">Loading reviews...</p>
         </div>
-
       </section>
-
     </section>
 
-
     <aside class="sidebar">
-
-
-      <section
-        class="sidebar-section"
-        id="profile"
-      >
-
-        <div class="sidebar-heading">
-          USER PROFILE
-        </div>
-
-
+      <section class="sidebar-section" id="profile">
+        <div class="sidebar-heading">USER PROFILE</div>
         <div class="profile">
-
-          <img
-            id="home-profile-avatar"
-            src="images/avatar.png"
-            alt="User avatar"
-          >
-
-
+          <img id="home-profile-avatar" src="images/avatar.png" alt="User avatar">
           <div class="profile-details">
-
-            <strong id="home-profile-username">
-              user
-            </strong>
-
-            <span id="home-profile-gamerscore">
-              Gamerscore: 0
-            </span>
-
-            <span id="home-profile-member-since">
-              Member since: —
-            </span>
-
-            <span id="home-profile-status">
-              Status: Checking...
-            </span>
-
+            <strong id="home-profile-username">user</strong>
+            <span id="home-profile-gamerscore">Gamerscore: 0</span>
+            <span id="home-profile-member-since">Member since: —</span>
+            <span id="home-profile-status">Status: Checking...</span>
           </div>
-
         </div>
-
-
-        <p
-          class="profile-bio"
-          id="home-profile-bio"
-        >
-          profile information goes here
-        </p>
-
-
+        <p class="profile-bio" id="home-profile-bio">Loading profile...</p>
         <div class="profile-links">
-
-          <a
-            id="home-profile-primary-link"
-            href="login.html"
-          >
-            Log in
-          </a>
-
-          <a
-            id="home-profile-secondary-link"
-            href="signup.html"
-          >
-            Create account
-          </a>
-
+          <a id="home-profile-primary-link" href="login.html">Log in</a>
+          <a id="home-profile-secondary-link" href="signup.html">Create account</a>
         </div>
-
       </section>
 
-
       <section class="sidebar-section">
-
-        <div class="sidebar-heading">
-          SITE INFO
-        </div>
-
-
+        <div class="sidebar-heading">SITE INFO</div>
         <div class="site-stats">
-
-          <div>
-
-            <span>
-              Games
-            </span>
-
-            <strong>
-              246
-            </strong>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              Clips
-            </span>
-
-            <strong>
-              1,308
-            </strong>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              Members
-            </span>
-
-            <strong>
-              482
-            </strong>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              Posts
-            </span>
-
-            <strong>
-              3,891
-            </strong>
-
-          </div>
-
+          <div><span>Games</span><strong id="home-stat-games">—</strong></div>
+          <div><span>Clips</span><strong id="home-stat-clips">—</strong></div>
+          <div><span>Members</span><strong id="home-stat-members">—</strong></div>
+          <div><span>Articles</span><strong id="home-stat-articles">—</strong></div>
         </div>
-
       </section>
-
-
-      <section
-        class="sidebar-section"
-        id="forum"
-      >
-
-        <div class="sidebar-heading">
-          FORUM ACTIVITY
-        </div>
-
-
-        <ul class="forum-list">
-
-          <li>
-
-            <a href="#">
-              Favorite dashboard version?
-            </a>
-
-            <span>
-              3 minutes ago
-            </span>
-
-          </li>
-
-
-          <li>
-
-            <a href="#">
-              Show your old avatar
-            </a>
-
-            <span>
-              18 minutes ago
-            </span>
-
-          </li>
-
-
-          <li>
-
-            <a href="#">
-              Xbox 360 disc drive problem
-            </a>
-
-            <span>
-              41 minutes ago
-            </span>
-
-          </li>
-
-
-          <li>
-
-            <a href="#">
-              Best game box art
-            </a>
-
-            <span>
-              yesterday
-            </span>
-
-          </li>
-
-
-          <li>
-
-            <a href="#">
-              Games that still have active servers
-            </a>
-
-            <span>
-              yesterday
-            </span>
-
-          </li>
-
-        </ul>
-
-
-        <a
-          class="sidebar-bottom-link"
-          href="#"
-        >
-          GO TO FORUM
-        </a>
-
-      </section>
-
 
       <section class="sidebar-section">
-
-        <div class="sidebar-heading">
-          POLL
-        </div>
-
-
-        <form class="poll">
-
-          <p>
-            Which dashboard did you use most?
-          </p>
-
-
-          <label>
-
-            <input
-              type="radio"
-              name="dashboard"
-            >
-
-            Blades
-
-          </label>
-
-
-          <label>
-
-            <input
-              type="radio"
-              name="dashboard"
-            >
-
-            New Xbox Experience
-
-          </label>
-
-
-          <label>
-
-            <input
-              type="radio"
-              name="dashboard"
-            >
-
-            Metro
-
-          </label>
-
-
-          <label>
-
-            <input
-              type="radio"
-              name="dashboard"
-            >
-
-            I don't remember
-
-          </label>
-
-
-          <button type="button">
-            VOTE
-          </button>
-
-        </form>
-
-      </section>
-
-
-      <section class="sidebar-section">
-
-        <div class="sidebar-heading">
-          POPULAR THIS WEEK
-        </div>
-
-
-        <ol class="popular-list">
-
-          <li>
-
-            <a href="#">
-              Halo 3 multiplayer maps
-            </a>
-
-          </li>
-
-          <li>
-
-            <a href="#">
-              Xbox 360 dashboard archive
-            </a>
-
-          </li>
-
-          <li>
-
-            <a href="#">
-              Best local multiplayer games
-            </a>
-
-          </li>
-
-          <li>
-
-            <a href="#">
-              Original gamer pictures
-            </a>
-
-          </li>
-
-          <li>
-
-            <a href="#">
-              Backward-compatible games
-            </a>
-
-          </li>
-
-        </ol>
-
-      </section>
-
-
-      <section class="sidebar-section">
-
-        <div class="sidebar-heading">
-          SITE LINKS
-        </div>
-
-
+        <div class="sidebar-heading">EXPLORE COMMUNITY</div>
         <nav class="side-links">
-
-          <a href="#">
-            About
-          </a>
-
-          <a href="games.html">
-            Game list
-          </a>
-
-          <a href="#">
-            Clip archive
-          </a>
-
-          <a href="#">
-            Guestbook
-          </a>
-
-          <a href="#">
-            Links
-          </a>
-
+          <a href="community.html?type=articles">Articles and history</a>
+          <a href="community.html?type=reviews">Member reviews</a>
+          <a href="community.html?type=clips">Game clips</a>
+          <a href="community.html?type=people">Community members</a>
+          <a href="community.html?type=tags">Profile tags</a>
         </nav>
-
       </section>
 
-
-      <section class="sidebar-section visitor-counter">
-
-        <div class="sidebar-heading">
-          VISITOR COUNT
+      <section class="sidebar-section">
+        <div class="sidebar-heading">NEWEST MEMBERS</div>
+        <div id="home-member-list" class="home-member-list">
+          <p class="home-loading-message">Loading members...</p>
         </div>
-
-        <span>
-          You are visitor
-        </span>
-
-        <strong>
-          0000360
-        </strong>
-
       </section>
 
+      <section class="sidebar-section">
+        <div class="sidebar-heading">ABOUT THE ARCHIVE</div>
+        <div class="home-about-card">
+          <p>360 Archive is a community-built fan project preserving the games, memories, clips, reviews, and history of the Xbox 360 era.</p>
+          <a class="sidebar-bottom-link" href="community.html">EXPLORE COMMUNITY</a>
+        </div>
+      </section>
     </aside>
-
   </main>
 
-
   <footer>
-
     <div class="site-width footer-inner">
-
-      <p>
-        360 Archive © 2026
-      </p>
-
-      <p>
-        360 Archive is an unofficial fan project and is not affiliated
-        with, endorsed by, or sponsored by Microsoft or Xbox.
-      </p>
-
+      <p>360 Archive © 2026</p>
+      <p>360 Archive is an unofficial fan project and is not affiliated with, endorsed by, or sponsored by Microsoft or Xbox.</p>
     </div>
-
   </footer>
 
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script src="js/supabase.js"></script>
-
-  <script src="js/home.js?v=2"></script>
-
+  <script src="js/supabase.js?v=7"></script>
+  <script src="js/home.js?v=7"></script>
 </body>
-
 </html>

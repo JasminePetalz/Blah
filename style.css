@@ -7699,3 +7699,110 @@ body.modal-open {
   padding-top: 40px;
   padding-bottom: 60px;
 }
+
+/* ==================================================
+   HOMEPAGE LIVE CONTENT
+   ================================================== */
+.home-loading-message {
+  grid-column: 1 / -1;
+  padding: 24px;
+  margin: 0;
+  color: #9ca89b;
+  text-align: center;
+}
+
+.game-item h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.game-item > a {
+  display: block;
+}
+
+.home-game-placeholder,
+.home-clip-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  color: #8aca59;
+  background: radial-gradient(circle, #344231, #171d18);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+}
+
+.home-clip-placeholder {
+  aspect-ratio: 16 / 9;
+}
+
+.home-clip-link {
+  display: grid;
+  gap: 8px;
+  color: #e7ede4;
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.home-clip-link img,
+.home-clip-link .home-clip-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.review h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-member-list {
+  display: grid;
+}
+
+.home-member-row {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 9px;
+  align-items: center;
+  padding: 10px 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: #e5ebe2;
+  text-decoration: none;
+}
+
+.home-member-row:last-child {
+  border-bottom: 0;
+}
+
+.home-member-row:hover {
+  background: rgba(112, 197, 67, 0.09);
+}
+
+.home-member-row img {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #6cab49;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.home-member-row span {
+  display: grid;
+  gap: 3px;
+}
+
+.home-member-row small {
+  color: #97a395;
+  font-size: 8px;
+}
+
+.home-about-card {
+  padding: 14px;
+  color: #aeb8ac;
+  font-size: 10px;
+  line-height: 1.6;
+}
