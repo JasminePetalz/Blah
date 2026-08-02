@@ -9289,23 +9289,23 @@ button:disabled,
 
 
 /* ==================================================
-   FORUM VISIBILITY + REPLY ACTION FIX
+   FORUM CONTEXT ACTIONS
 ================================================== */
 
 [hidden] {
   display: none !important;
 }
 
-#forum-home-create-button[data-mode="thread"] {
-  border-color: #78c94a;
-  color: #11200e;
-  background: linear-gradient(180deg, #c2f58f, #68ce3f 58%, #3d971f);
+#forum-thread-reply-button {
+  min-width: 160px;
 }
 
+#forum-home-create-panel,
 #forum-reply-panel {
-  scroll-margin-top: 88px;
+  scroll-margin-top: 24px;
 }
 
-#forum-reply-panel .forum-panel-heading {
-  background: linear-gradient(180deg, #b7ef83, #60c53b 58%, #378a20);
+.forum-heading-actions .forum-primary-button,
+.forum-heading-actions .forum-secondary-button {
+  white-space: nowrap;
 }

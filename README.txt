@@ -1,13 +1,20 @@
-Replace these two files in your repository:
+PREVIOUS SAVE FORUM UPDATE
 
-style.css            -> repository root
-js/profile.js         -> js folder
+Replace these three files in your repository:
+- forum.html
+- js/forum.js
+- style.css
 
-Then push to GitHub and hard refresh the profile page with Ctrl + F5.
+What changed:
+- Signed-in users see START A THREAD on the forum homepage.
+- Logged-out users see LOG IN TO POST instead.
+- The forum homepage thread form includes a category picker.
+- Category pages keep CREATE THREAD.
+- Individual thread pages show REPLY TO THREAD instead of CREATE THREAD.
+- Clicking REPLY TO THREAD opens and focuses the reply form.
+- Locked threads do not allow normal users to reply; staff can still reply.
+- Forum search now searches thread titles and post bodies.
+- FORUM HOME stays hidden on the actual forum homepage.
+- Added a global hidden attribute fix so JS-controlled buttons stay hidden.
 
-This update:
-- hides Edit Profile on every profile except the signed-in user's own profile
-- keeps the account-management section owner-only
-- makes location/member metadata easier to read
-- gives UNFOLLOW a clear red destructive-action style
-- preserves Supabase RLS as the actual permission enforcement
+No new SQL is required.
