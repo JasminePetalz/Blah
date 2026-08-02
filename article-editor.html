@@ -8,7 +8,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Article Editor | 360 Archive</title>
+  <title>Article Editor | Previous Save</title>
 
   <link
     rel="stylesheet"
@@ -19,7 +19,7 @@
 <body>
   <div class="top-bar">
     <div class="site-width top-bar-inner">
-      <span>360 ARCHIVE</span>
+      <span>PREVIOUS SAVE</span>
 
       <span class="online-status">
         <span class="online-dot"></span>
@@ -34,13 +34,11 @@
         class="site-logo"
         href="index.html"
       >
-        <span class="logo-circle">
-          X
-        </span>
+        <span class="logo-circle">PS</span>
 
-        <span class="logo-name">
-          <strong>360</strong>
-          <span>ARCHIVE</span>
+        <span class="logo-name previous-save-logo-name">
+          <strong>PREVIOUS</strong>
+          <span>SAVE</span>
         </span>
       </a>
 
@@ -55,24 +53,13 @@
     <div class="site-width nav-inner">
       <a href="index.html">HOME</a>
       <a href="games.html">GAMES</a>
-      <a class="active" href="community.html">COMMUNITY</a>
+      <a href="community.html">COMMUNITY</a>
       <a href="forum.html">FORUM</a>
       <a href="profile.html">PROFILE</a>
     </div>
   </nav>
-  <nav class="community-subnav" aria-label="Community sections">
-    <div class="site-width community-subnav-inner">
-      <a href="community.html">OVERVIEW</a>
-      <a href="community.html?type=articles">ARTICLES</a>
-      <a href="community.html?type=reviews">REVIEWS</a>
-      <a href="community.html?type=clips">CLIPS</a>
-      <a href="community.html?type=people">MEMBERS</a>
-      <a href="community.html?type=tags">TAGS</a>
-    </div>
-  </nav>
 
-
-<main class="site-width article-editor-page">
+  <main class="site-width article-editor-page">
     <p
       id="article-editor-message"
       class="form-message"
@@ -90,7 +77,7 @@
         <div class="article-editor-heading">
           <div>
             <p class="small-heading">
-              360 ARCHIVE EDITOR
+              PREVIOUS SAVE EDITOR
             </p>
 
             <h1 id="article-editor-title">
@@ -140,15 +127,50 @@
             >
           </label>
 
-          <label class="article-field">
-            <span>COVER IMAGE URL</span>
+          <div class="article-field article-image-field">
+            <span>COVER IMAGE</span>
 
-            <input
-              id="article-cover-url"
-              type="url"
-              placeholder="https://..."
-            >
-          </label>
+            <div class="article-image-upload-box">
+              <input
+                id="article-cover-file"
+                class="article-cover-file-input"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+              >
+
+              <label
+                class="article-image-picker"
+                for="article-cover-file"
+              >
+                <strong>CHOOSE IMAGE</strong>
+                <span>JPG, PNG, WEBP, or GIF · maximum 10 MB</span>
+              </label>
+
+              <div
+                id="article-image-selection"
+                class="article-image-selection"
+                hidden
+              >
+                <img
+                  id="article-image-thumbnail"
+                  alt="Selected article cover preview"
+                >
+
+                <div>
+                  <strong id="article-image-name">Selected image</strong>
+                  <span id="article-image-size"></span>
+                </div>
+
+                <button
+                  id="article-remove-image"
+                  class="article-remove-image"
+                  type="button"
+                >
+                  REMOVE
+                </button>
+              </div>
+            </div>
+          </div>
 
           <label class="article-field">
             <span>ARTICLE BODY</span>
@@ -228,10 +250,10 @@ Write the article here..."
 
   <footer>
     <div class="site-width footer-inner">
-      <p>360 Archive © 2026</p>
+      <p>Previous Save © 2026</p>
 
       <p>
-        360 Archive is an unofficial fan project and is not
+        Previous Save is an unofficial fan project and is not
         affiliated with, endorsed by, or sponsored by Microsoft
         or Xbox.
       </p>
@@ -239,7 +261,7 @@ Write the article here..."
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/article-editor.js?v=1"></script>
+  <script src="js/supabase.js?v=7"></script>
+  <script src="js/article-editor.js?v=2"></script>
 </body>
 </html>

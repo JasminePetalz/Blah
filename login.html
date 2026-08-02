@@ -8,9 +8,9 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Log In | 360 Archive</title>
+  <title>Log In | Previous Save</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=32">
 </head>
 
 <body>
@@ -30,15 +30,14 @@
     <section class="auth-box">
 
       <a class="auth-logo" href="index.html">
-        360 ARCHIVE
+        PREVIOUS SAVE
       </a>
 
       <h1>Log in</h1>
 
       <p class="auth-intro">
-        Sign in to view your profile and posts.
+        Sign in to view your profile, reviews, clips, and posts.
       </p>
-
 
       <form id="login-form">
 
@@ -54,7 +53,6 @@
           required
         >
 
-
         <label for="login-password">
           Password
         </label>
@@ -67,11 +65,15 @@
           required
         >
 
+        <div class="forgot-password-row">
+          <a href="forgot-password.html">
+            Forgot password?
+          </a>
+        </div>
 
         <button type="submit">
           LOG IN
         </button>
-
 
         <p
           class="auth-message"
@@ -81,17 +83,13 @@
 
       </form>
 
-
       <p class="auth-switch">
-
         Need an account?
 
         <a href="signup.html">
           Sign up
         </a>
-
       </p>
-
 
       <a class="auth-back" href="index.html">
         ← Back to home
@@ -101,12 +99,11 @@
 
   </main>
 
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="js/supabase.js"></script>
+  <script src="js/supabase.js?v=7"></script>
 
-  <script src="js/auth.js?v=4"></script>
+  <script src="js/auth.js?v=5"></script>
 
 </body>
 </html>
