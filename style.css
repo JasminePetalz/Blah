@@ -7806,3 +7806,128 @@ body.modal-open {
   font-size: 10px;
   line-height: 1.6;
 }
+
+
+/* ==================================================
+   PREVIOUS SAVE BRANDING + HOMEPAGE CREATOR ACTIONS
+================================================== */
+
+.logo-mark {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 68px;
+  border: 2px solid #65b844;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #f9fbf7, #bfc9bc);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -8px 16px rgba(85, 105, 85, 0.18),
+    0 4px 10px rgba(60, 80, 60, 0.22);
+  transform: rotate(-2deg);
+}
+
+.logo-mark svg {
+  width: 46px;
+  height: 46px;
+  fill: #45a92f;
+  filter: drop-shadow(0 3px 2px rgba(37, 80, 35, 0.24));
+}
+
+.logo-mark .logo-mark-cutout {
+  fill: #dfe6dc;
+}
+
+.logo-mark .logo-mark-slot {
+  fill: #526152;
+}
+
+.logo-mark .logo-mark-label {
+  fill: #eef3eb;
+}
+
+.logo-mark .logo-mark-dot {
+  fill: #62c83b;
+}
+
+.previous-save-name {
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.previous-save-name strong {
+  color: #2b382b;
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -2.5px;
+  line-height: 0.9;
+}
+
+.previous-save-name span {
+  margin: 0 0 2px;
+  color: #4baa32;
+  font-size: 18px;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.header-action-button {
+  display: inline-block;
+  margin-top: 13px;
+  padding: 9px 13px;
+  border: 1px solid #2d8d29;
+  border-radius: 12px;
+  color: #173317;
+  background: linear-gradient(180deg, #b5f081, #58c637);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 3px 7px rgba(50,80,50,.18);
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: .8px;
+}
+
+.header-action-button:hover {
+  background: linear-gradient(180deg, #c6f89e, #70d44a);
+}
+
+.header-action-button[hidden] {
+  display: none;
+}
+
+.footer-inner {
+  gap: 12px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-links a {
+  color: inherit;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+}
+
+.footer-links a:hover {
+  color: var(--green-main);
+}
+
+@media (max-width: 700px) {
+  .previous-save-name {
+    display: block;
+  }
+
+  .previous-save-name strong,
+  .previous-save-name span {
+    display: block;
+    margin: 0;
+  }
+
+  .previous-save-name span {
+    margin-top: 6px;
+  }
+}

@@ -3,26 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>360 Archive</title>
+  <title>Previous Save</title>
   <link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
   <div class="top-bar">
     <div class="site-width top-bar-inner">
-      <span>360 ARCHIVE</span>
+      <span>PREVIOUS SAVE</span>
       <span class="online-status"><span class="online-dot"></span>ONLINE</span>
     </div>
   </div>
 
   <header class="site-header">
     <div class="site-width header-inner">
-      <a class="site-logo" href="index.html">
-        <span class="logo-circle">X</span>
-        <span class="logo-name"><strong>360</strong><span>ARCHIVE</span></span>
+      <a class="site-logo" href="index.html" aria-label="Previous Save home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img">
+            <path d="M14 7h31l8 8v42H14z" />
+            <path class="logo-mark-cutout" d="M22 7h21v17H22z" />
+            <path class="logo-mark-slot" d="M25 11h13v9H25z" />
+            <path class="logo-mark-label" d="M21 34h25v16H21z" />
+            <circle class="logo-mark-dot" cx="41" cy="42" r="3" />
+          </svg>
+        </span>
+        <span class="logo-name previous-save-name"><strong>PREVIOUS</strong><span>SAVE</span></span>
       </a>
       <div class="header-text">
-        <p>Xbox 360 games, clips, reviews, articles, and community history</p>
-        <span>unofficial fan archive</span>
+        <p>An Xbox 360 community archive</p>
+        <span>games, memories, reviews, clips, and community history</span>
+        <a id="home-write-article" class="header-action-button" href="article-editor.html" hidden>WRITE AN ARTICLE</a>
       </div>
     </div>
   </header>
@@ -143,7 +152,7 @@
       <section class="sidebar-section">
         <div class="sidebar-heading">ABOUT THE ARCHIVE</div>
         <div class="home-about-card">
-          <p>360 Archive is a community-built fan project preserving the games, memories, clips, reviews, and history of the Xbox 360 era.</p>
+          <p>Previous Save is a community-built fan project preserving the games, memories, clips, reviews, and history of the Xbox 360 era.</p>
           <a class="sidebar-bottom-link" href="community.html">EXPLORE COMMUNITY</a>
         </div>
       </section>
@@ -152,8 +161,13 @@
 
   <footer>
     <div class="site-width footer-inner">
-      <p>360 Archive © 2026</p>
-      <p>360 Archive is an unofficial fan project and is not affiliated with, endorsed by, or sponsored by Microsoft or Xbox.</p>
+      <p>Previous Save © 2026</p>
+      <p>Previous Save is an unofficial fan project and is not affiliated with, endorsed by, or sponsored by Microsoft or Xbox.</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="support.html">Support</a>
+        <a href="support.html#bug-report">Report a bug</a>
+        <a href="community.html">Community</a>
+      </nav>
     </div>
   </footer>
 
