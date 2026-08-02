@@ -19,6 +19,21 @@ const forumElements = {
   backButton: document.querySelector("#forum-back-button"),
   globalMessage: document.querySelector("#forum-global-message"),
 
+  homeCreateButton: document.querySelector("#forum-home-create-button"),
+  homeLoginButton: document.querySelector("#forum-home-login-button"),
+  homeCreatePanel: document.querySelector("#forum-home-create-panel"),
+  homeCreateForm: document.querySelector("#forum-home-create-form"),
+  homeCategory: document.querySelector("#forum-home-category"),
+  homeThreadTitle: document.querySelector("#forum-home-thread-title"),
+  homeThreadBody: document.querySelector("#forum-home-thread-body"),
+  homeCreateMessage: document.querySelector("#forum-home-create-message"),
+  homeCancelCreate: document.querySelector("#forum-home-cancel-create"),
+
+  searchForm: document.querySelector("#forum-search-form"),
+  searchInput: document.querySelector("#forum-search-input"),
+  searchResults: document.querySelector("#forum-search-results"),
+  clearSearch: document.querySelector("#forum-clear-search"),
+
   categoryList: document.querySelector("#forum-category-list"),
   recentThreads: document.querySelector("#forum-recent-threads"),
   threadList: document.querySelector("#forum-thread-list"),
@@ -366,13 +381,22 @@ async function loadForumOverview() {
     throw categoryError;
   }
 
+  if (forumElements.homeCategory) {
+    forumElements.homeCategory.innerHTML = `
+      <option value="">Choose a category</option>
+      ${(categories || []).map((category) => `
+        <option value="${category.id}">${escapeHtml(category.name)}</option>
+      `).join("")}
+    `;
+  }
+
   const {
     data: threads,
     error: threadError
   } = await supabaseClient
     .from("forum_threads")
     .select(
-      "id,category_id,author_id,title,is_pinned,is_locked,created_at"
+      "id,category_id,author_id,title,body,is_pinned,is_locked,created_at"
     )
     .order("created_at", {
       ascending: false
@@ -443,6 +467,16 @@ async function loadForumOverview() {
         );
       }).join("");
   }
+
+  if (forumState.user) {
+    forumElements.homeCreateButton.hidden = false;
+    forumElements.homeLoginButton.hidden = true;
+  } else {
+    forumElements.homeCreateButton.hidden = true;
+    forumElements.homeLoginButton.hidden = false;
+  }
+
+  forumElements.homeCreatePanel.hidden = true;
 
   hideLoading();
   forumElements.overviewView.hidden = false;
@@ -1185,6 +1219,175 @@ document.addEventListener(
     }
   }
 );
+
+
+
+forumElements.homeCreateButton?.addEventListener("click", () => {
+  forumElements.homeCreatePanel.hidden =
+    !forumElements.homeCreatePanel.hidden;
+
+  if (!forumElements.homeCreatePanel.hidden) {
+    forumElements.homeCategory.focus();
+  }
+});
+
+
+forumElements.homeCancelCreate?.addEventListener("click", () => {
+  forumElements.homeCreatePanel.hidden = true;
+  forumElements.homeCreateForm.reset();
+  showForumMessage(forumElements.homeCreateMessage, "");
+});
+
+
+forumElements.homeCreateForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!forumState.user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const categoryId = Number(forumElements.homeCategory.value);
+  const title = forumElements.homeThreadTitle.value.trim();
+  const body = forumElements.homeThreadBody.value.trim();
+
+  if (!categoryId) {
+    showForumMessage(
+      forumElements.homeCreateMessage,
+      "Please choose a forum category.",
+      "error"
+    );
+    return;
+  }
+
+  if (title.length < 3) {
+    showForumMessage(
+      forumElements.homeCreateMessage,
+      "Your title must contain at least 3 characters.",
+      "error"
+    );
+    return;
+  }
+
+  if (!body) {
+    showForumMessage(
+      forumElements.homeCreateMessage,
+      "Please write something before posting.",
+      "error"
+    );
+    return;
+  }
+
+  const submitButton = forumElements.homeCreateForm.querySelector(
+    'button[type="submit"]'
+  );
+
+  submitButton.disabled = true;
+  submitButton.textContent = "POSTING...";
+
+  const { data, error } = await supabaseClient
+    .from("forum_threads")
+    .insert({
+      category_id: categoryId,
+      author_id: forumState.user.id,
+      title,
+      body
+    })
+    .select("id")
+    .single();
+
+  if (error) {
+    console.error("Homepage forum thread error:", error);
+    showForumMessage(
+      forumElements.homeCreateMessage,
+      error.message || "Your thread could not be posted.",
+      "error"
+    );
+    submitButton.disabled = false;
+    submitButton.textContent = "POST THREAD";
+    return;
+  }
+
+  window.location.href = `forum.html?thread=${encodeURIComponent(data.id)}`;
+});
+
+
+async function searchForum(searchTerm) {
+  const query = searchTerm.trim().toLowerCase();
+
+  if (!query) {
+    forumElements.searchResults.hidden = true;
+    forumElements.searchResults.innerHTML = "";
+    forumElements.clearSearch.hidden = true;
+    return;
+  }
+
+  forumElements.searchResults.hidden = false;
+  forumElements.clearSearch.hidden = false;
+  forumElements.searchResults.innerHTML =
+    '<p class="forum-empty">Searching...</p>';
+
+  const { data: threads, error } = await supabaseClient
+    .from("forum_threads")
+    .select("id,category_id,author_id,title,body,is_pinned,is_locked,created_at")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Forum search error:", error);
+    forumElements.searchResults.innerHTML =
+      '<p class="forum-empty">The forum could not be searched.</p>';
+    return;
+  }
+
+  const matches = (threads || []).filter((thread) => {
+    const searchableText = `${thread.title || ""} ${thread.body || ""}`.toLowerCase();
+    return searchableText.includes(query);
+  });
+
+  if (!matches.length) {
+    forumElements.searchResults.innerHTML = `
+      <p class="forum-empty">No forum threads matched “${escapeHtml(searchTerm)}”.</p>
+    `;
+    return;
+  }
+
+  const [{ data: categories }, authorMap] = await Promise.all([
+    supabaseClient
+      .from("forum_categories")
+      .select("id,slug,name"),
+    getProfilesByIds(matches.map((thread) => thread.author_id))
+  ]);
+
+  const categoryMap = new Map(
+    (categories || []).map((category) => [category.id, category])
+  );
+
+  forumElements.searchResults.innerHTML = `
+    <div class="forum-search-heading">
+      ${matches.length} ${matches.length === 1 ? "RESULT" : "RESULTS"}
+    </div>
+    ${matches.map((thread) => renderThreadRow(
+      thread,
+      authorMap.get(thread.author_id),
+      categoryMap.get(thread.category_id)
+    )).join("")}
+  `;
+}
+
+
+forumElements.searchForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  await searchForum(forumElements.searchInput.value);
+});
+
+
+forumElements.clearSearch?.addEventListener("click", () => {
+  forumElements.searchInput.value = "";
+  forumElements.searchResults.innerHTML = "";
+  forumElements.searchResults.hidden = true;
+  forumElements.clearSearch.hidden = true;
+  forumElements.searchInput.focus();
+});
 
 
 async function initializeForum() {

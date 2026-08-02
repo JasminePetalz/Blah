@@ -34,6 +34,12 @@ const messageElement =
 const saveButton =
   document.querySelector("#save-profile-button");
 
+const editTagList = document.querySelector("#edit-tag-list");
+const editTagInput = document.querySelector("#edit-tag-input");
+const editTagAddButton = document.querySelector("#edit-tag-add-button");
+const editTagCount = document.querySelector("#edit-tag-count");
+const editTagMessage = document.querySelector("#edit-tag-message");
+
 
 const DEFAULT_AVATAR =
   "images/avatar.png";
@@ -125,6 +131,159 @@ function showSelectedAvatar(file) {
 }
 
 
+
+const MAX_PROFILE_TAGS = 8;
+const MAX_TAG_LENGTH = 24;
+let profileTags = [];
+
+function normalizeTag(value = "") {
+  return String(value)
+    .trim()
+    .replace(/^#+/, "")
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+}
+
+function displayTag(value = "") {
+  return String(value)
+    .trim()
+    .replace(/^#+/, "")
+    .replace(/\s+/g, " ");
+}
+
+function setTagMessage(message = "", isError = false) {
+  if (!editTagMessage) return;
+  editTagMessage.textContent = message;
+  editTagMessage.dataset.status = isError ? "error" : "normal";
+}
+
+function renderEditableTags() {
+  if (!editTagList) return;
+
+  editTagList.innerHTML = "";
+  editTagCount.textContent = `${profileTags.length} / ${MAX_PROFILE_TAGS}`;
+
+  if (!profileTags.length) {
+    editTagList.innerHTML = '<p class="edit-tags-empty">No tags added yet.</p>';
+    return;
+  }
+
+  profileTags.forEach((item) => {
+    const chip = document.createElement("span");
+    chip.className = "edit-tag-chip";
+    chip.innerHTML = `
+      <span>#${item.tag}</span>
+      <button type="button" aria-label="Remove ${item.tag}" data-tag="${item.normalized_tag}">×</button>
+    `;
+    editTagList.append(chip);
+  });
+}
+
+async function loadEditableTags() {
+  if (!currentUser) return;
+
+  const { data, error } = await supabaseClient
+    .from("profile_tags")
+    .select("tag,normalized_tag")
+    .eq("user_id", currentUser.id)
+    .order("tag", { ascending: true });
+
+  if (error) {
+    console.error("Tag load error:", error);
+    setTagMessage("Tags could not be loaded.", true);
+    return;
+  }
+
+  profileTags = data || [];
+  renderEditableTags();
+}
+
+async function addProfileTag() {
+  if (!currentUser) return;
+
+  const tag = displayTag(editTagInput.value);
+  const normalizedTag = normalizeTag(tag);
+
+  if (!tag) {
+    setTagMessage("Type a tag first.", true);
+    return;
+  }
+
+  if (tag.length > MAX_TAG_LENGTH) {
+    setTagMessage(`Tags can be no longer than ${MAX_TAG_LENGTH} characters.`, true);
+    return;
+  }
+
+  if (!/^[a-zA-Z0-9][a-zA-Z0-9 &+.'_-]*$/.test(tag)) {
+    setTagMessage("Use letters, numbers, spaces, and simple punctuation only.", true);
+    return;
+  }
+
+  if (profileTags.length >= MAX_PROFILE_TAGS) {
+    setTagMessage(`You can add up to ${MAX_PROFILE_TAGS} tags.`, true);
+    return;
+  }
+
+  if (profileTags.some((item) => item.normalized_tag === normalizedTag)) {
+    setTagMessage("You already have that tag.", true);
+    return;
+  }
+
+  editTagAddButton.disabled = true;
+
+  const { error } = await supabaseClient
+    .from("profile_tags")
+    .insert({
+      user_id: currentUser.id,
+      tag,
+      normalized_tag: normalizedTag
+    });
+
+  editTagAddButton.disabled = false;
+
+  if (error) {
+    console.error("Tag add error:", error);
+    setTagMessage(error.message || "That tag could not be added.", true);
+    return;
+  }
+
+  editTagInput.value = "";
+  setTagMessage("Tag added.");
+  await loadEditableTags();
+}
+
+editTagAddButton?.addEventListener("click", addProfileTag);
+editTagInput?.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    addProfileTag();
+  }
+});
+
+editTagList?.addEventListener("click", async (event) => {
+  const button = event.target.closest("button[data-tag]");
+  if (!button || !currentUser) return;
+
+  button.disabled = true;
+
+  const { error } = await supabaseClient
+    .from("profile_tags")
+    .delete()
+    .eq("user_id", currentUser.id)
+    .eq("normalized_tag", button.dataset.tag);
+
+  if (error) {
+    console.error("Tag delete error:", error);
+    setTagMessage("That tag could not be removed.", true);
+    button.disabled = false;
+    return;
+  }
+
+  setTagMessage("Tag removed.");
+  await loadEditableTags();
+});
+
+
 async function loadProfileForEditing() {
   setMessage("Loading profile...");
 
@@ -201,6 +360,7 @@ async function loadProfileForEditing() {
 
 
   updateBioCount();
+  await loadEditableTags();
 
   setMessage("");
 }
