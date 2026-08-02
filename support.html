@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support | Previous Save</title>
+  <link rel="stylesheet" href="style.css?v=50">
+</head>
+<body>
+  <nav class="main-nav">
+    <div class="site-width nav-inner">
+      <a href="index.html">HOME</a>
+      <a href="games.html">GAMES</a>
+      <a href="community.html">COMMUNITY</a>
+      <a href="forum.html">FORUM</a>
+      <a href="profile.html">PROFILE</a>
+    </div>
+  </nav>
+
+  <main class="site-width support-page">
+    <section class="support-card">
+      <p class="small-heading">HELP &amp; REPORTING</p>
+      <h1>Previous Save Support</h1>
+      <p class="support-intro">
+        Report a bug, ask for account help, or flag something that needs a quicker response.
+        Please include the page you were on and as much detail as you can.
+      </p>
+
+      <form name="previous-save-support" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="support-form">
+        <input type="hidden" name="form-name" value="previous-save-support">
+        <p class="support-honeypot"><label>Do not fill this out: <input name="bot-field"></label></p>
+
+        <label>
+          <span>ISSUE TYPE</span>
+          <select name="issue_type" id="support-issue-type" required>
+            <option value="">Choose one</option>
+            <option value="Bug report">Bug report</option>
+            <option value="Account or login issue">Account or login issue</option>
+            <option value="Safety concern">Safety concern</option>
+            <option value="Copyright or removal request">Copyright or removal request</option>
+            <option value="General question">General question</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+
+        <label>
+          <span>YOUR EMAIL</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+
+        <label>
+          <span>USERNAME <em>optional</em></span>
+          <input type="text" name="username" maxlength="40">
+        </label>
+
+        <label>
+          <span>PAGE OR LINK <em>optional</em></span>
+          <input type="url" name="page_url" placeholder="https://previoussave.com/...">
+        </label>
+
+        <label>
+          <span>WHAT HAPPENED?</span>
+          <textarea name="message" minlength="10" maxlength="5000" required></textarea>
+        </label>
+
+        <button type="submit" class="forum-primary-button">SEND TO SUPPORT</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const typeFromUrl = new URLSearchParams(window.location.search).get("type");
+    if (typeFromUrl === "bug") document.querySelector("#support-issue-type").value = "Bug report";
+  </script>
+</body>
+</html>

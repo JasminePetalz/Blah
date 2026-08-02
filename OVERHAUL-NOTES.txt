@@ -1,0 +1,14 @@
+PREVIOUS SAVE OVERHAUL
+
+Fixed:
+- Supabase sessions explicitly persist and refresh across pages on previoussave.com.
+- Forum homepage only shows Start a Thread to logged-in users.
+- Forum homepage only shows Log In to Post to logged-out visitors.
+- Forum Home is hidden on the forum homepage and appears only inside categories/threads.
+- Restored the missing homepage thread-creation and forum-search JavaScript.
+- Added a global [hidden] rule so JavaScript-controlled elements cannot be forced visible by older CSS.
+- Increased Forgot password visibility and focus styling.
+- Standardized CSS/Supabase cache versions across pages.
+- Added support.html as a working Netlify form so footer Support and Report a bug links no longer 404.
+
+No additional SQL is required for these fixes.

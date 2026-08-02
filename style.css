@@ -9286,3 +9286,161 @@ button:disabled,
     justify-content: flex-start;
   }
 }
+
+/* ==================================================
+   GLOBAL VISIBILITY + AUTH CONSISTENCY
+================================================== */
+
+[hidden] {
+  display: none !important;
+}
+
+.forum-heading-actions > [hidden],
+.forum-category-actions > [hidden],
+#forum-thread-view > [hidden],
+#forum-overview-view[hidden],
+#forum-category-view[hidden],
+#forum-thread-view[hidden] {
+  display: none !important;
+}
+
+/* Make account recovery impossible to miss. */
+.forgot-password-row {
+  margin: 8px 0 20px;
+}
+
+.forgot-password-row a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 16px;
+  border: 1px solid #8ad854;
+  border-radius: 11px;
+  color: #efffe4 !important;
+  background: linear-gradient(180deg, #3f5739, #1d2b1b);
+  box-shadow: inset 0 1px rgba(255,255,255,.13), 0 4px 10px rgba(0,0,0,.32);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .6px;
+  text-decoration: none;
+}
+
+.forgot-password-row a::before {
+  content: "↻";
+  margin-right: 7px;
+  color: #a9ef75;
+  font-size: 15px;
+}
+
+.forgot-password-row a:hover,
+.forgot-password-row a:focus-visible {
+  border-color: #b5f486;
+  color: #fff !important;
+  background: linear-gradient(180deg, #58784d, #294125);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+/* Cleaner forum action hierarchy. */
+.forum-heading-actions {
+  align-items: center;
+}
+
+#forum-home-create-button,
+#forum-home-login-button {
+  min-width: 180px;
+}
+
+#forum-back-button {
+  white-space: nowrap;
+}
+
+.forum-search-panel {
+  position: relative;
+}
+
+.forum-search-results:empty {
+  display: none;
+}
+
+/* ==================================================
+   SUPPORT PAGE
+================================================== */
+.support-page {
+  padding-top: 38px;
+  padding-bottom: 65px;
+}
+
+.support-card {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid #4f5d4f;
+  border-radius: 22px;
+  color: #dce5da;
+  background: linear-gradient(180deg, #242c24, #151b15);
+  box-shadow: inset 0 1px rgba(255,255,255,.06), 0 8px 22px rgba(0,0,0,.28);
+}
+
+.support-card h1 {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 34px;
+}
+
+.support-intro {
+  margin: 0 0 26px;
+  color: #aeb8ae;
+  line-height: 1.65;
+}
+
+.support-form {
+  display: grid;
+  gap: 17px;
+}
+
+.support-form label > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #a9e879;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .8px;
+}
+
+.support-form label em {
+  color: #7f8c7f;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.support-form input,
+.support-form select,
+.support-form textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #5b685b;
+  border-radius: 11px;
+  outline: none;
+  color: #edf3eb;
+  background: #101610;
+  font: inherit;
+}
+
+.support-form textarea {
+  min-height: 190px;
+  resize: vertical;
+}
+
+.support-form input:focus,
+.support-form select:focus,
+.support-form textarea:focus {
+  border-color: #86d64f;
+  box-shadow: 0 0 0 3px rgba(134,214,79,.16);
+}
+
+.support-honeypot {
+  position: absolute;
+  left: -9999px;
+}
