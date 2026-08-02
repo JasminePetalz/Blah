@@ -97,10 +97,10 @@ function renderArticles(container, rows) {
       <a class="community-article-cover" href="article.html?id=${encodeURIComponent(row.id)}">
         ${row.cover_url
           ? `<img src="${esc(row.cover_url)}" alt="${esc(row.title)}" loading="lazy">`
-          : '<div class="community-cover-placeholder">360 ARCHIVE</div>'}
+          : '<div class="community-cover-placeholder">PREVIOUS SAVE</div>'}
       </a>
       <div class="community-article-content">
-        <div class="community-card-meta"><span>${esc(game?.title || "360 Archive")}</span><span>${esc(date(row.published_at))}</span></div>
+        <div class="community-card-meta"><span>${esc(game?.title || "Previous Save")}</span><span>${esc(date(row.published_at))}</span></div>
         <h3><a href="article.html?id=${encodeURIComponent(row.id)}">${esc(row.title)}</a></h3>
         ${row.subtitle ? `<p>${esc(row.subtitle)}</p>` : ""}
         ${authorLink(author)}

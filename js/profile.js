@@ -196,25 +196,25 @@ function displayRole(profile) {
   const settings = {
     "co-creator": {
       badge: "CO-CREATOR",
-      title: "360 ARCHIVE CO-CREATOR",
+      title: "PREVIOUS SAVE CO-CREATOR",
       name: "Co-creator"
     },
 
     "co-creator-dev": {
       badge: "CO-CREATOR · DEV",
-      title: "360 ARCHIVE CO-CREATOR & DEVELOPER",
+      title: "PREVIOUS SAVE CO-CREATOR & DEVELOPER",
       name: "Co-creator and developer"
     },
 
     admin: {
       badge: "ADMIN",
-      title: "360 ARCHIVE ADMINISTRATOR",
+      title: "PREVIOUS SAVE ADMINISTRATOR",
       name: "Administrator"
     },
 
     moderator: {
       badge: "MOD",
-      title: "360 ARCHIVE MODERATOR",
+      title: "PREVIOUS SAVE MODERATOR",
       name: "Moderator"
     }
   };
@@ -237,7 +237,7 @@ function displayRole(profile) {
   setText(
     profileStaffDescription,
     profile.staff_description ||
-      "Member of the 360 Archive team."
+      "Member of the Previous Save team."
   );
 
   profileAboutRoleRow.hidden = false;
@@ -251,7 +251,7 @@ function displayProfile(profile) {
   const favoriteGenre =
     profile.favorite_genre || "Not added";
 
-  document.title = `${username} | 360 Archive`;
+  document.title = `${username} | Previous Save`;
 
   setText(profileUsername, username);
   setText(profileBio, profile.bio || "No bio added yet.");
@@ -289,15 +289,30 @@ function displayProfile(profile) {
    ================================================== */
 
 function displayProfileActions() {
-  profileEditButton.hidden = !viewingOwnProfile;
-  profileAccountSection.hidden = !viewingOwnProfile;
+  /*
+    Only the owner may see profile editing controls. The database RLS
+    policy remains the actual security boundary; this keeps the UI honest.
+  */
+  if (profileEditButton) {
+    profileEditButton.hidden = !viewingOwnProfile;
+    profileEditButton.setAttribute(
+      "aria-hidden",
+      String(!viewingOwnProfile)
+    );
+  }
+
+  if (profileAccountSection) {
+    profileAccountSection.hidden = !viewingOwnProfile;
+  }
 
   if (viewingOwnProfile) {
     profileFollowButton.hidden = true;
+    profileFollowButton.setAttribute("aria-hidden", "true");
     return;
   }
 
   profileFollowButton.hidden = false;
+  profileFollowButton.setAttribute("aria-hidden", "false");
 
   if (!loggedInUser) {
     profileFollowButton.textContent = "LOG IN TO FOLLOW";
@@ -310,6 +325,17 @@ function displayProfileActions() {
 
   profileFollowButton.textContent =
     currentlyFollowing ? "UNFOLLOW" : "FOLLOW";
+
+  profileFollowButton.setAttribute(
+    "aria-label",
+    currentlyFollowing
+      ? "Unfollow this member"
+      : "Follow this member"
+  );
+
+  profileFollowButton.title = currentlyFollowing
+    ? "Stop following this member"
+    : "Follow this member";
 }
 
 

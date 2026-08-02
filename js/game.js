@@ -231,7 +231,7 @@ async function loadGamePage() {
     }
 
     document.title =
-      `${game.title} | 360 Archive`;
+      `${game.title} | Previous Save`;
 
     if (gameTitle) {
       gameTitle.textContent =

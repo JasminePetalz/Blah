@@ -203,7 +203,7 @@ async function loadArticle() {
         : data.game;
 
     document.title =
-      `${data.title} | 360 Archive`;
+      `${data.title} | Previous Save`;
 
     articleTitle.textContent =
       data.title;
