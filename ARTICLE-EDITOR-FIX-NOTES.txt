@@ -1,0 +1,11 @@
+Previous Save article editor fix — 2026-08-02
+
+Fixed the article editor JavaScript to match the current HTML image-upload controls.
+The editor no longer looks for the removed #article-cover-url input.
+The script version is now v=2026080201 to force browsers and Netlify to load the new file.
+
+Replace/deploy the whole project as supplied.
+After Netlify finishes, open:
+https://previoussave.com/js/article-editor.js?v=2026080201
+The first line should say:
+Previous Save article editor build 2026-08-02.1 loaded
