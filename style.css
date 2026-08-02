@@ -9059,3 +9059,230 @@ button:disabled,
     margin-bottom: 0;
   }
 }
+
+/* ==================================================
+   FORUM SEARCH, HOME THREAD CREATION, AND AUTH FIXES
+================================================== */
+
+.forum-heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.forum-search-panel {
+  margin-bottom: 24px;
+  padding: 18px 20px;
+  border: 1px solid #4d5a4d;
+  border-radius: 17px;
+  background: linear-gradient(180deg, #242c24, #171d17);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+}
+
+.forum-search-panel label {
+  display: block;
+  margin-bottom: 8px;
+  color: #a6e778;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.forum-search-row {
+  display: flex;
+  gap: 9px;
+}
+
+.forum-search-row input {
+  min-width: 0;
+  flex: 1;
+  padding: 11px 13px;
+  border: 1px solid #596759;
+  border-radius: 11px;
+  outline: none;
+  color: #edf2eb;
+  background: #111711;
+  font: inherit;
+}
+
+.forum-search-row input:focus {
+  border-color: #82d249;
+  box-shadow: 0 0 0 3px rgba(130, 210, 73, 0.16);
+}
+
+.forum-search-results {
+  margin-top: 17px;
+  overflow: hidden;
+  border: 1px solid #465246;
+  border-radius: 13px;
+}
+
+.forum-search-heading {
+  padding: 10px 14px;
+  color: #152311;
+  background: #85d64d;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.forum-create-panel select {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #596559;
+  border-radius: 11px;
+  outline: none;
+  color: #eaf0e8;
+  background: #111711;
+  font: inherit;
+}
+
+.forgot-password-row {
+  margin: 4px 0 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.forgot-password-row a {
+  padding: 10px 14px;
+  border: 1px solid #70c842;
+  border-radius: 10px;
+  color: #d5ffb8 !important;
+  background: linear-gradient(180deg, #344533, #1c281b);
+  box-shadow: inset 0 1px rgba(255,255,255,.1), 0 3px 8px rgba(0,0,0,.3);
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .5px;
+}
+
+.forgot-password-row a:hover {
+  color: #fff !important;
+  border-color: #a1ed6a;
+  background: linear-gradient(180deg, #4c6844, #263d22);
+}
+
+.auth-kicker {
+  margin: 0 0 8px;
+  color: #8fda55;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+}
+
+/* ==================================================
+   EDITABLE PROFILE TAGS
+================================================== */
+
+.edit-tags-panel {
+  margin: 24px 0;
+  padding: 18px;
+  border: 1px solid #4d5b4d;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #252d25, #171d17);
+}
+
+.edit-tags-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.edit-tags-heading h2 {
+  margin: 0 0 5px;
+  color: #9be561;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.edit-tags-heading p,
+.edit-tags-heading > span {
+  margin: 0;
+  color: #a6b0a6;
+  font-size: 10px;
+}
+
+.edit-tag-list {
+  min-height: 42px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.edit-tags-empty {
+  margin: 0;
+  color: #7f8a7f;
+  font-size: 10px;
+}
+
+.edit-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #5ea13d;
+  border-radius: 11px;
+  color: #dff5d1;
+  background: #263622;
+  font-size: 10px;
+}
+
+.edit-tag-chip > span {
+  padding: 7px 9px;
+}
+
+.edit-tag-chip button {
+  align-self: stretch;
+  min-width: 28px;
+  border: 0;
+  border-left: 1px solid #5ea13d;
+  color: #f1b3ad;
+  background: #172117;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.edit-tag-chip button:hover {
+  color: #fff;
+  background: #743a36;
+}
+
+.edit-tag-add-row {
+  display: flex;
+  gap: 9px;
+}
+
+.edit-tag-add-row input {
+  min-width: 0;
+  flex: 1;
+  padding: 11px 12px;
+  border: 1px solid #586558;
+  border-radius: 10px;
+  color: #edf2eb;
+  background: #111711;
+}
+
+.edit-tag-add-row button {
+  padding: 10px 14px;
+  border: 1px solid #397e24;
+  border-radius: 10px;
+  color: #12210f;
+  background: linear-gradient(180deg, #aeea79, #55b831);
+  font-size: 9px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+@media (max-width: 650px) {
+  .forum-search-row,
+  .edit-tag-add-row {
+    flex-direction: column;
+  }
+
+  .forum-heading-actions {
+    justify-content: flex-start;
+  }
+}

@@ -10,7 +10,7 @@
 
   <title>Edit Profile | Previous Save</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=45">
 </head>
 
 <body>
@@ -225,6 +225,33 @@
         </div>
 
 
+        <section class="edit-tags-panel">
+          <div class="edit-tags-heading">
+            <div>
+              <h2>PROFILE TAGS</h2>
+              <p>Add up to 8 interests so other members can find you.</p>
+            </div>
+            <span id="edit-tag-count">0 / 8</span>
+          </div>
+
+          <div id="edit-tag-list" class="edit-tag-list"></div>
+
+          <div class="edit-tag-add-row">
+            <input
+              id="edit-tag-input"
+              type="text"
+              maxlength="24"
+              placeholder="Halo, RPGs, achievement hunting..."
+            >
+            <button id="edit-tag-add-button" type="button">
+              ADD TAG
+            </button>
+          </div>
+
+          <p id="edit-tag-message" class="form-message" aria-live="polite"></p>
+        </section>
+
+
         <div class="profile-actions edit-profile-actions">
 
           <button
@@ -275,7 +302,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
-  <script src="js/edit-profile.js?v=2"></script>
+  <script src="js/edit-profile.js?v=3"></script>
 
 </body>
 </html>

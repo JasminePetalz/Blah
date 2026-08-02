@@ -10,7 +10,7 @@
 
   <title>Forum | Previous Save</title>
 
-  <link rel="stylesheet" href="style.css?v=40">
+  <link rel="stylesheet" href="style.css?v=45">
 </head>
 
 <body>
@@ -68,15 +68,69 @@
         </p>
       </div>
 
-      <a
-        id="forum-back-button"
-        class="forum-secondary-button"
-        href="forum.html"
-        hidden
-      >
-        ← FORUM HOME
-      </a>
+      <div class="forum-heading-actions">
+        <button
+          id="forum-home-create-button"
+          class="forum-primary-button"
+          type="button"
+          hidden
+        >
+          + START A THREAD
+        </button>
+
+        <a
+          id="forum-home-login-button"
+          class="forum-primary-button"
+          href="login.html"
+          hidden
+        >
+          LOG IN TO POST
+        </a>
+
+        <a
+          id="forum-back-button"
+          class="forum-secondary-button"
+          href="forum.html"
+          hidden
+        >
+          ← FORUM HOME
+        </a>
+      </div>
     </div>
+
+    <section class="forum-search-panel">
+      <form id="forum-search-form">
+        <label for="forum-search-input">SEARCH THE FORUM</label>
+
+        <div class="forum-search-row">
+          <input
+            id="forum-search-input"
+            type="search"
+            placeholder="Search thread titles and posts..."
+            maxlength="100"
+          >
+
+          <button class="forum-primary-button" type="submit">
+            SEARCH
+          </button>
+
+          <button
+            id="forum-clear-search"
+            class="forum-secondary-button"
+            type="button"
+            hidden
+          >
+            CLEAR
+          </button>
+        </div>
+      </form>
+
+      <div
+        id="forum-search-results"
+        class="forum-search-results"
+        hidden
+      ></div>
+    </section>
 
     <p
       id="forum-global-message"
@@ -95,6 +149,63 @@
       id="forum-overview-view"
       hidden
     >
+      <section
+        id="forum-home-create-panel"
+        class="forum-panel forum-create-panel"
+        hidden
+      >
+        <div class="forum-panel-heading">
+          <h2>START A NEW THREAD</h2>
+        </div>
+
+        <form id="forum-home-create-form">
+          <label class="forum-field">
+            <span>CATEGORY</span>
+            <select id="forum-home-category" required>
+              <option value="">Choose a category</option>
+            </select>
+          </label>
+
+          <label class="forum-field">
+            <span>THREAD TITLE</span>
+            <input
+              id="forum-home-thread-title"
+              type="text"
+              maxlength="140"
+              required
+            >
+          </label>
+
+          <label class="forum-field">
+            <span>YOUR POST</span>
+            <textarea
+              id="forum-home-thread-body"
+              maxlength="20000"
+              required
+            ></textarea>
+          </label>
+
+          <div class="forum-form-actions">
+            <button class="forum-primary-button" type="submit">
+              POST THREAD
+            </button>
+
+            <button
+              id="forum-home-cancel-create"
+              class="forum-secondary-button"
+              type="button"
+            >
+              CANCEL
+            </button>
+          </div>
+
+          <p
+            id="forum-home-create-message"
+            class="forum-message"
+            aria-live="polite"
+          ></p>
+        </form>
+      </section>
       <div
         id="forum-category-list"
         class="forum-category-list"

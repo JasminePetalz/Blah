@@ -1,0 +1,19 @@
+PREVIOUS SAVE UPDATE
+
+Included:
+- Forum search across thread titles and posts
+- A visible Start a Thread button on the forum homepage
+- Category picker for starting threads from the forum homepage
+- Existing category-level thread creation and thread reply forms preserved
+- Cleaner forgot-password page matching the login page
+- Much more visible Forgot password button
+- Editable profile tags (up to 8, 24 characters each)
+- setup-profile-tags.sql with normalization, limits, indexes, and secure RLS
+
+Before deploying tags:
+1. Run setup-profile-tags.sql in Supabase SQL Editor.
+2. Replace the site files with this package.
+3. Hard refresh after Netlify deploys.
+
+To clear existing test forum threads while keeping categories:
+delete from public.forum_threads;
