@@ -9312,105 +9312,50 @@ button:disabled,
 
 
 /* ==================================================
-   MOBILE SAFETY PASS
-   Keeps layouts readable without changing desktop styling
+   LOGGED-OUT PROFILE STATE
 ================================================== */
 
-html {
-  -webkit-text-size-adjust: 100%;
+.profile-logged-out {
+  max-width: 760px;
+  margin: 56px auto;
+  padding: 36px;
+  border: 1px solid rgba(150, 185, 142, 0.34);
+  border-radius: 24px;
+  background: linear-gradient(180deg, #202a21, #151c16);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
-img,
-video,
-iframe,
-svg {
-  max-width: 100%;
+.profile-logged-out h1 {
+  margin: 8px 0 12px;
 }
 
-input,
-select,
-textarea,
-button {
-  max-width: 100%;
+.profile-logged-out > p:not(.small-heading) {
+  max-width: 590px;
+  color: #c3cec1;
+  line-height: 1.65;
 }
 
-@media (max-width: 760px) {
-  .site-width {
-    width: min(100% - 28px, 1180px);
+.profile-logged-out-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+  .profile-logged-out {
+    margin: 28px auto;
+    padding: 24px 20px;
+    border-radius: 18px;
   }
 
-  .header-inner,
-  .footer-inner,
-  .article-editor-layout,
-  .forum-page-heading,
-  .profile-header,
-  .home-hero-inner {
-    min-width: 0;
-  }
-
-  .nav-inner {
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: thin;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .nav-inner a {
-    flex: 0 0 auto;
-  }
-
-  .article-editor-layout,
-  .home-feature-grid,
-  .home-games-grid,
-  .community-grid,
-  .profile-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .article-editor-panel,
-  .article-preview-panel,
-  .forum-panel,
-  .profile-card,
-  .home-panel {
-    min-width: 0;
-  }
-
-  .article-editor-actions,
-  .forum-heading-actions,
-  .forum-form-actions,
-  .home-hero-actions,
-  .auth-actions {
+  .profile-logged-out-actions {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .article-editor-actions > *,
-  .forum-heading-actions > *,
-  .forum-form-actions > *,
-  .home-hero-actions > *,
-  .auth-actions > * {
+  .profile-logged-out-actions a {
     width: 100%;
-  }
-
-  .forum-post,
-  .forum-reply {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .forum-post-author-column {
-    border-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-}
-
-@media (max-width: 420px) {
-  .site-width {
-    width: min(100% - 20px, 1180px);
-  }
-
-  .logo-name,
-  .previous-save-name {
-    font-size: clamp(1rem, 7vw, 1.45rem);
+    text-align: center;
   }
 }

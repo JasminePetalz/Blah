@@ -9,12 +9,10 @@
   >
 
   <title>Profile | Previous Save</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#171d17">
 
   <link
     rel="stylesheet"
-    href="style.css?v=16"
+    href="style.css?v=46"
   >
 </head>
 
@@ -85,6 +83,29 @@
     >
       Loading profile...
     </p>
+
+    <section
+      id="profile-logged-out"
+      class="profile-logged-out"
+      hidden
+    >
+      <p class="small-heading">YOUR PROFILE</p>
+      <h1>You’re not logged in</h1>
+      <p>
+        Log in to view your profile, or create an account to start
+        reviewing games, sharing clips, and joining discussions.
+      </p>
+
+      <div class="profile-logged-out-actions">
+        <a class="main-button" href="login.html">
+          LOG IN
+        </a>
+
+        <a class="secondary-button" href="signup.html">
+          CREATE ACCOUNT
+        </a>
+      </div>
+    </section>
 
     <section
       id="profile-content"
@@ -529,7 +550,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/profile.js?v=12"></script>
+  <script src="js/supabase.js?v=8"></script>
+  <script src="js/profile.js?v=13"></script>
 </body>
 </html>
