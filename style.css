@@ -8418,3 +8418,83 @@ button:disabled,
     font-size: 27px;
   }
 }
+/* ==================================================
+   PROFILE ACTION VISIBILITY + META CONTRAST FIX
+   ================================================== */
+
+/* Some existing button rules set display values that can override the
+   browser's default [hidden] behavior. Keep private/profile-only actions
+   genuinely hidden until profile.js decides they belong on the page. */
+#profile-edit-button[hidden],
+#profile-follow-button[hidden],
+#profile-account-section[hidden],
+.profile-tab-panel[hidden] {
+  display: none !important;
+}
+
+/* Make profile metadata readable against the light profile header. */
+.profile-meta {
+  align-items: center;
+  gap: 10px;
+  color: #334333;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+#profile-location,
+#profile-member-since {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 7px 11px;
+  border: 1px solid rgba(65, 91, 63, 0.35);
+  border-radius: 10px 4px 10px 4px;
+  color: #263526;
+  background: rgba(247, 250, 245, 0.72);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.8),
+    0 2px 5px rgba(32, 48, 31, 0.12);
+}
+
+#profile-location::before {
+  content: "●";
+  margin-right: 7px;
+  color: #4fae2d;
+  font-size: 9px;
+}
+
+/* Following is a destructive action, so make its state unmistakable. */
+.profile-follow-button[data-state="following"] {
+  border-color: #7b3636 !important;
+  color: #fff4f4 !important;
+  background:
+    linear-gradient(180deg, #8f4b4b, #5f2929 58%, #381818) !important;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.25),
+    0 3px 8px rgba(48, 15, 15, 0.28) !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.65);
+}
+
+.profile-follow-button[data-state="following"]:hover:not(:disabled) {
+  border-color: #a85353 !important;
+  background:
+    linear-gradient(180deg, #aa5a5a, #743232 58%, #461d1d) !important;
+  transform: translateY(-1px);
+}
+
+.profile-follow-button:disabled {
+  opacity: 0.68;
+  cursor: wait;
+}
+
+@media (max-width: 650px) {
+  .profile-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #profile-location,
+  #profile-member-since {
+    width: 100%;
+  }
+}
