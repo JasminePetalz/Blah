@@ -2,24 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Forum | Previous Save</title>
-  <link rel="stylesheet" href="style.css?v=19">
+
+  <link rel="stylesheet" href="style.css?v=40">
 </head>
+
 <body>
-  <div class="top-bar"><div class="site-width top-bar-inner"><span>PREVIOUS SAVE</span><span class="online-status"><span class="online-dot"></span>ONLINE</span></div></div>
-  <header class="site-header"><div class="site-width header-inner"><a class="site-logo" href="index.html">
-        <span class="logo-mark" aria-hidden="true">
-          <svg viewBox="0 0 64 64" role="img">
-            <path d="M14 7h31l8 8v42H14z" />
-            <path class="logo-mark-cutout" d="M22 7h21v17H22z" />
-            <path class="logo-mark-slot" d="M25 11h13v9H25z" />
-            <path class="logo-mark-label" d="M21 34h25v16H21z" />
-            <circle class="logo-mark-dot" cx="41" cy="42" r="3" />
-          </svg>
+
+  <div class="top-bar">
+    <div class="site-width top-bar-inner">
+      <span>PREVIOUS SAVE</span>
+
+      <span class="online-status">
+        <span class="online-dot"></span>
+        ONLINE
+      </span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-width header-inner">
+
+      <a class="site-logo" href="index.html">
+        <span class="logo-circle">PS</span>
+
+        <span class="logo-name">
+          <strong>PREVIOUS</strong>
+          <span>SAVE</span>
         </span>
-        <span class="logo-name previous-save-name"><strong>PREVIOUS</strong><span>SAVE</span></span>
-      </a><div class="header-text"><p>Forum</p><span>community discussions are coming soon</span></div></div></header>
+      </a>
+
+      <div class="header-text">
+        <p>An Xbox 360 community archive</p>
+        <span>unofficial fan project</span>
+      </div>
+
+    </div>
+  </header>
+
   <nav class="main-nav">
     <div class="site-width nav-inner">
       <a href="index.html">HOME</a>
@@ -29,14 +55,252 @@
       <a href="profile.html">PROFILE</a>
     </div>
   </nav>
-  <main class="site-width coming-soon-page">
-    <section class="coming-soon-panel">
-      <p class="small-heading">PREVIOUS SAVE FORUM</p>
-      <h1>Discussions are coming next.</h1>
-      <p>The forum link now works, but posting threads will be added after the Community hub is settled.</p>
-      <a class="main-button" href="community.html">VISIT COMMUNITY</a>
+
+  <main class="site-width forum-page">
+
+    <div class="forum-page-heading">
+      <div>
+        <p class="small-heading">COMMUNITY DISCUSSION</p>
+        <h1 id="forum-page-title">Previous Save Forum</h1>
+        <p id="forum-page-description">
+          Talk about games, collecting, achievements, preservation,
+          and the Xbox 360 era.
+        </p>
+      </div>
+
+      <a
+        id="forum-back-button"
+        class="forum-secondary-button"
+        href="forum.html"
+        hidden
+      >
+        ← FORUM HOME
+      </a>
+    </div>
+
+    <p
+      id="forum-global-message"
+      class="forum-message"
+      aria-live="polite"
+    ></p>
+
+    <div
+      id="forum-loading"
+      class="forum-loading"
+    >
+      Loading forum...
+    </div>
+
+    <section
+      id="forum-overview-view"
+      hidden
+    >
+      <div
+        id="forum-category-list"
+        class="forum-category-list"
+      ></div>
+
+      <section class="forum-panel forum-recent-panel">
+        <div class="forum-panel-heading">
+          <h2>RECENT THREADS</h2>
+        </div>
+
+        <div id="forum-recent-threads"></div>
+      </section>
     </section>
+
+    <section
+      id="forum-category-view"
+      hidden
+    >
+      <div class="forum-category-actions">
+
+        <button
+          id="forum-show-create-button"
+          class="forum-primary-button"
+          type="button"
+          hidden
+        >
+          + CREATE THREAD
+        </button>
+
+        <a
+          id="forum-login-to-post"
+          class="forum-secondary-button"
+          href="login.html"
+          hidden
+        >
+          LOG IN TO POST
+        </a>
+
+      </div>
+
+      <section
+        id="forum-create-panel"
+        class="forum-panel forum-create-panel"
+        hidden
+      >
+        <div class="forum-panel-heading">
+          <h2>CREATE A THREAD</h2>
+        </div>
+
+        <form id="forum-create-form">
+
+          <label class="forum-field">
+            <span>THREAD TITLE</span>
+
+            <input
+              id="forum-thread-title"
+              type="text"
+              maxlength="140"
+              required
+            >
+          </label>
+
+          <label class="forum-field">
+            <span>YOUR POST</span>
+
+            <textarea
+              id="forum-thread-body"
+              maxlength="20000"
+              required
+            ></textarea>
+          </label>
+
+          <div class="forum-form-actions">
+
+            <button
+              class="forum-primary-button"
+              type="submit"
+            >
+              POST THREAD
+            </button>
+
+            <button
+              id="forum-cancel-create-button"
+              class="forum-secondary-button"
+              type="button"
+            >
+              CANCEL
+            </button>
+
+          </div>
+
+          <p
+            id="forum-create-message"
+            class="forum-message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+      </section>
+
+      <section class="forum-panel">
+        <div class="forum-panel-heading">
+          <h2>THREADS</h2>
+        </div>
+
+        <div id="forum-thread-list"></div>
+      </section>
+    </section>
+
+    <section
+      id="forum-thread-view"
+      hidden
+    >
+      <article
+        id="forum-main-post"
+        class="forum-post forum-main-post"
+      ></article>
+
+      <section class="forum-panel forum-replies-panel">
+        <div class="forum-panel-heading">
+          <h2>REPLIES</h2>
+          <span id="forum-reply-count">0 replies</span>
+        </div>
+
+        <div id="forum-reply-list"></div>
+      </section>
+
+      <section
+        id="forum-reply-panel"
+        class="forum-panel forum-reply-panel"
+        hidden
+      >
+        <div class="forum-panel-heading">
+          <h2>POST A REPLY</h2>
+        </div>
+
+        <form id="forum-reply-form">
+
+          <label class="forum-field">
+            <span>YOUR REPLY</span>
+
+            <textarea
+              id="forum-reply-body"
+              maxlength="10000"
+              required
+            ></textarea>
+          </label>
+
+          <button
+            class="forum-primary-button"
+            type="submit"
+          >
+            POST REPLY
+          </button>
+
+          <p
+            id="forum-reply-message"
+            class="forum-message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+      </section>
+
+      <div
+        id="forum-locked-message"
+        class="forum-locked-message"
+        hidden
+      >
+        This thread has been locked by forum staff.
+      </div>
+
+      <a
+        id="forum-thread-login"
+        class="forum-secondary-button"
+        href="login.html"
+        hidden
+      >
+        LOG IN TO REPLY
+      </a>
+    </section>
+
   </main>
-  <footer><div class="site-width footer-inner"><p>Previous Save © 2026</p><p>Unofficial fan project. Not affiliated with Microsoft or Xbox.</p></div></footer>
+
+  <footer>
+    <div class="site-width footer-inner">
+
+      <p>Previous Save © 2026</p>
+
+      <p>
+        <a href="support.html">Support</a>
+        ·
+        <a href="support.html?type=bug">Report a bug</a>
+      </p>
+
+      <p>
+        Previous Save is an unofficial fan project and is not
+        affiliated with, endorsed by, or sponsored by Microsoft or Xbox.
+      </p>
+
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js?v=7"></script>
+  <script src="js/forum.js?v=1"></script>
+
 </body>
 </html>
