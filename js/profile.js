@@ -611,7 +611,7 @@ async function loadProfileTags() {
     const link = document.createElement("a");
 
     link.href =
-      `search.html?q=${encodeURIComponent(item.tag)}` +
+      `community.html?q=${encodeURIComponent(item.tag)}` +
       `&type=tags`;
 
     link.textContent = `#${item.tag}`;

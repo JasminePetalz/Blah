@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Previous Save</title>
-  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="stylesheet" href="style.css?v=21">
 </head>
 <body>
   <div class="top-bar">
@@ -31,7 +31,6 @@
       <div class="header-text">
         <p>An Xbox 360 community archive</p>
         <span>games, memories, reviews, clips, and community history</span>
-        <a id="home-write-article" class="header-action-button" href="article-editor.html" hidden>WRITE AN ARTICLE</a>
       </div>
     </div>
   </header>
@@ -74,7 +73,10 @@
       <section class="content-section" id="articles">
         <div class="section-heading">
           <h2>LATEST ARTICLES</h2>
-          <a href="community.html?type=articles">view all articles</a>
+          <div class="section-heading-actions">
+            <a id="home-write-article" class="section-write-link" href="article-editor.html" hidden>write an article</a>
+            <a href="community.html?type=articles">view all articles</a>
+          </div>
         </div>
         <div id="home-article-list">
           <p class="home-loading-message">Loading articles...</p>
@@ -173,6 +175,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js?v=7"></script>
-  <script src="js/home.js?v=7"></script>
+  <script src="js/home.js?v=9"></script>
 </body>
 </html>
